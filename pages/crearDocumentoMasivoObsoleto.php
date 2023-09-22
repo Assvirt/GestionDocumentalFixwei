@@ -140,7 +140,17 @@ if($permisoEliminar == FALSE){
                     <div class="col-sm">
                        <!-- <button type="button" class="btn btn-block btn-success btn-sm"><a href="creacionDocumental"><font color="white"><i class="fas fa-chevron-left"></i> Regresar</font></a></button>
                     -->
+                    <?php
+                    if(isset($_POST['editarDocumentoMasivo'])){
+                    ?>
+                    <button type="button" class="btn btn-block btn-info btn-sm"><a href="crearDocumentoMasivoObsoleto"><font color="white"><i class="fas fa-list"></i> Listar </font></a></button>
+                    <?php
+                    }else{
+                    ?>
                      <button type="button" class="btn btn-block btn-info btn-sm"><a href="documentosObsoletos"><font color="white"><i class="fas fa-list"></i> Listar </font></a></button>
+                    <?php
+                    }
+                    ?>
                     </div>
                     <div class="col-sm">
                     </div>
@@ -412,10 +422,13 @@ if(isset($_POST['editarDocumentoMasivo'])){ }else{
                                             }
                                         }else{
                                             if($conteoArchivosB == 0){
-                                            echo '<font color=""><i>Falta documento pdf</i></font>';
-                                            }elseif($conteoArchivosB2 == 0 ){
-                                                echo '<font color=""><i>Falta documento editable</i></font>';
-                                            }else{
+                                            echo '<font color=""><i>- Falta documento pdf</i></font>';
+                                            }
+                                            if($conteoArchivosB2 == 0 ){
+                                                echo '<br><font color=""><i>- Falta documento editable</i></font>';
+                                            }
+                                            
+                                            if($conteoArchivosB <> 0 && $conteoArchivosB2 <> 0){
                                         ?>
                                             <button disabled class='btn btn-block btn-info btn-sm' >
                                                 <i class='fas fa-check'></i> Ejecutar
@@ -1453,6 +1466,8 @@ if($_POST['alertaConsecutivo'] != NULL){
                                 <label class="custom-file-label" for="exampleInputFile">Seleccionar archivo</label>
                               </div>
                             </div>
+                            
+                            
                             <script>
                                 $('input[name="archivopdf"]').on('change', function(){
                                     var ext = $( this ).val().split('.').pop();
@@ -1499,6 +1514,7 @@ if($_POST['alertaConsecutivo'] != NULL){
                                 <label class="custom-file-label" for="exampleInputFile">Seleccionar archivo</label>
                               </div>
                             </div>
+                            
                             <script>
                                 $('input[name="archivootro"]').on('change', function(){
                                     var ext = $( this ).val().split('.').pop();

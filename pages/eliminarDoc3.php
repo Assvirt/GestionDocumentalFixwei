@@ -332,8 +332,10 @@ require_once 'conexion/bd.php';
                 $activador_usuario='Si';
             }else{ /// verificamos que los roles estén ingresando, tmabién verificamos que el encargado que es el aprobador, sea quien tenga el documento abierto
                 if($activador_usuario != NULL){ //echo 'a 1';
+                    $VariableNoSalir=1;
                     $títulRol='Asignar documento';
                 }elseif($nombres_busqueda_cargo_solicitud['QuienAprueba'] == $celdulaUser && $datosDoc['estadoElimina'] == null || $nombres_busqueda_cargo_solicitud['QuienAprueba'] == $celdulaUser && $datosDoc['estadoElimina'] == 'Pendiente'){ //echo 'a 2';
+                    $VariableNoSalir=1;
                     $títulRol='Asignar documento';
                 }else{
                     $títulRol==NULL;

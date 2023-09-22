@@ -424,10 +424,13 @@ if(isset($_POST['editarDocumentoMasivo'])){}else{
                                             }
                                     }else{
                                         if($conteoArchivosB == 0){
-                                            echo '<font color=""><i>Falta documento pdf</i></font>';
-                                        }elseif($conteoArchivosB2 == 0 ){
-                                            echo '<font color=""><i>Falta documento editable</i></font>';
-                                        }else{
+                                            echo '<font color=""><i>- Falta documento pdf</i></font>';
+                                        }
+                                        if($conteoArchivosB2 == 0 ){
+                                            echo '<br><font color=""><i>- Falta documento editable</i></font>';
+                                        }
+                                            
+                                        if($conteoArchivosB <> 0 && $conteoArchivosB2 <> 0){
                                         
                                     ?>
                                         <button disabled class='btn btn-block btn-info btn-sm' >

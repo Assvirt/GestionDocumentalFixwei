@@ -793,12 +793,22 @@ $validacionRegreso=$_POST['validacionRegreso'];
         $consulta_usuario=$mysqli->query("SELECT * FROM usuario WHERE id='".$extraer_documento['asumeFlujo']."' ");
         $extraer_usuario=$consulta_usuario->fetch_array(MYSQLI_ASSOC);
         $usuarioGestionando=$extraer_usuario['nombres'].' '.$extraer_usuario['apellidos'];
-      ?>
+        
+        if($_POST['documentoAsignado'] != NULL && $extraer_usuario['nombres'] != NULL){
+    ?>
         Toast.fire({
             type: 'warning',
             title: " El usuario <?php echo $usuarioGestionando;?> ya se encargo de la solicitud."
         })
     <?php  
+        }else{
+    ?>
+        Toast.fire({
+            type: 'error',
+            title: " Acceso denegado."
+        })
+    <?php    
+        }
     }
     
     if($validacionUsuario2 == 1){
@@ -808,21 +818,22 @@ $validacionRegreso=$_POST['validacionRegreso'];
         $extraer_documento=$consultando_documento->fetch_array(MYSQLI_ASSOC);
         $consulta_usuario=$mysqli->query("SELECT * FROM usuario WHERE id='".$extraer_documento['asumeFlujo']."' ");
         $extraer_usuario=$consulta_usuario->fetch_array(MYSQLI_ASSOC);
-        $usuarioGestionando=$extraer_usuario['nombres'].' '.$extraer_usuario['apellidos'];
+        $usuarioGestionando=$extraer_usuario['nombres'].' '.$extraer_usuario['apellidos']; //Elija su rol en la gestión
       ?>
         Toast.fire({
-            type: 'warning',
-            title: " Elija su rol en la gestión."
+            type: 'error',
+            title: " Acceso denegado."
         })
     <?php  
     }
     
     if($_POST['alertaSinMensaje'] != NULL){
-        
+        //warning
+        //No ha sido asignado para gestionar este documento
       ?>
         Toast.fire({
-            type: 'warning',
-            title: " No ha sido asignado para gestionar este documento."
+            type: 'error',
+            title: " Acceso denegado."
         })
     <?php  
     }

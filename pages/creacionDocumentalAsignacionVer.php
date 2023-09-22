@@ -1407,6 +1407,7 @@ $verObsoletos = $_POST['verObsoletos'];
                                             
                                             
                                             if($listdandoUsuarioCreacion == 1){
+                                                if($extraerDocumentoSolicitadoValidnado['asumeFlujo'] > 0){ /// si encuentra un asignado, muestra el botón para liberar
                                             ?>
                                             <form action="creacionDocumentalAsignacionVerNotificar" method="post">
                                                     <!-- enviamos esta variable para activar alerta y cambio de datos en la BD -->
@@ -1415,7 +1416,7 @@ $verObsoletos = $_POST['verObsoletos'];
                                                     if($cargo == '1'){
                                                     ?>
                                                     <label>Cambiar cargo</label>
-                                                    <select class="form-control" style="width:50%;" name="cambiarCargo">
+                                                    <select class="form-control" style="width:50%;" name="cambiarCargo" required>
                                                         <option value=""></option>
                                                         <?php
                                                         $recorrido_cargos=$mysqli->query("SELECT * FROM cargos ORDER BY nombreCargos ");
@@ -1432,7 +1433,7 @@ $verObsoletos = $_POST['verObsoletos'];
                                                     if($usuario == '1'){
                                                     ?>
                                                     <label>Cambiar usuario</label>
-                                                    <select class="form-control" style="width:50%;" name="cambiarUsuario">
+                                                    <select class="form-control" style="width:50%;" name="cambiarUsuario" required>
                                                         <option value=""></option>
                                                         <?php
                                                         $recorrido_usuarios=$mysqli->query("SELECT * FROM usuario ORDER BY nombres ");
@@ -1459,6 +1460,7 @@ $verObsoletos = $_POST['verObsoletos'];
                                                     </button>
                                             </form>
                                             <?php
+                                                }
                                             }
                                         
                                         if($extraerDocumentoSolicitadoValidnado['asumeFlujo'] > 0 && $listdandoUsuarioCreacion <> 1){ // si es mayor a 0 nos debería mostrar el flujo ha cambiar

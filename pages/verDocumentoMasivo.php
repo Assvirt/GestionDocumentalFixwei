@@ -236,11 +236,69 @@ $verObsoletos = $_POST['obsoletooss'];//$_POST['verObsoletos'];
                                 
                                 <div class="form-group col-sm-4">
                                     <label class="text-dark">Código: </label><br>
-                                    <?php echo $datosDoc['codificacion']; ?>
+                                    <?php
+                                    //echo $datosDoc['codificacion']; 
+                                     $consulta_documento=$mysqli->query("SELECT * FROM documento WHERe id='".$_POST['idDocumento']."' ");
+                                    $extraer_consulta_documento=$consulta_documento->fetch_array(MYSQLI_ASSOC);
+                                    
+                                    /// consultamos el tipo de documento para traer el prefijo
+                                        $consultaTipoDocumento=$mysqli->query("SELECT prefijo,id FROM tipoDocumento WHERE id='".$extraer_consulta_documento['tipo_documento']."' ");
+                                        $extraerNombreTipoDocumentoConsulDocum=$consultaTipoDocumento->fetch_array(MYSQLI_ASSOC);
+                                        $prefijoTipo=$extraerNombreTipoDocumentoConsulDocum['prefijo'];
+                                        //// consultamos el prefijo del proceso para traerlo
+                                        $consultaProceso=$mysqli->query("SELECT id,prefijo FROM procesos WHERE id='".$extraer_consulta_documento['proceso']."' ");
+                                        $extraerNombreProcesoConsulDocum=$consultaProceso->fetch_array(MYSQLI_ASSOC);
+                                        $prefijoProceso=$extraerNombreProcesoConsulDocum['prefijo'];
+                                        
+                                        /// traemos el consecutivo y version temporal para mostrar antes de ser verificado nuevamente
+                                        $consecutivo=$extraer_consulta_documento['consecutivoTemporal'];
+                                        $version=$extraer_consulta_documento['versionTemporal'];
+                                        
+                                        //echo $recorridoDocumentos['codificacion'];
+                                        
+                                        //CODIFICACION
+                                            $codificacion = "";
+                                            $dataCodificacion = $mysqli->query("SELECT * FROM codificacion ORDER BY id")or die(mysqli_error());
+                                            while($rowC = $dataCodificacion->fetch_assoc()){
+                                                                   
+                                                $cod = $rowC['codificacion'];
+                                                                        
+                                                if($cod == "-"){
+                                                    $codificacion =  $codificacion."-";
+                                                }
+                                                                    
+                                                if($cod == "/"){
+                                                    $codificacion =  $codificacion."/";
+                                                }
+                                                                        
+                                                if($cod == " "){
+                                                    $codificacion =  $codificacion." ";
+                                                }
+                                                                        
+                                                if($cod == "Proceso"){
+                                                    $codificacion =  $codificacion.$prefijoProceso;
+                                                }
+                                                                    
+                                                if($cod == "Tipo de documento"){
+                                                    $codificacion = $codificacion.$prefijoTipo;        
+                                                }
+                                                                        
+                                                if($cod == "Consecutivo"){
+                                                    $codificacion = $codificacion.$consecutivo;        
+                                                }
+                                                                        
+                                                if($cod == "Versión"){
+                                                    $codificacion = $codificacion.$version;        
+                                                }
+                                            }//Fin codificacion 
+                                            
+                                            /// traemos la simulación del consecutivo, que no ha sido tomado aún
+                                            echo $codificacion;
+                                    ?>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     <label class="text-dark">Versión: </label><br>
-                                    <?php echo $datosDoc['version']; ?>
+                                    <?php echo $datosDoc['versionTemporal']; ?>
                                 </div>
                                 <div class="form-group col-sm-4">
                                     <?php
