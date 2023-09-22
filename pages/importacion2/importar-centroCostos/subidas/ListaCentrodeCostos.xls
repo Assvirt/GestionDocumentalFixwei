@@ -1,0 +1,77 @@
+
+<table border="1">
+    <tr>
+        <th class="text-center">CODIGO</th>
+        <th class="text-center">PREFIJO</th>
+        <th class="text-center">NOMBRE</th>
+        <th class="text-center">DUE&Ntilde;O DEL CENTRO DE COSTO</th>
+        <th class="text-center">CENTRO DE TRABAJO</th>
+        <th class="text-center">PERSONA RESPONSABLE</th>
+		
+	
+		
+        
+        
+    </tr>
+        
+        <tr>
+            <td>101010</td>
+            <td>ADM</td>
+            <td>ADMINISTRACIÓN</td>
+            
+                        <td>DESARROLLADOR DE SOFTWARE</td>
+                        <td>APARTADÓ</td>
+            
+                        <td>MIGUEL ANGELANGARITÁ</td>
+            
+           
+            
+        </tr>
+            
+        <tr>
+            <td>101020</td>
+            <td>CONT</td>
+            <td>CONTABILIDAD</td>
+            
+                 
+	       <td><b>No aplica</b></td>        
+	                    <td>BARRANCABERMEJA</td>
+            
+                        <td>ALEXANDERCARVAJAL VARGAS</td>
+            
+           
+            
+        </tr>
+            
+        <tr>
+            <td>101050</td>
+            <td>AMB</td>
+            <td>AMBIENTAL M</td>
+            
+                 
+	       <td><b>No aplica</b></td>        
+	                    <td>BARRANCABERMEJA</td>
+            
+                        <td>SEBASTIANRINCÓN</td>
+            
+           
+            
+        </tr>
+            
+        <tr>
+            <td>101070</td>
+            <td>SISTEMAS</td>
+            <td>SISTEMAS</td>
+            
+                 
+	       <td><b>No aplica</b></td>        
+	                    <td>APARTADÓ</td>
+            
+                        <td>MAYRARODRIGUEZ</td>
+            
+           
+            
+        </tr>
+            
+
+</table>

@@ -1,0 +1,37 @@
+
+<table border="1">
+    <tr>
+        <th class="text-center">Nombre</th>
+        <th class="text-center">Prefijo</th>
+		<th class="text-center">Cargos asociado</th>
+		
+        
+        
+    </tr>
+        
+        <tr>
+            <td>BARRANQUILLA</td>
+            <td>BAR</td>
+            <td style='text-align:justify;' class='text-center'>*SST<br></td>            
+        </tr>
+            
+        <tr>
+            <td>Bogotá</td>
+            <td>Bot</td>
+            <td style='text-align:justify;' class='text-center'>*DESARROLLADOR DE SOTFWARE<br></td>            
+        </tr>
+            
+        <tr>
+            <td>Cali</td>
+            <td>CAL</td>
+            <td style='text-align:justify;' class='text-center'>*CONTADOR GENERAL<br></td>            
+        </tr>
+            
+        <tr>
+            <td>Medllín</td>
+            <td>MED</td>
+            <td style='text-align:justify;' class='text-center'>*Director Ambiental<br></td>            
+        </tr>
+            
+
+</table>

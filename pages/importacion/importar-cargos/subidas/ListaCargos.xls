@@ -1,0 +1,524 @@
+
+<table border="1">
+    <tr>
+        
+        <th class="text-center">Nombres</th>
+		<th class="text-center">Descripción</th>
+		<th class="text-center">Jefe inmediato</th>
+		<th class="text-center">Nivel cargo</th>
+        
+        
+    </tr>
+        
+        <tr>
+            <td>ADMINISTRADOR AMBIENTAL</td>
+            <td>Administrador ambiental</td>
+                        <td>PROFESIONAL AMBIENTAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>ANALISTA DE COMPRAS</td>
+            <td>ANALISTA DE COMPRAS</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>ANALISTA DE DERECHOS HUMANOS</td>
+            <td>DERECHOS HUMANOS</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>ASISTENTE ADMINISTRATIVA Y HSEQ</td>
+            <td>ASISTENTE ADMINISTRATIVA Y HSEQ</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>AUXILIAR CONTABLE</td>
+            <td>AUXILIAR CONTABLE</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>AUXILIAR MIT</td>
+            <td>AUXILIAR MIT</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>CONTADOR</td>
+            <td>CONTADOR</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR COMERCIAL</td>
+            <td>COORDINADOR COMERCIAL</td>
+                        <td>FACILITADOR FINANCIERO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR DE COMPRAS</td>
+            <td>COORDINADOR DE COMPRAS</td>
+                        <td>FACILITADOR FINANCIERO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR DE GESTIÓN CARTERA</td>
+            <td>COORDINADOR DE GESTIÓN CARTERA</td>
+                        <td>FACILITADOR CGC</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR DE OPECIONES</td>
+            <td>COORDINADOR DE OPECIONES</td>
+                        <td>FACILITADOR FINANCIERO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR DE TALENTO HUMANO</td>
+            <td>COORDINADOR DE TALENTO HUMANO</td>
+                        <td>FACILITADOR FINANCIERO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR DE TESORERÍA</td>
+            <td>COORDINADOR DE TESORERÍA</td>
+                        <td>FACILITADOR CGC</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR JURÍDICO</td>
+            <td>COORDINADOR JURÍDICO</td>
+                        <td>FACILITADOR JURIDICO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR MIT</td>
+            <td>COORDINADOR MIT</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR NACIONAL GESTIONES</td>
+            <td>COORDINADOR NACIONAL GESTIONES</td>
+                        <td>FACILITADOR FINANCIERO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR NACIONAL SERVICE</td>
+            <td>COORDINADOR NACIONAL SERVICE</td>
+                        <td>FACILITADOR FINANCIERO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>DESARROLLADOR DE SOFTWARE</td>
+            <td>DESARROLLADOR DE SOFTWARE</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>FACILITADOR CGC</td>
+            <td>FACILITADOR CGC</td>
+                        <td>No aplica</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>FACILITADOR DE CONTABILIDAD A</td>
+            <td>FACILITADOR DE CONTABILIDAD A</td>
+                        <td>FACILITADOR CGC</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>FACILITADOR FINANCIERO</td>
+            <td>FACILITADOR FINANCIERO</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>FACILITADOR JURIDICO</td>
+            <td>FACILITADOR JURIDICO</td>
+                        <td>No aplica</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>GERENTE DE GESTIÓN DE RECURSOS</td>
+            <td>GERENTE DE GESTIÓN DE RECURSOS</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>GERENTE DE OPERACIÓN Y MANTENIMIENTO</td>
+            <td>GERENTE DE OPERACIÓN Y MANTENIMIENTO</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>GERENTE GENERAL</td>
+            <td>GERENTE GENERAL DE LA COMPAÑIA</td>
+                        <td>JUNTA DIRECTIVA</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>INGENIERO AMBIENTAL</td>
+            <td>Ingeniera Ambiental</td>
+                        <td>PROFESIONAL AMBIENTAL</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>INGENIERO CBM</td>
+            <td>INGENIERO CBM</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>INGENIERO DE CONFIABILIDAD</td>
+            <td>INGENIERO DE CONFIABILIDAD</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>INGENIERO DE PROYECTOS</td>
+            <td>INGENIERO DE PROYECTOS</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>INGENIERO ELECTRICO/ELECTRICISTA</td>
+            <td>INGENIERO ELECTRICO/ELECTRICISTA</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>INGENIERO SOPORTE CBM</td>
+            <td>INGENIERO SOPORTE CBM</td>
+                        <td>INGENIERO DE CONFIABILIDAD</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>JUNTA DIRECTIVA</td>
+            <td>JUNTA DIRECTIVA</td>
+                        <td>No aplica</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LÍDER CONTABLE</td>
+            <td>Contabilidad</td>
+                        <td></td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LIDER DE PROYECTO</td>
+            <td>LIDER DE PROYECTO</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LÍDER DE PROYECTOS</td>
+            <td>LÍDER DE PROYECTOS</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LIDER DE PROYECTOS O&M</td>
+            <td>LIDER DE PROYECTOS O&M</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LIDER FINANCIERO Y CONTABLE</td>
+            <td>LIDER FINANCIERO Y CONTABLE</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LIDER HSEQ</td>
+            <td>LIDER HSEQ</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LIDER SOPORTE MIT</td>
+            <td>LIDER SOPORTE MIT</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LIDER TALENTO HUMANO</td>
+            <td>LIDER TALENTO HUMANO</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>PLANEADOR DE MANTENIMIENTO</td>
+            <td>PLANEADOR DE MANTENIMIENTO</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>PROFESIONAL AMBIENTAL</td>
+            <td>PROFESIONAL AMBIENTAL</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>PROFESIONAL DE PREVENCION EN ENFERMERIA</td>
+            <td>PROFESIONAL DE PREVENCION EN ENFERMERIA</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>PROFESIONAL EN PREVENCIÓN EN FISIOTERAPIA</td>
+            <td>PROFESIONAL EN PREVENCIÓN EN FISIOTERAPIA</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>PROFESIONAL EN PREVENCIÓN EN PSICOLOGÍA</td>
+            <td>PROFESIONAL EN PREVENCIÓN EN PSICOLOGÍA</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>PROFESIONAL JUNIOR DE TALENTO HUMANO</td>
+            <td>PROFESIONAL JUNIOR DE TALENTO HUMANO</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>SOPORTE AMBIENTAL</td>
+            <td>Soporte ambiental</td>
+                        <td>PROFESIONAL AMBIENTAL</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>SOPORTE HSEQ</td>
+            <td>SOPORTE HSEQ</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>SOPORTE RESPONSABILIDAD SOCIAL</td>
+            <td>SOPORTE RESPONSABILIDAD SOCIAL</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>SUPERVISOR HSEQ</td>
+            <td>SUPERVISOR HSEQ</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>TECNOLOGO HSEQ</td>
+            <td>TECNOLOGO HSEQ</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Táctico</td>
+           
+            
+        </tr>
+            
+
+</table>

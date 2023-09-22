@@ -1,0 +1,24 @@
+
+<table border="1">
+    <tr>
+        <th class="text-center">Nombre</th>
+	    <th class="text-center">Descripción</th>
+	</tr>
+        
+        <tr>
+           <td>Apoyo</td>
+           <td>Soportar la operación</td>
+        </tr>
+            
+        <tr>
+           <td>Estratégico</td>
+           <td>Estrategia</td>
+        </tr>
+            
+        <tr>
+           <td>Negocio</td>
+           <td>Negocio</td>
+        </tr>
+            
+
+</table>

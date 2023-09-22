@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora</title>
+    <!-- Traemos la librería de boostrap-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
+
+
+    <!--Fuente de google Kanit-->
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch&family=Kanit:wght@300&display=swap" rel="stylesheet">
+ 
+    <!-- Traemos los estilos para la calculadora-->
+    <link rel="stylesheet" href="../css/estilos.css">
+  
+</head>
+<body><br><br><br>
+    <div class="content-wrapper">
+        <div class="container">
+            <h1>Calculadora</h1>
+            <!-- Agregamos el form para enviar los datos-->
+            <form method="post" id="js-form" onsubmit="return false" >
+                <div class="form-group">
+                    <input type="number" class="form-control" id="numero1" min="0" placeholder="Primer número">
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control" id="numero2" min="0" placeholder="Segundo número">
+                  </div>
+                  <div class="form-group">
+                    <select class="form-control" id="opcion">
+                      <option value="">Operacion a realizar</option>
+                      <option value="sumar">Suma</option>
+                      <option value="restar">Resta</option>
+                      <option value="multiplicar">Multiplicación</option>
+                      <option value="dividir">División</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control" id="resultado" placeholder="Resultado" readonly>
+                  </div>
+            
+                  <div class="form-group">
+                    <button class="btn btn-primary btn-block btn-lg" id="js-enviar">Calcular</button>
+                    <button id="limpiar" type="reset"  class="btn btn-danger btn-block btn-lg">Limpiar</button>
+                  </div>
+            </form>
+
+            <!-- Se imprime la alerta-->
+            <div id="estado"></div>
+
+
+            <!-- Se ejecuta el botón para abrir el Modal-->
+            <div class="form-group">
+            <button type="button" id="js-consulta" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Historial de resultados</button>
+            </div><br>
+        </div>
+
+        <!--  Se imprime los datos registrados-->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div id="mostrarDatos"></div>
+                </div>
+            </div>
+        </div>
+           
+
+           
+       
+      
+    </div>
+    
+    
+    <!-- se adjunta librería jquery para la función de ajax-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>     
+   
+    <!-- Traemos la acción de ajax-->
+    <script src="../js/index.js"></script>
+    
+   
+      
+</body>
+</html>

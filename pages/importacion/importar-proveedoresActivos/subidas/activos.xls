@@ -1,0 +1,27 @@
+
+<table border="1">
+    <tr>
+       <th>Nit</th>
+       <th>Contacto</th>
+       <th>Razón social</th>
+       <th>Correo</th>
+       <th>Móvil</th>
+       <th>Actividad económica</th>
+       <th>Criticidad</th>
+       <th>Grupo</th>
+       <th>Método de pago</th>
+       <th>Ciudad</th>
+       <th>Dirección</th>
+       <th>Fecuencia de actualización de documentos</th>
+       <th>Télefono</th>
+       <th>Tiempo de evaluación</th>
+       <th>Tipo de persona</th>
+       <th>Tipo de proveedor</th>
+        
+    </tr>
+   
+       
+      
+      
+
+</table>

@@ -1,0 +1,38 @@
+
+                                    .invoiceBox > input {
+                                  display: none;
+                                }
+                                .invoiceBox label {
+                                	display: block;
+                                }
+                                .boxFile {
+                                	display: inline-block;
+                                  /*width: 100%;*/
+                                  border: 1px solid grey;
+                                  background: #fff;
+                                  color: grey;
+                                  padding: 10px;
+                                  text-align: center;
+                                  font-weight: 500;
+                                  font-size: 14px;
+                                  -webkit-transition: all 0.3s;
+                                  transition: all 0.3s;
+                                }
+                                .boxFile:hover {
+                                	cursor: pointer;
+                                	background: grey;
+                                	color: #fff;
+                                }
+                                .boxFile i {
+                                	display: block;
+                                	/*font-size: 26px;*/
+                                	margin-bottom: 5px;
+                                }
+                                .attached,
+                                .attached:hover,
+                                .attached:focus {
+                                	background: green;
+                                  color: #fff;
+                                  border: 1px solid green;
+                                }
+                    

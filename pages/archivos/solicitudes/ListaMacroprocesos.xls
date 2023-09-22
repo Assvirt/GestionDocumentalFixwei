@@ -1,0 +1,29 @@
+
+<table border="1">
+    <tr>
+        <th class="text-center">Nombre</th>
+	    <th class="text-center">Descripción</th>
+	</tr>
+        
+        <tr>
+           <td>Estrategia</td>
+           <td>Estrategico</td>
+        </tr>
+            
+        <tr>
+           <td>Financiero</td>
+           <td>Financiero</td>
+        </tr>
+            
+        <tr>
+           <td>HSEQ</td>
+           <td>HSEQ</td>
+        </tr>
+            
+        <tr>
+           <td>Operación</td>
+           <td>Operacional</td>
+        </tr>
+            
+
+</table>

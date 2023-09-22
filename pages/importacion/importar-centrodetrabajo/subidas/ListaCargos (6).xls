@@ -1,0 +1,354 @@
+
+<table border="1">
+    <tr>
+        
+        <th class="text-center">Nombres</th>
+		<th class="text-center">Descripción</th>
+		<th class="text-center">Jefe inmediato</th>
+		<th class="text-center">Nivel cargo</th>
+        
+        
+    </tr>
+        
+        <tr>
+            <td>ALMACENISTA B3</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>AUXILIAR DE BODEGA</td>
+            <td>LOGÍSTICA</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>AUXILIAR DE PRODUCCION</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>AUXILIAR LOGISTICO OPERATIVO</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>AYUDANTE TECNICO</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>CAPATAZ</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>COORDINADOR O&M</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>DIRECTOR ADMINISTRATIVO</td>
+            <td>Administración general</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>ESPECIALISTA ELECTRICO</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>ESPECIALISTA VARIADORES</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>GERENTE FINANCIERO</td>
+            <td>Finanzas</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>GERENTE GENERAL</td>
+            <td>Direccionamiento Estratégico</td>
+                        <td>N/A</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>GERENTE LOGÍSTICO</td>
+            <td>Logístico</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>GERENTE OPERACIONES</td>
+            <td>Operaciones</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>GERENTE TALENTO HUMANO</td>
+            <td>Gestión humana</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>INGENIERO IMC-CBM</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LÍDER AMBIENTAL</td>
+            <td>Sistema ambiental</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LÍDER CALIDAD</td>
+            <td>Sistema integrado</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LÍDER DE PROYECTOS</td>
+            <td>Proyectos</td>
+                        <td>GERENTE GENERAL</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>LÍDER FINANCIERO</td>
+            <td>Finanzas</td>
+                        <td>GERENTE FINANCIERO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>OBRERO</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>OPERADOR DE PLANTA DE AGUA</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>OPERADOR DE PRODUCCION 2</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>OPERADOR DE PRODUCCION 3</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>OPERADOR DE PRODUCCION SEMISENIOR</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>PROGRAMADOR/PLANEADOR DE MANTENIMEINTO</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>RECORREDOR DE POZOS C5</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>SOPORTE DE CALIDAD</td>
+            <td>Calidad</td>
+                        <td>LÍDER CALIDAD</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>SOPORTE FINANCIERO</td>
+            <td>Finanzas</td>
+                        <td>LÍDER FINANCIERO</td>
+            
+                        <td>Estratégico</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>SUPERVISOR MANTENIMIENTO</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>TECNICO DE ALS</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>TECNICO ELECTRICISTA 1</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>TECNICO ELECTROMECANICO</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+        <tr>
+            <td>TECNICO INSTRUMENTISTA II</td>
+            <td>OPERACIONES</td>
+                        <td>GERENTE OPERACIONES</td>
+            
+                        <td>Operativo</td>
+           
+            
+        </tr>
+            
+
+</table>

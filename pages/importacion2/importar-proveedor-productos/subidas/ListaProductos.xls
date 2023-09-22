@@ -1,0 +1,257 @@
+
+<table border="1">
+    <tr>
+        
+        <th class="text-center">Nombre del bien o servicio:</th>
+        <th class="text-center">Nombre</th>
+        <th class="text-center">Descripción del bien o servicio</th>
+		<th class="text-center">Código</th>
+		<th class="text-center">Identificador</th>
+		<th class="text-center">Impuesto</th>
+		<th class="text-center">Grupo</th>
+	    <th class="text-center">Unidad de empaque</th>
+		<th class="text-center">Unidad de medida</th>
+		<th class="text-center">Proveedor</th>
+		<th class="text-center">Inventario</th>
+		<th class="text-center">Activo</th>
+		<th class="text-center">Tiempo de servicio</th>
+	
+		
+        
+        
+    </tr>
+        
+        <tr>
+            <td>
+                Bienes            </td>
+            <td>BOTAS DE SEGURIDAD MEDIA CAÑA</td>
+            <td>PROTECCION PARA TRABAJO DIELECTRICO </td>
+            <td>124</td>
+            <td>SER 001            </td>
+            <td>
+                N/A            </td>
+            <td>
+                EPP - EPP -     (PROTECCION DE PIES  - PROTECCION VISUAL)            </td>
+            
+             <td>
+                UNIDAD-UNIDADES            </td>
+            <td>
+                UND-UNIDAD            </td>
+           
+            <td>
+                            </td>
+            <td>
+                Si            </td>
+            <td>
+                No            </td>
+            <td>
+                            </td>
+            
+            
+        </tr>
+            
+        <tr>
+            <td>
+                Bienes            </td>
+            <td>cámaras hd</td>
+            <td>información del producto</td>
+            <td>AD-050</td>
+            <td>SER 001            </td>
+            <td>
+                Iva 19 %            </td>
+            <td>
+                EPP - EPP -     (Informativo de EPP y material de trabajo - Informativo de EPP y material de trabajo)            </td>
+            
+             <td>
+                Und-Unidad de empaque            </td>
+            <td>
+                CM-CENTIMETROS ,,,,,,....1122255737            </td>
+           
+            <td>
+                            </td>
+            <td>
+                Si            </td>
+            <td>
+                Si            </td>
+            <td>
+                            </td>
+            
+            
+        </tr>
+            
+        <tr>
+            <td>
+                Servicios            </td>
+            <td>COMPUTADOR</td>
+            <td>PARA DOTACION DE LOS COLABORADORES </td>
+            <td>123</td>
+            <td>SER 001            </td>
+            <td>
+                Iva 19 %            </td>
+            <td>
+                EPP - EPP - 2    (Informativo de EPP y material de trabajo - Informativo de EPP y material de trabajo)            </td>
+            
+             <td>
+                            </td>
+            <td>
+                            </td>
+           
+            <td>
+                Proveedores de EPP            </td>
+            <td>
+                            </td>
+            <td>
+                            </td>
+            <td>
+                6 ALTO            </td>
+            
+            
+        </tr>
+            
+        <tr>
+            <td>
+                Bienes            </td>
+            <td>epp</td>
+            <td>para proteccion de manos </td>
+            <td>1245</td>
+            <td>SER 004            </td>
+            <td>
+                N/A            </td>
+            <td>
+                EPP - EPP - 3    (Informativo de EPP y material de trabajo - Informativo de EPP y material de trabajo)            </td>
+            
+             <td>
+                Und-Unidad de empaque            </td>
+            <td>
+                CM-CENTIMETROS ,,,,,,....1122255737            </td>
+           
+            <td>
+                            </td>
+            <td>
+                Si            </td>
+            <td>
+                No            </td>
+            <td>
+                            </td>
+            
+            
+        </tr>
+            
+        <tr>
+            <td>
+                Bienes            </td>
+            <td>GAFAS DE SEGURIDAD OSCURAS</td>
+            <td>GAFAS PARA PROTECCIÓN VISUAL, PELICULA NEGRA</td>
+            <td>555</td>
+            <td>SER 004            </td>
+            <td>
+                Iva 19 %            </td>
+            <td>
+                EPP - Servicios -     (PROTECCION VISUAL - Asesores)            </td>
+            
+             <td>
+                UNIDAD-UNIDADES            </td>
+            <td>
+                UND-UNIDAD            </td>
+           
+            <td>
+                            </td>
+            <td>
+                No            </td>
+            <td>
+                No            </td>
+            <td>
+                            </td>
+            
+            
+        </tr>
+            
+        <tr>
+            <td>
+                Bienes            </td>
+            <td>Guantes de nitrilo</td>
+            <td>Guantes de proyección para uso de herramientas manuales</td>
+            <td>887</td>
+            <td>SER 003            </td>
+            <td>
+                Iva 19 %            </td>
+            <td>
+                EPP - EPP - 1    (PROTECCION DE LAS MANOS - PROTECCION DE PIES )            </td>
+            
+             <td>
+                Und-Unidad de empaque            </td>
+            <td>
+                UND-UNIDAD            </td>
+           
+            <td>
+                            </td>
+            <td>
+                Si            </td>
+            <td>
+                No            </td>
+            <td>
+                            </td>
+            
+            
+        </tr>
+            
+        <tr>
+            <td>
+                Servicios            </td>
+            <td>Plan 10 gb</td>
+            <td>PLan de minutos e internet 10 gb</td>
+            <td>0009898</td>
+            <td>SER 003            </td>
+            <td>
+                Iva 19 %            </td>
+            <td>
+                Servicios -  - 1    (Banda ancha - )            </td>
+            
+             <td>
+                            </td>
+            <td>
+                            </td>
+           
+            <td>
+                Papelería Fontibón            </td>
+            <td>
+                            </td>
+            <td>
+                            </td>
+            <td>
+                4 MES            </td>
+            
+            
+        </tr>
+            
+        <tr>
+            <td>
+                Bienes            </td>
+            <td>proteccion de oidos</td>
+            <td>para el cuidado auditivo</td>
+            <td>1530</td>
+            <td>SER 004            </td>
+            <td>
+                N/A            </td>
+            <td>
+                EPP - EPP - 4    (Informativo de EPP y material de trabajo - Informativo de EPP y material de trabajo)            </td>
+            
+             <td>
+                Und-Unidad de empaque            </td>
+            <td>
+                PAR-DOS MEDIDAS            </td>
+           
+            <td>
+                            </td>
+            <td>
+                            </td>
+            <td>
+                No            </td>
+            <td>
+                            </td>
+            
+            
+        </tr>
+            
+
+</table>

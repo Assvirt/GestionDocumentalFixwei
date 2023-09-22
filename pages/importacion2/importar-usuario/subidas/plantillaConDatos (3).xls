@@ -1,0 +1,27 @@
+
+<table border="1">
+    <tr>
+        
+        <th class="text-center">Nombre</th>
+		<th class="text-center">Email</th>
+        <th class="text-center">Celular</th>
+        
+        
+    </tr>
+    
+
+        <tr>
+            <td>Lucas</td>
+            <td>juanrinconaxl9296@gmail.com</td>
+            <td>13215464</td>
+        </tr>
+        <tr>    
+            <td>Pedro</td>
+            <td>juanrinconaxl9296@gmail.com</td>
+            <td>8411651</td>
+            
+        </tr>
+        
+    
+
+</table>

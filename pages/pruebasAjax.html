@@ -1,0 +1,55 @@
+<html>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <h1>Prueba de envios AJAX</h1><br>
+    
+    
+    
+            <form method="post" onsubmit="return false">
+                <input id="nombre"  type="text" placeholder="Escriba su nombre">
+                <input id="edad" type="number" min="1" placeholder="Escriba su edad">
+                <input id="fecha" type="date">
+                <!--<input id="foto" type="file">-->
+                <button id="js-consulta" >Enviar</button>
+            </form>
+            
+            <br><br>        
+            <label>RESULTADOS</label><br>
+            <div id="mostrarDatos"></div>    
+                    
+                    
+                    <script>
+                     
+                    
+                       
+                            $(document).on('click', '#js-consulta', function(e){  /// atrapamos la acción del botón enviar id=js-consulta
+                            	e.preventDefault();
+                            	
+                            	// capturamos los id de los input
+                            	var nombre = $('#nombre').val(),
+                            	    edad = $('#edad').val(),
+                            	    fecha = $('#fecha').val();
+                            	    //foto = $('#foto').val();
+                            	// end
+                            	
+                            	/// imprimir captura de datos
+                            	    /*alert(nombre);
+                            	    alert(edad);
+                            	    alert(fecha);*/
+                            	    //alert(foto);
+                            	/// end
+                            	
+                                $.ajax({
+                            		url: 'https://fixwei.com/plataforma/pages/pruebasAjaxJS.php', //ruta para enviar los datos
+                            		method: 'POST',
+                            		data: { nombre:nombre, edad:edad, fecha:fecha },  /// enviamos los datos capturamos al otro archivo
+                            		beforeSend: function(){
+                            			$('#mostrarDatos').css('display','block');
+                            		},
+                            		success: function(lista){
+                            				$('#mostrarDatos').html(lista);
+                            		}
+                            	}); 
+                            });
+                        
+                    </script>  
+</html>

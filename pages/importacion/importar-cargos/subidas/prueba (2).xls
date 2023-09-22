@@ -1,0 +1,23 @@
+<table border="1">
+    <tr>
+        
+        <th class="text-center">Nombres</th>
+		<th class="text-center">Cargo</th>
+		<th class="text-center">Celular</th>
+		<th class="text-center">Descripcion</th>
+        <th class="text-center">Fecha</th>
+        
+        
+    </tr>
+        
+        <tr>
+            <td>Juan</td>
+            <td>Desarrollador</td>
+            <td>312156</td>
+            <td>Desc</td>
+            <td>2022-02-02 10:29:13</td>         
+            
+        </tr>
+            
+
+</table>

@@ -1,0 +1,134 @@
+
+<table border="1">
+    <tr>
+        <th class="text-center">Nombre</th>
+	    <th class="text-center">Descripción</th>
+	</tr>
+        
+        <tr>
+           <td>ALMACENISTA B3</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>Apoyo</td>
+           <td>Soportar la operación</td>
+        </tr>
+            
+        <tr>
+           <td>AUXILIAR DE BODEGA</td>
+           <td>LOGÍSTICA</td>
+        </tr>
+            
+        <tr>
+           <td>AUXILIAR DE PRODUCCION</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>AUXILIAR LOGISTICO OPERATIVO</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>AYUDANTE TECNICO</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>CAPATAZ</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>COORDINADOR O&M</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>ESPECIALISTA ELECTRICO</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>ESPECIALISTA VARIADORES</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>Estratégico</td>
+           <td>Estrategia</td>
+        </tr>
+            
+        <tr>
+           <td>INGENIERO IMC-CBM</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>Negocio</td>
+           <td>Negocio</td>
+        </tr>
+            
+        <tr>
+           <td>OBRERO</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>OPERADOR DE PLANTA DE AGUA</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>OPERADOR DE PRODUCCION 2</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>OPERADOR DE PRODUCCION 3</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>OPERADOR DE PRODUCCION SEMISENIOR</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>PROGRAMADOR/PLANEADOR DE MANTENIMEINTO</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>RECORREDOR DE POZOS C5</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>SUPERVISOR MANTENIMIENTO</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>TECNICO DE ALS</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>TECNICO ELECTRICISTA 1</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>TECNICO ELECTROMECANICO</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+        <tr>
+           <td>TECNICO INSTRUMENTISTA II</td>
+           <td>OPERACIONES</td>
+        </tr>
+            
+
+</table>

@@ -1,0 +1,73 @@
+
+<table border="1">
+    <tr>
+        <th class="text-center">Nombre</th>
+        <th class="text-center">Prefijo</th>
+		<th class="text-center">Cargos asociado</th>
+		
+        
+        
+    </tr>
+        
+        <tr>
+            <td>ACACIAS</td>
+            <td>ACA</td>
+            <td style='text-align:justify;' class='text-center'>*SUPERVISOR HSEQ<br>*TECNOLOGO HSEQ<br>*SOPORTE RESPONSABILIDAD SOCIAL<br>*SOPORTE HSEQ<br></td>            
+        </tr>
+            
+        <tr>
+            <td>APARTADÓ</td>
+            <td>1</td>
+            <td style='text-align:justify;' class='text-center'>*GERENTE GENERAL<br></td>            
+        </tr>
+            
+        <tr>
+            <td>ARMENIA</td>
+            <td>2</td>
+            <td style='text-align:justify;' class='text-center'>*GERENTE GENERAL<br>*LIDER DE PROYECTO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>BARRANCABERMEJA</td>
+            <td>3</td>
+            <td style='text-align:justify;' class='text-center'>*GERENTE GENERAL<br>*LIDER DE PROYECTO<br>*<br></td>            
+        </tr>
+            
+        <tr>
+            <td>BARRANQUILLA</td>
+            <td>BARR</td>
+            <td style='text-align:justify;' class='text-center'>*<br>*ANALISTA DE COMPRAS<br>*ANALISTA DE DERECHOS HUMANOS<br>*AUXILIAR MIT<br></td>            
+        </tr>
+            
+        <tr>
+            <td>BUCARAMANGA</td>
+            <td>7</td>
+            <td style='text-align:justify;' class='text-center'>*GERENTE GENERAL<br></td>            
+        </tr>
+            
+        <tr>
+            <td>CARTAGO</td>
+            <td>CARTG</td>
+            <td style='text-align:justify;' class='text-center'>*<br>*AUXILIAR MIT<br>*LIDER DE PROYECTO<br>*ANALISTA DE COMPRAS<br>*GERENTE GENERAL<br>*GERENTE GENERAL<br></td>            
+        </tr>
+            
+        <tr>
+            <td>FACATATIVÁ</td>
+            <td>19</td>
+            <td style='text-align:justify;' class='text-center'>*GERENTE GENERAL<br></td>            
+        </tr>
+            
+        <tr>
+            <td>FUENTE DE ORO</td>
+            <td>FTE ORO</td>
+            <td style='text-align:justify;' class='text-center'>*INGENIERO DE CONFIABILIDAD<br>*INGENIERO DE PROYECTOS<br>*INGENIERO SOPORTE CBM<br>*LIDER HSEQ<br></td>            
+        </tr>
+            
+        <tr>
+            <td>MEDELLÍN</td>
+            <td>MEDALLO</td>
+            <td style='text-align:justify;' class='text-center'>*SUPERVISOR HSEQ<br>*GERENTE GENERAL<br>*LIDER DE PROYECTO<br>*AUXILIAR MIT<br></td>            
+        </tr>
+            
+
+</table>

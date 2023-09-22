@@ -1,0 +1,127 @@
+
+<table border="1">
+    <tr>
+        <th class="text-center">Nombre</th>
+        <th class="text-center">Prefijo</th>
+		<th class="text-center">Cargos asociado</th>
+		
+        
+        
+    </tr>
+        
+        <tr>
+            <td>ACACIAS</td>
+            <td>ACAC</td>
+            <td style='text-align:justify;' class='text-center'>*OBRERO<br>*OPERADOR DE PLANTA DE AGUA<br>*OPERADOR DE PRODUCCION SEMISENIOR<br>*SOPORTE FINANCIERO<br>*SUPERVISOR MANTENIMIENTO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>ARAUCA</td>
+            <td>ARAU</td>
+            <td style='text-align:justify;' class='text-center'>*OPERADOR DE PRODUCCION SEMISENIOR<br>*PROGRAMADOR/PLANEADOR DE MANTENIMEINTO<br>*SUPERVISOR MANTENIMIENTO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>ARMENIA</td>
+            <td>ARME</td>
+            <td style='text-align:justify;' class='text-center'>*LÍDER FINANCIERO<br>*OPERADOR DE PRODUCCION SEMISENIOR<br>*CAPATAZ<br>*ESPECIALISTA VARIADORES<br>*SUPERVISOR MANTENIMIENTO<br>*PROGRAMADOR/PLANEADOR DE MANTENIMEINTO<br>*OPERADOR DE PRODUCCION 2<br>*OBRERO<br>*SUPERVISOR MANTENIMIENTO<br>*RECORREDOR DE POZOS C5<br>*RECORREDOR DE POZOS C5<br>*OPERADOR DE PRODUCCION SEMISENIOR<br></td>            
+        </tr>
+            
+        <tr>
+            <td>BARRANQUILLA</td>
+            <td>BARRA</td>
+            <td style='text-align:justify;' class='text-center'>*ALMACENISTA B3<br>*AUXILIAR LOGISTICO OPERATIVO<br>*CAPATAZ<br></td>            
+        </tr>
+            
+        <tr>
+            <td>BOGOTÁ</td>
+            <td>BOGO</td>
+            <td style='text-align:justify;' class='text-center'>*AUXILIAR DE PRODUCCION<br>*CAPATAZ<br>*DIRECTOR ADMINISTRATIVO<br>*ESPECIALISTA VARIADORES<br>*COORDINADOR O&M<br></td>            
+        </tr>
+            
+        <tr>
+            <td>CALI</td>
+            <td>CALI</td>
+            <td style='text-align:justify;' class='text-center'>*AYUDANTE TECNICO<br>*COORDINADOR O&M<br>*INGENIERO IMC-CBM<br>*LÍDER AMBIENTAL<br>*LÍDER FINANCIERO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>CARTAGENA</td>
+            <td>CART</td>
+            <td style='text-align:justify;' class='text-center'>*AUXILIAR DE BODEGA<br>*AUXILIAR LOGISTICO OPERATIVO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>CUCUTA</td>
+            <td>CUCU</td>
+            <td style='text-align:justify;' class='text-center'>*SOPORTE DE CALIDAD<br>*SUPERVISOR MANTENIMIENTO<br>*TECNICO INSTRUMENTISTA II<br>*TECNICO ELECTROMECANICO<br>*TECNICO ELECTRICISTA 1<br>*TECNICO DE ALS<br>*AYUDANTE TECNICO<br>*AUXILIAR LOGISTICO OPERATIVO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>GRANADA</td>
+            <td>GRA</td>
+            <td style='text-align:justify;' class='text-center'>*GERENTE TALENTO HUMANO<br>*GERENTE OPERACIONES<br>*GERENTE LOGÍSTICO<br>*GERENTE GENERAL<br>*LÍDER DE PROYECTOS<br>*LÍDER FINANCIERO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>LETICIA</td>
+            <td>LETI</td>
+            <td style='text-align:justify;' class='text-center'>*ALMACENISTA B3<br>*AUXILIAR DE BODEGA<br>*AUXILIAR DE PRODUCCION<br>*AUXILIAR LOGISTICO OPERATIVO<br>*AYUDANTE TECNICO<br>*CAPATAZ<br>*COORDINADOR O&M<br>*DIRECTOR ADMINISTRATIVO<br>*ESPECIALISTA VARIADORES<br></td>            
+        </tr>
+            
+        <tr>
+            <td>MALAMBO</td>
+            <td>MALA</td>
+            <td style='text-align:justify;' class='text-center'>*OPERADOR DE PRODUCCION 3<br>*PROGRAMADOR/PLANEADOR DE MANTENIMEINTO<br>*SOPORTE FINANCIERO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>MITU</td>
+            <td>MITU</td>
+            <td style='text-align:justify;' class='text-center'>*SOPORTE FINANCIERO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>NEIVA</td>
+            <td>NEIV</td>
+            <td style='text-align:justify;' class='text-center'>*COORDINADOR O&M<br>*AYUDANTE TECNICO<br>*LÍDER AMBIENTAL<br>*LÍDER FINANCIERO<br>*INGENIERO IMC-CBM<br></td>            
+        </tr>
+            
+        <tr>
+            <td>PASTO</td>
+            <td>PAST</td>
+            <td style='text-align:justify;' class='text-center'>*OPERADOR DE PLANTA DE AGUA<br>*OPERADOR DE PRODUCCION SEMISENIOR<br>*SOPORTE DE CALIDAD<br>*SUPERVISOR MANTENIMIENTO<br>*TECNICO INSTRUMENTISTA II<br>*TECNICO ELECTROMECANICO<br>*TECNICO ELECTRICISTA 1<br>*TECNICO DE ALS<br>*AYUDANTE TECNICO<br>*AUXILIAR LOGISTICO OPERATIVO<br>*ESPECIALISTA VARIADORES<br></td>            
+        </tr>
+            
+        <tr>
+            <td>POPAYAN</td>
+            <td>POPA</td>
+            <td style='text-align:justify;' class='text-center'>*OPERADOR DE PLANTA DE AGUA<br>*OPERADOR DE PRODUCCION 3<br>*RECORREDOR DE POZOS C5<br>*SOPORTE FINANCIERO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>SAN ANDRES</td>
+            <td>SANA</td>
+            <td style='text-align:justify;' class='text-center'>*AYUDANTE TECNICO<br>*LÍDER FINANCIERO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>SOGAMOSO</td>
+            <td>SOGA</td>
+            <td style='text-align:justify;' class='text-center'>*COORDINADOR O&M<br>*COORDINADOR O&M<br></td>            
+        </tr>
+            
+        <tr>
+            <td>VALLEDUPAR</td>
+            <td>VALLE</td>
+            <td style='text-align:justify;' class='text-center'>*OPERADOR DE PLANTA DE AGUA<br>*OPERADOR DE PRODUCCION 3<br>*RECORREDOR DE POZOS C5<br>*SOPORTE FINANCIERO<br>*OPERADOR DE PLANTA DE AGUA<br>*OPERADOR DE PRODUCCION SEMISENIOR<br>*SOPORTE DE CALIDAD<br>*SUPERVISOR MANTENIMIENTO<br>*TECNICO INSTRUMENTISTA II<br>*TECNICO ELECTROMECANICO<br>*TECNICO ELECTRICISTA 1<br>*TECNICO DE ALS<br>*AYUDANTE TECNICO<br>*AUXILIAR LOGISTICO OPERATIVO<br></td>            
+        </tr>
+            
+        <tr>
+            <td>VILLETA</td>
+            <td>VILLE</td>
+            <td style='text-align:justify;' class='text-center'>*TECNICO INSTRUMENTISTA II<br>*TECNICO ELECTROMECANICO<br>*TECNICO ELECTRICISTA 1<br>*TECNICO DE ALS<br></td>            
+        </tr>
+            
+
+</table>

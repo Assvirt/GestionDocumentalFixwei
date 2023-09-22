@@ -1,0 +1,51 @@
+
+<table border="1">
+    <tr>
+       <th>Nit</th>
+       <th>Contacto</th>
+       <th>Razón social</th>
+       <th>Correo</th>
+       <th>Móvil</th>
+       <th>Actividad económica</th>
+       <th>Criticidad</th>
+       <th>Grupo</th>
+       <th>Método de pago</th>
+       <th>Ciudad</th>
+       <th>Dirección</th>
+       <th>Fecuencia de actualización de documentos</th>
+       <th>Télefono</th>
+       <th>Tiempo de evaluación</th>
+       <th>Tipo de persona</th>
+       <th>Tipo de proveedor</th>
+        
+    </tr>
+   
+       
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="color:gray;">
+                Bajo<br>Critico<br>Medio<br>Significativo<br>            </td>
+            <td></td>
+            <td>
+                Crédito<br>Contado<br>Contraentrega<br>Otro
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td style="color:gray;">
+                jurídico<br>natural               
+            </td>
+            <td style="color:gray;">
+            Tipo A<br>Tipo B<br>Tipo C<br>Tipo D<br>            </td>
+           
+        </tr>
+      
+
+</table>

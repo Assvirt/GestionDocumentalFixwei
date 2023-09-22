@@ -1,0 +1,30 @@
+{
+  "name": "Fixwei",
+  "short_name": "Fixwei",
+  "description": "Bienvenid@s a Fixwei",
+  "background_color": "#35214a",
+  "theme_color": "#35214a",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": "./login.php?utm_source=web_app_manifest",
+  "scope": "./",
+  "lang": "es-MX",
+  "icons": [
+    
+    {
+      "src": "../iconos/IconoF.png",
+      "sizes": "305x302",
+      "type": "image/png"
+    },
+    {
+      "src": "../iconos/IconoF1.png",
+      "sizes": "305x302",
+      "type": "image/png"
+    },
+    {
+      "src": "../iconos/IconoC.png",
+      "sizes": "305x305",
+      "type": "image/png"
+    }
+  ]
+}

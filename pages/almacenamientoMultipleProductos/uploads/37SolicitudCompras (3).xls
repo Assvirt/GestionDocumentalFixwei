@@ -1,0 +1,129 @@
+
+<table border="1">
+    <tr>
+        
+        <th>Solicitud</th>
+        <th>Fecha de solicitud</th>
+        <th>Dirección o contacto de entrega</th>
+        <th>Tipo de compra</th>
+        <th>Centro de trabajo para entrega</th>
+        <th>Centro de costos</th>
+        
+        <th>Área o proceso</th>
+        <th>Necesidad</th>
+        <th>Contrato</th>
+        <th>Observaciones</th>
+        
+        <th>Solicitante</th>
+        <th>Aprobador</th>
+        <th>Estado </th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Usuario</th>
+        <th>Comentario</th>
+        <!--<th>Alistamiento</th>
+        <th>Correo con copia a</th>-->
+        
+    </tr>
+    <tr><td>1</td><td>2022-09-01</td><td>Sandra María Perdomo</td><td>Gasto Reembolsable</td><td>Bogotá</td><td>*Ambiental (Tatiana García)<br></td><td>Primer proceso</td><td>Bien</td><td>MA00658</td><td>El repuesto se requiere urgente. maquina parada</td><td>Mayra Rodriguez</td><td>N/A</td><td>Pendiente</td><td></td><td></td><td></td><td></td></tr><tr><td>2</td><td>2022-09-01</td><td>Juan Pablo Mendez</td><td>GASTO DIRECTO</td><td>Cali</td><td>*Ambiental (Tatiana García)<br></td><td>Primer proceso</td><td>Bien</td><td>Corporativo</td><td>Las semillas se requieren a mas tardar para el 16 de septiembre</td><td>Mayra Rodriguez</td><td>Nicolas Rodríguez</td><td>Pendiente</td><td></td><td></td><td></td><td></td></tr><tr><td>4</td><td>2022-09-05</td><td>dirección de entrega</td><td>GASTO DIRECTO</td><td>Bogotá</td><td>*Ambiental (Tatiana García)<br></td><td>Primer proceso</td><td>Bien</td><td>Contrato</td><td>Observaciones</td><td>Miguel  Angarita</td><td>Miguel  Angarita</td><td>Revisado</td><td>                                <table border="1">
+                                   
+                                    <tr>
+                                        <td>
+                                        2022-09-05</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                   
+                                    <tr>
+                                        <td>
+                                        Aprobado</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                    
+                                    <tr>
+                                        <td>
+                                        Miguel  Angarita</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                    <!-- <thead>
+                                       <th>Fecha</th>
+                                        <th>Estado</th>
+                                        <th>Usuario</th
+                                        <th>Comentario</th>
+                                    </thead>>-->
+                                    <tr>
+                                        <td>
+                                        Comentario desde la primera revisión</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td></tr><tr><td>5</td><td>2022-09-05</td><td>dirección de entrega</td><td>GASTO DIRECTO</td><td>Bogotá</td><td>*Talento Humano (Miguel  Angarita)<br></td><td>Primer proceso</td><td>Bien</td><td>Contraro</td><td>Observaciones</td><td>Miguel  Angarita</td><td>Miguel  Angarita</td><td>Rechazado</td><td>                                <table border="1">
+                                   
+                                    <tr>
+                                        <td>
+                                        2022-09-28</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                   
+                                    <tr>
+                                        <td>
+                                        Rechazado</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                    
+                                    <tr>
+                                        <td>
+                                        Miguel  Angarita</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                    <!-- <thead>
+                                       <th>Fecha</th>
+                                        <th>Estado</th>
+                                        <th>Usuario</th
+                                        <th>Comentario</th>
+                                    </thead>>-->
+                                    <tr>
+                                        <td>
+                                        Rechazo solicitud por falta de documentos</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td></tr><tr><td>6</td><td>2022-09-28</td><td>dirección de entrega</td><td>GASTO DIRECTO</td><td>Bogotá</td><td>*Contabilidad (Mayra Rodriguez)<br></td><td>Primer proceso</td><td>Bien</td><td>Contrato</td><td>observaciones</td><td>Miguel  Angarita</td><td>Tatiana García</td><td>Revisado</td><td>                                <table border="1">
+                                   
+                                    <tr>
+                                        <td>
+                                        2022-09-28</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                   
+                                    <tr>
+                                        <td>
+                                        Aprobado</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                    
+                                    <tr>
+                                        <td>
+                                        Mayra Rodriguez</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td><td>                                <table border="1">
+                                    <!-- <thead>
+                                       <th>Fecha</th>
+                                        <th>Estado</th>
+                                        <th>Usuario</th
+                                        <th>Comentario</th>
+                                    </thead>>-->
+                                    <tr>
+                                        <td>
+                                        ok</td><br>                                        </td>
+                                    </tr>
+                                </table>
+                                </td></tr>    
+
+</table>
