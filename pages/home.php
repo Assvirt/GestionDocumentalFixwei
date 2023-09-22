@@ -55,7 +55,22 @@ if(!isset($_SESSION["session_username"])){
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="home">Inicio</a></li>
-              <li class="breadcrumb-item active">Dashboard v3</li>
+              <?php // traemos le nombre del usuario o caso contrario el del administrador
+              	$acentos = $mysqli->query("SET NAMES 'utf8'");
+        		$sqlPerfil= $mysqli->query("SELECT nombres,apellidos,cedula FROM usuario WHERE cedula = '".$_SESSION["session_username"]."'");
+        		$rowPerfil = $sqlPerfil->fetch_array(MYSQLI_ASSOC);
+        		$nombres = $rowPerfil['nombres'];
+        		$apellidos = $rowPerfil['apellidos'];
+        	  ?>
+              <li class="breadcrumb-item active">
+                  <?php
+                  if($root == 1){ 
+                    echo 'Administrador del sistema';
+                  }else{
+                    echo $nombres." ".$apellidos;   
+                  }
+                  ?>
+              </li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
