@@ -67,7 +67,7 @@ session_start();
 
 
 
-
+    //// generador de copia de seguridad
         function exportarTablas($host, $usuario, $pasword, $nombreDeBaseDeDatos)
         {
             set_time_limit(3000);
@@ -144,4 +144,97 @@ session_start();
         //// función para conectar la base de datos para el respaldo de información
         exportarTablas("localhost", "fixwei_pageroot", "l_9&e~Lu+SzX", "fixwei_c9rp5r4t2v8");
 
+
+    ///traemos el formato de fecha
+    date_default_timezone_set("America/Bogota");
+    
+    //construimos el nombre del archivo con la fecha del día presente
+    $guardar_respaldo_fecha='respaldo_'.$fecha=date("Y-m-j").'.sql';
+    
+    
+    /// listamos los archivos existentes de la carpeta respaldo
+    $thefolder = "respaldos/";
+    if ($handler = opendir($thefolder)) {
+     while (false !== ($file = readdir($handler))) {
+            // filtramos para no traer extension de libreria . y ..
+            
+            if($file == '.' || $file == '..'){
+                
+            }else{
+                if($guardar_respaldo_fecha == $file){
+                    $enviarArchivo.=$file;
+                }
+            }
+        }
+       
+        closedir($handler);
+    }
+
+    /// consultamos si ya existe una copia de seguridad generada el día presente
+    if($enviarArchivo == $guardar_respaldo_fecha){
+        /// se consulta la fecha de la copia guardada
+        $consulta_copia_seguridad=$mysqli->query("SELECT * FROM seguridadCopia ");
+        $extraer_consulta_copia_seguridad=$consulta_copia_seguridad->fetch_array(MYSQLI_ASSOC);
+        $extraer_consulta_copia_seguridad['copia'];
+        
+        if($extraer_consulta_copia_seguridad['copia'] == $guardar_respaldo_fecha) { // verificamos que la ultima copia guardada coincida con la copia generada en el servidor
+            
+        }else{
+            $mysqli->query("UPDATE seguridadCopia SET copia='$guardar_respaldo_fecha' ");
+            require 'correoEnviar/libreria/PHPMailerAutoload.php';
+             
+             /// enviamos la ruta para visualizar el script de la BD
+             $divulgarDocumento='<br><a href="https://fixwei.com/plataforma/pages/respaldos/'.$enviarArchivo.'" target="_blank">Copia de seguridad '.$guardar_respaldo_fecha.'</a>';
+             
+             /// enviamos la ruta para descargar el archivo en un formato txt
+             $divulgarDocumentoB='https://fixwei.com/plataforma/pages/respaldos/'.$enviarArchivo;
+             
+             //Instanciamos $mail para el envio de correos
+                        
+                        $mail = new PHPMailer();
+                        $mail->IsSMTP();
+                 
+                       
+                        require 'correoEnviar/contenido.php';
+                      
+                        $mail->isHTML(true);
+                        $mail->AddAddress('miguelangarita9208@gmail.com'); //$correos
+                        $mail->Subject = utf8_decode('Copia de seguridad '.$guardar_respaldo_fecha.' Fixwei');
+                        
+                        //// usamos esta línea de código para enviar un documento
+                        $fichero = file_get_contents($divulgarDocumentoB);
+                        $mail->addStringAttachment($fichero, $guardar_respaldo_fecha);
+                        /// end
+                        
+                        $mail->Body =utf8_decode(('
+                        <html>
+                        <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                        <title>HTML</title>
+                        </head>
+                        <body>
+                        <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
+                        
+                        <p>Descargar y visualiza el script de la copia de seguridad de la base de datos de la empresa Fixwei<b><em></em></b>.
+                        <br><br>
+                         Visualizar script base de datos: '.$divulgarDocumento.'
+                        <br><br>
+                        Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                        </p>
+                        </body>
+                        </html>
+                        '));
+                        
+                        //Avisar si fue enviado o no y dirigir al index
+                        
+                        if ($mail->Send()) {
+                            
+                        } else {
+                            
+                        }
+                        $mail->ClearAddresses(); 
+        }
+    }
+    
+    
+    
 ?>

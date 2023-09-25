@@ -260,6 +260,11 @@ require_once 'permisosPlataforma.php';
                   </thead>
                   <tbody>
                    <?php
+                    
+                    /// validamos la existencia de documentos creados, si existen, no debe permitir eliminar nada de la codificación
+                    $validandoCodificacion=$mysqli->query("SELECT count(*) FROM `documento` ");
+                    $extraerValidandoCodificacion=$validandoCodificacion->fetch_array(MYSQLI_ASSOC);
+                    $enviarValidacionCodificacion=$extraerValidandoCodificacion['count(*)'];
                      
                      $data = $mysqli->query("SELECT * FROM codificacion ORDER BY id")or die(mysqli_error());
                      $n = 1;
@@ -268,18 +273,25 @@ require_once 'permisosPlataforma.php';
                     echo"<tr>";
                     echo" <td>".$n."</td>";
                     echo" <td>".$row['codificacion']."</td>";
-                    /*
-                    echo"<td>
-                        <form action='controlador/codificacion' method='POST'>
-                            <input type='hidden' value='$idDel' name='idDel'>
-                            <button style='display:$visibleD;' type='submit' name='eliminaCod' class='btn btn-block btn-danger btn-sm'><i class='fas fa-trash-alt'></i> Eliminar</button>
-                        </form>
-                    </td>";
-                    */
-                        /// validación de script y funcion de eliminacion
-                        ?>
+                    
+                    /// validación de script y funcion de eliminacion
+                    ?>
                         <input type='hidden' id='capturaVariable<?php echo $contador++;?>'  value= '<?php echo $idDel;?>' >
-                        <td style='display:<?php echo $visibleD;?>'><a onclick='funcionFormula<?php echo $contador1++;?>()' style='color:white;' data-toggle='modal' data-target='#modal-danger' class='btn btn-block btn-danger btn-sm'><i class='fas fa-trash-alt'></i> Eliminar</a></td>
+                        
+                        <td style='display:<?php echo $visibleD;?>'>
+                            <?php
+                            if($enviarValidacionCodificacion > 0){
+                            ?>
+                            <button style='color:white;' disabled class='btn btn-block btn-danger btn-sm'><i class='fas fa-trash-alt'></i> Eliminar</button>
+                            <?php
+                            }else{
+                            ?>
+                            <a onclick='funcionFormula<?php echo $contador1++;?>()' style='color:white;' data-toggle='modal' data-target='#modal-danger' class='btn btn-block btn-danger btn-sm'><i class='fas fa-trash-alt'></i> Eliminar</a>
+                            <?php
+                            }
+                            ?>
+                        </td>
+                        
                         <script>
                             function funcionFormula<?php echo $contador2++;?>() {
                                 /*alert("entre");*/
@@ -321,7 +333,17 @@ require_once 'permisosPlataforma.php';
               </div>
               <!-- /.card-body -->
               <div class="card-footer" >
+                <?php //// si existen datos en la codificación, no permite eliminar ningún registro
+                    if($enviarValidacionCodificacion > 0){
+                ?>
+                    <button style='color:white;' disabled class='btn btn-danger float-right'><i class='fas fa-trash-alt'></i> Eliminar Todo</button>
+                <?php
+                    }else{
+                ?>
                       <a style='color:white;' data-toggle='modal' data-target='#modal-dangerTodo' class='btn btn-danger float-right'><i class='fas fa-trash-alt'></i> Eliminar Todo</a>
+                <?php
+                    }
+                ?>    
                         <div class="modal fade" id="modal-dangerTodo">
                             <div class="modal-dialog">
                               <div class="modal-content bg-danger">
