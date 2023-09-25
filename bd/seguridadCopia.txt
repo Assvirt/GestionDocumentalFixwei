@@ -1,0 +1,55 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Servidor: localhost:3306
+-- Tiempo de generación: 25-09-2023 a las 11:43:28
+-- Versión del servidor: 10.5.22-MariaDB
+-- Versión de PHP: 8.1.16
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+--
+-- Base de datos: `fixwei_c9rp5r4t2v8`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `seguridadCopia`
+--
+
+CREATE TABLE `seguridadCopia` (
+  `id` int(11) NOT NULL,
+  `copia` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `seguridadCopia`
+--
+
+INSERT INTO `seguridadCopia` (`id`, `copia`) VALUES
+(1, 'respaldo_2023-09-25.sql');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `seguridadCopia`
+--
+ALTER TABLE `seguridadCopia`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `seguridadCopia`
+--
+ALTER TABLE `seguridadCopia`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
