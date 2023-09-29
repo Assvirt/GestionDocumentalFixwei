@@ -57,8 +57,8 @@ if(isset($_POST['agregarSolicitud'])){
     
                     
                     if($activarAlerta == FALSE){
-                    	$mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento,nombreDocumento2, proceso, solicitud,fecha,plataformaH,tpdG,procesoG)
-                        VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$nombre','$nombre','$proceso','$solicitud','$fecha','1','$nombreTipoDOcumentoN','$nombreP')")or die(mysqli_error($mysqli));
+                    	$mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento,nombreDocumento2, proceso, solicitud,fecha,plataformaH,tpdG,procesoG,alerta)
+                        VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$nombre','$nombre','$proceso','$solicitud','$fecha','1','$nombreTipoDOcumentoN','$nombreP','1')")or die(mysqli_error($mysqli));
                     }
         
                     $verificandoDocumento = $mysqli->query("SELECT MAX(id) as documentoSolicitud FROM solicitudDocumentos WHERE quienSolicita = '$usuario'")or die(mysqli_error($mysqli));
@@ -86,8 +86,8 @@ if(isset($_POST['agregarSolicitud'])){
             
             $ruta = 'sin datos';
             
-            $mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento, nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,tpdG,procesoG)
-                    VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$nombre','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreTipoDOcumentoN','$nombreP')")or die(mysqli_error($mysqli));
+            $mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento, nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,tpdG,procesoG,alerta)
+                    VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$nombre','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreTipoDOcumentoN','$nombreP','1')")or die(mysqli_error($mysqli));
     
                                 require '../../correoEnviar/libreria/PHPMailerAutoload.php';
                                 $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cargo ='$encargado' ")or die(mysqli_error());
@@ -243,8 +243,8 @@ if(isset($_POST['agregarSolicitud'])){
                 if(move_uploaded_file($guardado, '../../archivos/solicitudes/'.$archivoNombre)){
                         $ruta = utf8_decode('archivos/solicitudes/'.$archivoNombre);
                         ///////// consultamos la tabla y extraemos el nombre
-                		$mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento,nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,tpdG,procesoG)
-                        VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$nombre','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreTipoDOcumentoN','$nombreP')")or die(mysqli_error($mysqli));
+                		$mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento,nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,tpdG,procesoG,alerta)
+                        VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$nombre','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreTipoDOcumentoN','$nombreP','1')")or die(mysqli_error($mysqli));
                 //echo '2';
         
         
@@ -631,8 +631,8 @@ if(isset($_POST['agregarSolicitud'])){
                 
                 $ruta = 'sin datos';
                 
-               $mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento, nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,nombreSalvar,tpdG,procesoG)
-                        VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$idDocumento','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreEnviarCorreo','$nombreTipoDOcumentoN','$nombreP')")or die(mysqli_error($mysqli));
+               $mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento, nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,nombreSalvar,tpdG,procesoG,alerta)
+                        VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$idDocumento','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreEnviarCorreo','$nombreTipoDOcumentoN','$nombreP','1')")or die(mysqli_error($mysqli));
         
                     require '../../correoEnviar/libreria/PHPMailerAutoload.php';
                     $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cargo ='$encargado' ")or die(mysqli_error());
@@ -739,8 +739,8 @@ if(isset($_POST['agregarSolicitud'])){
                             $ruta = utf8_decode('archivos/solicitudes/'.$archivoNombre);
                             
                             ///////// consultamos la tabla y extraemos el nombre
-            		        $mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento, nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,nombreSalvar,tpdG,procesoG)
-                            VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$idDocumento','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreEnviarCorreo','$nombreTipoDOcumentoN','$nombreP')")or die(mysqli_error($mysqli));
+            		        $mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento, nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,nombreSalvar,tpdG,procesoG,alerta)
+                            VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$idDocumento','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreEnviarCorreo','$nombreTipoDOcumentoN','$nombreP','1')")or die(mysqli_error($mysqli));
             
                            
                             ?>
@@ -798,8 +798,8 @@ if(isset($_POST['agregarSolicitud'])){
             
                             
                             if($activarAlerta == FALSE){
-                            	$mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento,nombreDocumento2, proceso, solicitud,fecha,plataformaH,nombreSalvar,tpdG,procesoG)
-                                VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$idDocumento','$nombre','$proceso','$solicitud','$fecha','1','$nombreEnviarCorreo','$nombreTipoDOcumentoN','$nombreP')")or die(mysqli_error($mysqli));
+                            	$mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento,nombreDocumento2, proceso, solicitud,fecha,plataformaH,nombreSalvar,tpdG,procesoG,alerta)
+                                VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$idDocumento','$nombre','$proceso','$solicitud','$fecha','1','$nombreEnviarCorreo','$nombreTipoDOcumentoN','$nombreP','1')")or die(mysqli_error($mysqli));
                             }
                 
                             $verificandoDocumento = $mysqli->query("SELECT MAX(id) as documentoSolicitud FROM solicitudDocumentos WHERE quienSolicita = '$usuario'")or die(mysqli_error($mysqli));
@@ -828,8 +828,8 @@ if(isset($_POST['agregarSolicitud'])){
                         
                         
                             ///////// consultamos la tabla y extraemos el nombre
-                    	$mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento,nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,nombreSalvar,tpdG,procesoG)
-                        VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$idDocumento','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreEnviarCorreo','$nombreTipoDOcumentoN','$nombreP')")or die(mysqli_error($mysqli));
+                    	$mysqli->query("INSERT INTO solicitudDocumentos ( quienSolicita, tipoSolicitud, tipoDocumento, encargadoAprobar, nombreDocumento,nombreDocumento2, proceso, solicitud,fecha,documento,plataformaH,nombreSalvar,tpdG,procesoG,alerta)
+                        VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$idDocumento','$nombre','$proceso','$solicitud','$fecha','$ruta','1','$nombreEnviarCorreo','$nombreTipoDOcumentoN','$nombreP','1')")or die(mysqli_error($mysqli));
             
                             $verificandoDocumento = $mysqli->query("SELECT MAX(id) as documentoSolicitud FROM solicitudDocumentos WHERE quienSolicita = '$usuario'")or die(mysqli_error($mysqli));
                             $extraerVerificacionDocumento=$verificandoDocumento->fetch_array(MYSQLI_ASSOC);

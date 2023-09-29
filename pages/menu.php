@@ -20,7 +20,58 @@ if(!isset($_SESSION["session_username"])){
         <a href="home.php" class="nav-link">Inicio</a>
       </li>
     </ul>
+    
+    <!--  agregamos validacion de notificacion de mensajes  generales -->
+      
 
+        <link href="style.css" type="text/css" rel="stylesheet" />
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+        <script>
+        setInterval(function(){
+            pushNotify();
+        }, 10000);
+        
+        function pushNotify() {
+            if (!("Notification" in window)) {
+                alert("El navegador web no admite notificaciones de escritorio");
+            }
+            if (Notification.permission !== "granted")
+                Notification.requestPermission();
+            else {
+                $.ajax({
+                url : "respuesta_push.php",
+                type: "POST",
+                success: function(data, textStatus, jqXHR) {
+                if ($.trim(data)){
+                var data = jQuery.parseJSON(data);
+                console.log(data);
+                notification = createNotification( data.title, data.icon, data.body, data.url);
+                
+                setTimeout(function() {
+                notification.close();
+                }, 5000);
+                }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {}
+                });
+            }
+        };
+        
+        function createNotification(title, icon, body, url) {
+            var notification = new Notification(title, {
+                icon: icon,
+                body: body,
+            });
+            notification.onclick = function() {
+                //window.open(url);
+            };
+            return notification;
+        }
+        
+        </script>
+    <!--END-->
+        
+        
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
@@ -71,6 +122,10 @@ if(!isset($_SESSION["session_username"])){
                    
           
         </button>
+        
+       
+        
+        
         <?php
             }
         ?>
