@@ -3306,7 +3306,7 @@ if(isset($_POST['siguiente'])){
                                                 $nombreuser = $mysqli->query("SELECT * FROM usuario WHERE id = '$arrayEncargado[$i]' ");
                                                 while($columna = $nombreuser->fetch_array()){
                                                 $nombreResponsable=utf8_encode($columna['nombres'].' '.$columna['apellidos']); 
-                                                //echo $correoResponsable=$columna['correo']; 
+                                                $correoResponsable=$columna['correo']; 
                                                 //echo '<br>';
                                                 
                                                 
