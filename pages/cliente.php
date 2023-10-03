@@ -711,7 +711,7 @@ if($mensajeIntentos == 3){
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
-      timer: 5000
+      timer: 9000
     });
     
     
