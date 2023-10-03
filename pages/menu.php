@@ -528,26 +528,6 @@ if(!isset($_SESSION["session_username"])){
               </li>
               -->
               <?php
-              if($menuPermisoListarUsuarios == FALSE){}else{
-              ?>
-              <li class="nav-item">
-                <a href="usuarios" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Usuarios</p>
-                </a>
-              </li>
-              <?php
-              }
-              if($menuPermisoListarGruposD == FALSE){}else{
-              ?>
-              <li class="nav-item">
-                <a href="grupos" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Grupos de distribución</p>
-                </a>
-              </li>
-              <?php
-              }
               if($menuPermisoListarCargo == FALSE){}else{
               ?>
               <li class="nav-item">
@@ -558,16 +538,7 @@ if(!isset($_SESSION["session_username"])){
               </li>
               <?php
               }
-              if($menuPermisoListarCentroTrabajo == FALSE){}else{
-              ?>
-              <li class="nav-item">
-                <a href="centrodetrabajo" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Centro de trabajo</p>
-                </a>
-              </li>
-              <?php
-              }
+              
               if($menuPermisoListarProcesos == FALSE){}else{
               ?>
               <li class="nav-item">
@@ -578,55 +549,40 @@ if(!isset($_SESSION["session_username"])){
               </li>
               <?php
               }
-              if($menuPermisoListarMacroprocesos == FALSE){}else{ /*
+              
+              if($menuPermisoListarCentroTrabajo == FALSE){}else{
               ?>
               <li class="nav-item">
-                <a href="macroproceso" class="nav-link">
+                <a href="centrodetrabajo" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Macroprocesos</p>
-                </a>
-              </li>
-              <?php
-              */}
-             if($menuPermisoListarDefiniciones == FALSE){}else{ 
-              ?>
-              <li class="nav-item">
-                <a href="definicion" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Definici&oacute;n</p>
-                </a>
-              </li>
-              <?php
-             }
-              ?>
-              <!--
-              <li class="nav-item">
-                <a href="versionamiento" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Versión y consecutivo</p>
-                </a>
-              </li>-->
-              <?php
-              if($menuPermisoListarCodificacion == FALSE){}else{
-              ?>
-              <li class="nav-item">
-                <a href="agregarCodificacion" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Codificación</p>
+                  <p>Centro de trabajo</p>
                 </a>
               </li>
               <?php
               }
-              if($menuPermisoListarNormativa == FALSE){}else{
+              
+              if($menuPermisoListarGruposD == FALSE){}else{
               ?>
               <li class="nav-item">
-                <a href="normatividad" class="nav-link">
+                <a href="grupos" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Normatividad</p>
+                  <p>Grupos de distribución</p>
                 </a>
               </li>
               <?php
               }
+              
+              if($menuPermisoListarUsuarios == FALSE){}else{
+              ?>
+              <li class="nav-item">
+                <a href="usuarios" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Usuarios</p>
+                </a>
+              </li>
+              <?php
+              }
+              
               if($menuPermisoListarCentroCosto == FALSE){}else{
               ?>
               <li class="nav-item">
@@ -637,6 +593,18 @@ if(!isset($_SESSION["session_username"])){
               </li>
               <?php
               }
+              
+              if($menuPermisoListarMacroprocesos == FALSE){}else{ /*
+              ?>
+              <li class="nav-item">
+                <a href="macroproceso" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Macroprocesos</p>
+                </a>
+              </li>
+              <?php
+              */}
+              
               if($menuPermisoListarTipoDocumento == FALSE){}else{
               ?>
               <li class="nav-item">
@@ -647,44 +615,44 @@ if(!isset($_SESSION["session_username"])){
               </li>
               <?php
               }
+              
+              if($menuPermisoListarCodificacion == FALSE){}else{
               ?>
-              <!--
-              <li class="nav-item has-treeview">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>
-                    Level 2
-                    <i class="right fas fa-angle-left"></i>
-                  </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                </ul>
-              </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="agregarCodificacion" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Level 2</p>
+                  <p>Codificación</p>
                 </a>
               </li>
-              -->
+              <?php
+              }
+              
+             if($menuPermisoListarDefiniciones == FALSE){}else{ 
+              ?>
+              <li class="nav-item">
+                <a href="definicion" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Definici&oacute;n</p>
+                </a>
+              </li>
+              <?php
+              }
+              ?>
+              
+              <?php
+              
+              if($menuPermisoListarNormativa == FALSE){}else{
+              ?>
+              <li class="nav-item">
+                <a href="normatividad" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Normatividad</p>
+                </a>
+              </li>
+              <?php
+              }
+              ?>
+              
             </ul>
           </li>
           <?php
