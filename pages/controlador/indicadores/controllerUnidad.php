@@ -8,7 +8,7 @@ if(isset($_POST['Agregar'])){
     $nombre = utf8_decode($_POST['nombre']);
     $unidad = utf8_decode($_POST['unidad']);
     
-    $consultaValidacion=$mysqli->query("SELECT * FROM indicadoresUnidad WHERE unidad='$unidad' AND nombre='$nombre' ");
+    $consultaValidacion=$mysqli->query("SELECT * FROM indicadoresUnidad WHERE unidad='$unidad'  "); //AND nombre='$nombre'
     $extraerConsultaValidacion=$consultaValidacion->fetch_array(MYSQLI_ASSOC);
     
     if($extraerConsultaValidacion['unidad'] == $unidad){
