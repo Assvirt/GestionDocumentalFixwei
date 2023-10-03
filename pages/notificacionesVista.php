@@ -2956,11 +2956,13 @@
                                         <ul>
                             <?php
                             $sqlActasRepositorios= $mysqli->query("SELECT * FROM repositorioCarpetaSolicitud WHERE estado='Pendiente'  ");
+                            // conteo para carpetas
                             $conteoSolicitud=0;
                             $conteoSolicitudA=0;
                             $conteoSolicitudB=0;
                             $conteoSolicitudC=0;
                             
+                            // envio de ID
                             $conteoSolicitudId=0;
                             $conteoSolicitudIdd=0;
                             $conteoSolicitudIdA=0;
@@ -3001,25 +3003,25 @@
         		            ?>
                                         <li>
                                            
-                                                <input type='hidden' id='capturaVariable<?php echo $conteoSolicitud++;?>'  value= '<?php echo 'El usuario '.mb_strtoupper($nombresSolicitante).' '.mb_strtoupper($apellidowSolcitante).' con el cargo '.mb_strtoupper($nombreCargosSolicitante).' solicita permiso de visualización para la carpeta '.mb_strtoupper(substr($extraeIDArchivoSolicitud['ruta'], 10)).'. Motivo: '.$rowRepositorio['motivo']; ?>' >
-                                                <input type='hidden' id='capturaVariableID<?php echo $conteoSolicitudId++;?>'  value= '<?php echo $extraeIDArchivoSolicitud['id'];?>' >
-                                                <input type='hidden' id='capturaVariableSS<?php echo $conteoSolicitudIdd++;?>'  value= '<?php echo $enviarCargoUsuarioVisualizar;?>' >
-                                                <!-- $rowRepositorio['solicitante']; -->
+                                        <input type='hidden' id='capturaVariable<?php echo $contador++;?>'  value= '<?php echo 'El usuario '.mb_strtoupper($nombresSolicitante).' '.mb_strtoupper($apellidowSolcitante).' con el cargo '.mb_strtoupper($nombreCargosSolicitante).' solicita permiso de visualización para la carpeta '.mb_strtoupper(substr($extraeIDArchivoSolicitud['ruta'], 10)).'. Motivo: '.$rowRepositorio['motivo']; ?>' >
+                                        <input type='hidden' id='capturaVariableID<?php echo $contadorIdVariable++;?>'  value= '<?php echo $extraeIDArchivoSolicitud['id'];?>' >
+                                        <input type='hidden' id='capturaVariableSS<?php echo $contadorVaribleSS++;?>'  value= '<?php echo $enviarCargoUsuarioVisualizar;?>' >
+                                        <input type='hidden' id='capturaVariableSolicitanteUnico<?php echo $contadorVaribleSolicitanteInico++;?>'  value= '<?php echo $consultandodatosSolicitante;?>' >
+                                        
+                                        <a onclick='funcionFormula<?php echo $contador1++;?>()' data-toggle='modal' data-target='#modal-dangerSolicitud' style="width:35px;color:white;text-decoration:none;" class="btn btn-block btn-primary btn-sm float-right"><i class="fas fa-eye"></i></a>
+                                        <script>
+                                            function funcionFormula<?php echo $contador2++;?>() {
+                                              //alert("entra");
+                                              dato1C= document.getElementById("solicitar").value = document.getElementById("capturaVariable<?php echo $contador3Carpeta++;?>").value;
+                                              dato2C= document.getElementById("idSolicitar").value = document.getElementById("capturaVariableID<?php echo $contador4Carpeta++;?>").value;
+                                              dato3C= document.getElementById("idSolicitaSolicitante").value = document.getElementById("capturaVariableSS<?php echo $contador5Carpeta++;?>").value;
+                                              dato4C= document.getElementById("idSolicitaSolicitanteUnico").value = document.getElementById("capturaVariableSolicitanteUnico<?php echo $contador5CarpetaUnico++;?>").value;
+                                              //alert(dato1C + ' <br> ' + dato2C + ' <br>' + dato3C);
+                                            }
+                                        </script>
                                                 
-                                                <a onclick='funcionFormula<?php echo $conteoSolicitudA++;?>()' data-toggle='modal' data-target='#modal-dangerSolicitud' style="width:35px;color:white;text-decoration:none;" class="btn btn-block btn-primary btn-sm float-right"><i class="fas fa-eye"></i></a>
-                                                <script>
-                                                        function funcionFormula<?php echo $conteoSolicitudB++;?>() {
-                                                            //alert("entre");
-                                                          document.getElementById("solicitar").value = document.getElementById("capturaVariable<?php echo $conteoSolicitudC++;?>").value;
-                                                          document.getElementById("idSolicitar").value = document.getElementById("capturaVariableID<?php echo $conteoSolicitudIdA++;?>").value;
-                                                          document.getElementById("idSolicitaSolicitante").value = document.getElementById("capturaVariableSS<?php echo $conteoSolicitudIdB++;?>").value;
-                                                          
-                                                        
-                                                            
-                                                        }
-                                                </script>
-                                                <b>*</b><a style="color:black;text-decoration:none;" ><?php echo $extraeIDArchivoSolicitud['nombre']; ?><a/><br><br>
-                                                <!-- Al dar clic en el botón, envía la pretición al archivo myperfil.php donde se muestra el mensaje enla línea del 81 al 115-->    
+                                            <b>*</b><a style="color:black;text-decoration:none;" ><?php echo $extraeIDArchivoSolicitud['nombre']; ?><a/><br><br>
+                                            <!-- Al dar clic en el botón, envía la pretición al archivo myperfil.php donde se muestra el mensaje enla línea del 81 al 115-->    
                                             
                                         </li>
                                         
@@ -3075,6 +3077,7 @@
                                                 <input type='hidden' id='capturaVariableS<?php echo $conteoSolicitudS++;?>'  value= '<?php echo 'El usuario '.mb_strtoupper($nombresSolicitante).' '.mb_strtoupper($apellidowSolcitante).' con el cargo '.mb_strtoupper($nombreCargosSolicitante).' solicita permiso de visualización para el archivo '.mb_strtoupper($extraeIDArchivoSolicitud['nombre']).'.'.mb_strtoupper($extraeIDArchivoSolicitud['extension']).'. Motivo: '.$rowRepositorio['motivo']; ?>' > <!-- substr($extraerConsultaUsuariSolicitante['nombre']) -->
                                                 <input type='hidden' id='capturaVariableIDS<?php echo $conteoSolicitudIdS++;?>'  value= '<?php echo $extraeIDArchivoSolicitud['id'];?>' >
                                                 <input type='hidden' id='capturaVariableSSS<?php echo $conteoSolicitudIddS++;?>'  value= '<?php echo $enviarCargoUsuarioVisualizar;?>' >
+                                                <input type='hidden' id='capturaVariableSolicitanteUnicoA<?php echo $contadorVaribleSolicitanteInico++;?>'  value= '<?php echo $consultandodatosSolicitante;?>' >
                                                 <!-- $rowRepositorio['solicitante']; -->
                                                 
                                                 <a onclick='funcionFormulaS<?php echo $conteoSolicitudAS++;?>()' data-toggle='modal' data-target='#modal-dangerSolicitudArchivos' style="width:35px;color:white;text-decoration:none;" class="btn btn-block btn-primary btn-sm float-right"><i class="fas fa-eye"></i></a>
@@ -3084,6 +3087,7 @@
                                                           document.getElementById("solicitarS").value = document.getElementById("capturaVariableS<?php echo $conteoSolicitudCS++;?>").value;
                                                           document.getElementById("idSolicitarS").value = document.getElementById("capturaVariableIDS<?php echo $conteoSolicitudIdAS++;?>").value;
                                                           document.getElementById("idSolicitaSolicitanteS").value = document.getElementById("capturaVariableSSS<?php echo $conteoSolicitudIdBS++;?>").value;
+                                                          document.getElementById("idSolicitaSolicitanteUnicoA").value = document.getElementById("capturaVariableSolicitanteUnicoA<?php echo $contador5CarpetaUnico++;?>").value;
                                                           
                                                         
                                                             

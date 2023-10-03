@@ -109,6 +109,7 @@ if(!isset($_SESSION["session_username"])){
                                                <textarea type="" name="nombreSolicitante" id="solicitar" style="background:transparent;color:white;border:0px;width:100%;height:100px;" required></textarea>
                                                <input type="hidden" id="idSolicitar" name="idSolicitar" value="" placeholder="id Solicitar" readonly required>
                                                <input type="hidden" name="idSolicitaSolicitante" id="idSolicitaSolicitante" placeholder="Solicitante" readonly required>
+                                               <input type="hidden" name="idSolicitaSolicitanteUnico" id="idSolicitaSolicitanteUnico" placeholder="Solicitante" readonly required>
                                               
                                                <br><br>
                                                <textarea class="form-control" name="motivo" placeholder="Describa el motivo de su solicitud....." onkeypress="return ( (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 209 || event.charCode == 241 || event.charCode == 32  || event.charCode == 225 || event.charCode == 233 || event.charCode == 237 || event.charCode == 243 || event.charCode == 250 ||  event.charCode == 193 || event.charCode == 201 || event.charCode == 205 || event.charCode == 211 || event.charCode == 218 || event.charCode == 46 || event.charCode == 44)" required></textarea>
@@ -148,7 +149,8 @@ if(!isset($_SESSION["session_username"])){
                                                <textarea type="" name="nombreSolicitante" id="solicitarS" style="background:transparent;color:white;border:0px;width:100%;height:100px;" required></textarea>
                                                <input type="hidden"  name="idSolicitar" id="idSolicitarS" value="" placeholder="id Solicitar" readonly required>
                                                <input type="hidden" name="idSolicitaSolicitante" id="idSolicitaSolicitanteS" placeholder="Solicitante" readonly required>
-                                              
+                                               <input type="hidden" name="idSolicitaSolicitanteUnico" id="idSolicitaSolicitanteUnicoA" placeholder="Solicitante" readonly required>
+                                               
                                                <br><br>
                                                <textarea class="form-control" name="motivo" placeholder="Describa el motivo de su solicitud....." required></textarea>
                                                <input type="radio" name="aprobacionSolicitud" value="Aprobado" required> Aprobado

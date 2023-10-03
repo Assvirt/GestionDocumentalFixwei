@@ -819,7 +819,13 @@ require_once 'permisosPlataforma.php';
                                         <?php    
                                         if(is_dir($rutaVer.$elemento)){
                                         ?>
-                                            <span style=" color:#293B7D;" ><i class="fa fa-folder fa-2x" ></i></span>
+                                            <form action="" method="POST">
+                                                <button <?php echo $habilitarVisualizar; ?> class="btn" type="submit">
+                                                <input type="hidden" name="verCarpeta" value="<?php echo $elemento;?>">
+                                                <input type="hidden" name="nombreCarpeta" value="<?php echo $elemento;?>">
+                                                <span style=" color:#293B7D;" ><i class="fa fa-folder fa-2x" ></i></span>
+                                                </button>
+                                            </form>
                                         <?php
                                         }else{  
                                         ?>
@@ -965,38 +971,64 @@ require_once 'permisosPlataforma.php';
                                                 $consultamosArchivos=$mysqli->query("SELECT * FROM repositorioCarpeta WHERE nombre='$elemento' ");
                                                 $extraeIDArchivo=$consultamosArchivos->fetch_array(MYSQLI_ASSOC);
                                                 $verificandoSolicitud=$extraeIDArchivo['id'];
-                                                $consultamosArchivosSolicitud=$mysqli->query("SELECT * FROM repositorioCarpetaSolicitud WHERE idRepositorio='$verificandoSolicitud'  ");
+                                                $consultamosArchivosSolicitud=$mysqli->query("SELECT * FROM repositorioCarpetaSolicitud WHERE idRepositorio='$verificandoSolicitud' AND solicitante='$idparaChat' ");
                                                 $extraeIDArchivoSolicitud=$consultamosArchivosSolicitud->fetch_array(MYSQLI_ASSOC);
                                                 $extraeIDArchivoSolicitud['idRepositorio'];
                                             /// ENd
+                                            
+                                            
                                             if($verificandoSolicitud == $extraeIDArchivoSolicitud['idRepositorio']){
                                                 
-                                                if($extraeIDArchivoSolicitud['estado'] == 'Aprobado'){
-                                                ?>
-                                                    <button disabled style='background:#F7FA1E;width:70%;border:0px;' data-toggle='modal' data-target='#modal-dangerSolicitud' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Autorizado</button>
-                                                <?php
-                                                }elseif($extraeIDArchivoSolicitud['estado'] == 'Pendiente'){
-                                                ?>
-                                                    <button disabled style='background:#F7FA1E;width:70%;border:0px;' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> En proceso</button>
-                                                <?php
-                                                }else{
-                                                    if($habilitarVisualizar == 'disabled'){ /// si esta variable viene disabled, quiere decir que debe solicitar, en caso contrario ya está habilitado
-                                                        /////// si es administrador no debería poder crear archivo o carpeta
-                                                        if($root == '1'){
-                                                            echo 'El administrador no puede manipular repositorio';
+                                                /*
+                                                //// validamos existencia de visualizacion de carpeta y declaramos la variable de visualizacion de carpeta
+                                                $visualizacionCarpetaSseguraU=0;
+                                                $visualizacionCarpetaSseguraC=0;
+                                                $visualizacionCarpetaSseguraG=0;
+                                                
+                                                /// pregunta por usuario
+                                                if($extraeIDArchivo['visualizar'] == 'usuario'){
+                                                    
+                                                   $validarUsuarioVer=json_decode($extraeIDArchivo['visualizarID']);
+                                                    
+                                                    for($u=0; $u<=count($validarUsuarioVer); $u++){ 
+                                                        if($validarUsuarioVer[$u] == $idparaChat){
+                                                            //echo ' (existe U) ';
+                                                            $visualizacionCarpetaSseguraU=0;
                                                         }else{
-                                                        ?>
-                                                        <input type='hidden' id='capturaVariable<?php echo $conteoSolicitud++;?>'  value= '<?php echo $elemento;?>' >
-                                                        <a onclick='funcionFormula<?php echo $conteoSolicitudA++;?>()' style='background:#F7FA1E;width:70%;border:0px;' data-toggle='modal' data-target='#modal-dangerSolicitud' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Solicitar</a>
-                                                        <?php 
+                                                            //echo ' (no existe U) ';
+                                                            $visualizacionCarpetaSseguraU++;
                                                         }
-                                                    }else{
-                                                    ?>
-                                                    <button disabled style='background:#F7FA1E;width:70%;border:0px;' data-toggle='modal' data-target='#modal-dangerSolicitud' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Autorizado</button>
-                                                <?php    
                                                     }
                                                 
                                                 }
+                                                */
+                                                
+                                                    if($extraeIDArchivoSolicitud['estado'] == 'Aprobado' && $extraeIDArchivoSolicitud['solicitante'] == $idparaChat){
+                                                    ?>
+                                                        <button disabled style='background:#F7FA1E;width:70%;border:0px;' data-toggle='modal' data-target='#modal-dangerSolicitud' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Autorizado</button>
+                                                    <?php
+                                                    }elseif($extraeIDArchivoSolicitud['estado'] == 'Pendiente' && $extraeIDArchivoSolicitud['solicitante'] == $idparaChat){
+                                                    ?>
+                                                        <button disabled style='background:#F7FA1E;width:70%;border:0px;' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> En proceso</button>
+                                                    <?php
+                                                    }else{
+                                                        if($habilitarVisualizar == 'disabled'){ /// si esta variable viene disabled, quiere decir que debe solicitar, en caso contrario ya está habilitado
+                                                            /////// si es administrador no debería poder crear archivo o carpeta
+                                                            if($root == '1'){
+                                                                echo 'El administrador no puede manipular repositorio';
+                                                            }else{
+                                                            ?>
+                                                            <input type='hidden' id='capturaVariable<?php echo $conteoSolicitud++;?>'  value= '<?php echo $elemento;?>' >
+                                                            <a onclick='funcionFormula<?php echo $conteoSolicitudA++;?>()' style='background:#F7FA1E;width:70%;border:0px;' data-toggle='modal' data-target='#modal-dangerSolicitud' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Solicitar</a>
+                                                            <?php 
+                                                            }
+                                                        }else{
+                                                        ?>
+                                                        <button disabled style='background:#F7FA1E;width:70%;border:0px;' data-toggle='modal' data-target='#modal-dangerSolicitud' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Autorizado</button>
+                                                    <?php    
+                                                        }
+                                                    
+                                                    }
                                                 
                                             
                                             }else{
@@ -1050,32 +1082,37 @@ require_once 'permisosPlataforma.php';
                                                 $consultamosArchivosB=$mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre='$enviarSinExtension' ");
                                                 $extraeIDArchivoB=$consultamosArchivosB->fetch_array(MYSQLI_ASSOC);
                                                 $verificandoSolicitudB=$extraeIDArchivoB['id'];
-                                                $consultamosArchivosSolicitudB=$mysqli->query("SELECT * FROM repositorioArchivoSolicitud WHERE idRepositorio='$verificandoSolicitudB'  ");
+                                                $consultamosArchivosSolicitudB=$mysqli->query("SELECT * FROM repositorioArchivoSolicitud WHERE idRepositorio='$verificandoSolicitudB' AND solicitante='$idparaChat' ");
                                                 $extraeIDArchivoSolicitudB=$consultamosArchivosSolicitudB->fetch_array(MYSQLI_ASSOC);
                                                 $extraeIDArchivoSolicitudB['idRepositorio'];
                                             /// ENd
                                             if($verificandoSolicitudB == $extraeIDArchivoSolicitudB['idRepositorio']){
                                                 
-                                                if($extraeIDArchivoSolicitudB['estado'] == 'Aprobado'){
-                                                ?>
-                                                    <button disabled style='background:#F7FA1E;width:70%;border:0px;' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Autorizado</button>
-                                                <?php
-                                                }elseif($extraeIDArchivoSolicitudB['estado'] == 'Pendiente'){
-                                                ?>
-                                                    <button disabled style='background:#F7FA1E;width:70%;border:0px;' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> En proceso</button>
-                                                <?php
-                                                }else{
-                                                    /////// si es administrador no debería poder crear archivo o carpeta
-                                                    if($root == '1'){
-                                                        echo 'El administrador no puede manipular repositorio';
-                                                    }else{
-                                                    ?>
-                                                    <input type='hidden' id='capturaVariableB<?php echo $conteoSolicitudBB++;?>'  value= '<?php echo $enviarSinExtension;?>' >
-                                                    <a onclick='funcionFormulaB<?php echo $conteoSolicitudAB++;?>()' style='background:#F7FA1E;width:70%;border:0px;' data-toggle='modal' data-target='#modal-dangerSolicitudArchivos' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Solicitar</a>
                                                 
+                                              
+                                                
+                                                
+                                                    if($extraeIDArchivoSolicitudB['estado'] == 'Aprobado' && $extraeIDArchivoSolicitudB['solicitante'] == $idparaChat ){
+                                                    ?>
+                                                        <button disabled style='background:#F7FA1E;width:70%;border:0px;' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Autorizado</button>
                                                     <?php
+                                                    }elseif($extraeIDArchivoSolicitudB['estado'] == 'Pendiente' && $extraeIDArchivoSolicitudB['solicitante'] == $idparaChat){
+                                                    ?>
+                                                        <button disabled style='background:#F7FA1E;width:70%;border:0px;' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> En proceso</button>
+                                                    <?php
+                                                    }else{
+                                                        /////// si es administrador no debería poder crear archivo o carpeta
+                                                        if($root == '1'){
+                                                            echo 'El administrador no puede manipular repositorio';
+                                                        }else{
+                                                        ?>
+                                                        <input type='hidden' id='capturaVariableB<?php echo $conteoSolicitudBB++;?>'  value= '<?php echo $enviarSinExtension;?>' >
+                                                        <a onclick='funcionFormulaB<?php echo $conteoSolicitudAB++;?>()' style='background:#F7FA1E;width:70%;border:0px;' data-toggle='modal' data-target='#modal-dangerSolicitudArchivos' class='btn btn-block  btn-sm'><i class='fas fa-user-edit'></i> Solicitar</a>
+                                                    
+                                                        <?php
+                                                        }
                                                     }
-                                                }
+                                                
                                             
                                             }else{
                                                 if($habilitarVisualizarArchivos == 'disabled'){
@@ -1567,7 +1604,7 @@ $validacionEliminarB=$_POST['validacionEliminarB'];
     ?>
         Toast.fire({
             type: 'warning',
-            title: ' Para visualizar carpeta solo haga click sobre ella.'
+            title: ' Para visualizar el contenido de la carpeta solo haga click sobre el nombre de la carpeta.'
         })
     <?php
     }

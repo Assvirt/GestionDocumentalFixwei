@@ -561,17 +561,18 @@ if(isset($_POST['solicitudMotivo'])){
 }
 
 if(isset($_POST['ejecutaSolicitud'])){
-    $idSolicitar=$_POST['idSolicitar'];
-    $motivo=$_POST['motivo'];
-    $aprobacionSolicitud=$_POST['aprobacionSolicitud'];
-    $idSolicitaSolicitante=$_POST['idSolicitaSolicitante'];
+     'id solicitar: '.$idSolicitar=$_POST['idSolicitar'];
+     '<br>motivo: '.$motivo=$_POST['motivo'];
+     '<br>estado: '.$aprobacionSolicitud=$_POST['aprobacionSolicitud'];
+     '<br> id solicitante'.$idSolicitaSolicitante=$_POST['idSolicitaSolicitante'];
+     '<br> id usuario: '.$idSolicitaSolicitanteUnico=$_POST['idSolicitaSolicitanteUnico'];
     
     $consultamosArchivosSolicitud=$mysqli->query("SELECT * FROM repositorioCarpeta WHERE id='$idSolicitar' "); //
     $extraeIDArchivoSolicitud=$consultamosArchivosSolicitud->fetch_array(MYSQLI_ASSOC);
     $campodeVisualizar=$extraeIDArchivoSolicitud['visualizarID'];
     $verificandoID=$extraeIDArchivoSolicitud['id'];
      $nombreRpositorio=$extraeIDArchivoSolicitud['nombre'];
-
+    
     //// sacar el id de quien solicito
     $consultamosArchivosSolicitud2=$mysqli->query("SELECT * FROM repositorioCarpetaSolicitud WHERE idRepositorio='$verificandoID' "); //
     $extraeIDArchivoSolicitud2=$consultamosArchivosSolicitud2->fetch_array(MYSQLI_ASSOC);
@@ -603,7 +604,7 @@ if(isset($_POST['ejecutaSolicitud'])){
 
                   
 
-                    $nombreuser = $mysqli->query("SELECT * FROM usuario WHERE id='$idQuienDebeSolicitarSolicitante' ");
+                    $nombreuser = $mysqli->query("SELECT * FROM usuario WHERE id='$idSolicitaSolicitanteUnico' ");
                     while($columna = $nombreuser->fetch_array()){
                         $nombreResponsable=utf8_encode($columna['nombres'].' '.$columna['apellidos']); 
                         $correoResponsable=$columna['correo']; 
@@ -660,7 +661,7 @@ if(isset($_POST['ejecutaSolicitud'])){
 
 
         $mysqli->query("UPDATE repositorioCarpeta SET visualizarID = '$almacenandoNuevosDatos'  WHERE id='$verificandoID' ") or die(mysqli_error($mysqli));
-        $mysqli->query("UPDATE repositorioCarpetaSolicitud SET estado = 'Aprobado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' ") or die(mysqli_error($mysqli));
+        $mysqli->query("UPDATE repositorioCarpetaSolicitud SET estado = 'Aprobado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' AND solicitante='$idSolicitaSolicitanteUnico' ") or die(mysqli_error($mysqli));
         
         //// tambi��n autorizamos todos los archivos que contiene la carpeta principal
             //echo '<br><br><br>';
@@ -715,7 +716,7 @@ if(isset($_POST['ejecutaSolicitud'])){
 
                   
 
-                    $nombreuser = $mysqli->query("SELECT * FROM usuario WHERE id='$idQuienDebeSolicitarSolicitante' ");
+                    $nombreuser = $mysqli->query("SELECT * FROM usuario WHERE id='$idSolicitaSolicitanteUnico' ");
                     while($columna = $nombreuser->fetch_array()){
                         $nombreResponsable=utf8_encode($columna['nombres'].' '.$columna['apellidos']); 
                         $correoResponsable=$columna['correo']; 
@@ -768,7 +769,7 @@ if(isset($_POST['ejecutaSolicitud'])){
                     //// END 
         // end
         
-       $mysqli->query("UPDATE repositorioCarpetaSolicitud SET estado = 'Rechazado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' ") or die(mysqli_error($mysqli));
+       $mysqli->query("UPDATE repositorioCarpetaSolicitud SET estado = 'Rechazado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' AND solicitante='$idSolicitaSolicitanteUnico' ") or die(mysqli_error($mysqli));
         
        ?>
             <script> 
@@ -926,6 +927,7 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
     $motivo=$_POST['motivo'];
     $aprobacionSolicitud=$_POST['aprobacionSolicitud'];
     $idSolicitaSolicitante=$_POST['idSolicitaSolicitante'];
+    $idSolicitaSolicitanteUnico=$_POST['idSolicitaSolicitanteUnico'];
     
     $consultamosArchivosSolicitud=$mysqli->query("SELECT * FROM repositorioRegistro WHERE id='$idSolicitar' ");
     $extraeIDArchivoSolicitud=$consultamosArchivosSolicitud->fetch_array(MYSQLI_ASSOC);
@@ -959,7 +961,7 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
 
                   
 
-                    $nombreuser = $mysqli->query("SELECT * FROM usuario WHERE id='$idQuienDebeSolicitarSolicitante' ");
+                    $nombreuser = $mysqli->query("SELECT * FROM usuario WHERE id='$idSolicitaSolicitanteUnico' "); //$idQuienDebeSolicitarSolicitante
                     while($columna = $nombreuser->fetch_array()){
                         $nombreResponsable=$columna['nombres'].' '.$columna['apellidos']; 
                         $correoResponsable=$columna['correo']; 
@@ -1013,7 +1015,7 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
         // end
        
         $mysqli->query("UPDATE repositorioRegistro SET visualizarID = '$almacenandoNuevosDatos'  WHERE id='$verificandoID' ") or die(mysqli_error($mysqli));
-        $mysqli->query("UPDATE repositorioArchivoSolicitud SET estado = 'Aprobado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' ") or die(mysqli_error($mysqli));
+        $mysqli->query("UPDATE repositorioArchivoSolicitud SET estado = 'Aprobado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' AND solicitante='$idSolicitaSolicitanteUnico' ") or die(mysqli_error($mysqli));
         ?>
             <script> 
                  window.onload=function(){
@@ -1027,7 +1029,7 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
         <?php 
         
     }else{
-       $mysqli->query("UPDATE repositorioArchivoSolicitud SET estado = 'Rechazado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' ") or die(mysqli_error($mysqli));
+       $mysqli->query("UPDATE repositorioArchivoSolicitud SET estado = 'Rechazado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' AND solicitante='$idSolicitaSolicitanteUnico' ") or die(mysqli_error($mysqli));
         
        ?>
             <script> 
