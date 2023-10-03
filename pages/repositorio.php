@@ -673,11 +673,16 @@ require_once 'permisosPlataforma.php';
                                                 }
                                                 
                                                 
-                                                
-                                                if($permisoVerMas == FALSE){
-                                                    $habilitarVisualizar = "disabled";
-                                                }else{
+                                                ///// colocamos esta linea de codigo, para que el dueño de la carpeta o la de un archivo pueda ver su propio documento o carpeta
+                                                if($extraerDatos['usuario'] == $idparaChat ){
                                                     $habilitarVisualizar = "";
+                                                }else{
+                                                
+                                                    if($permisoVerMas == FALSE){
+                                                        $habilitarVisualizar = "disabled";
+                                                    }else{
+                                                        $habilitarVisualizar = "";
+                                                    }
                                                 }
                                                 //// END
                                                 
@@ -739,10 +744,15 @@ require_once 'permisosPlataforma.php';
                                                 
                                                 //var_dump($permisoVerMasArchivos);
                                                 
-                                                if($permisoVerMasArchivos == FALSE){
-                                                    $habilitarVisualizarArchivos = "disabled";
-                                                }else{
+                                                ///// colocamos esta linea de codigo, para que el dueño de la carpeta o la de un archivo pueda ver su propio documento o carpeta
+                                                if($extraerDatosArchivos['realiza'] == $idparaChat ){
                                                     $habilitarVisualizarArchivos = "";
+                                                }else{
+                                                    if($permisoVerMasArchivos == FALSE){
+                                                        $habilitarVisualizarArchivos = "disabled";
+                                                    }else{
+                                                        $habilitarVisualizarArchivos = "";
+                                                    }
                                                 }
                                                 //// END
                                                 
