@@ -3020,7 +3020,7 @@
                                             }
                                         </script>
                                                 
-                                            <b>*</b><a style="color:black;text-decoration:none;" ><?php echo $extraeIDArchivoSolicitud['nombre']; ?><a/><br><br>
+                                            <b>*</b><a style="color:black;text-decoration:none;" ><?php echo 'Solicitud de visualización de carpeta: '.$extraeIDArchivoSolicitud['nombre']; ?><a/><br><br>
                                             <!-- Al dar clic en el botón, envía la pretición al archivo myperfil.php donde se muestra el mensaje enla línea del 81 al 115-->    
                                             
                                         </li>
@@ -3093,7 +3093,7 @@
                                                             
                                                         }
                                                 </script>
-                                                <b>*</b><a style="color:black;text-decoration:none;" ><?php echo $extraeIDArchivoSolicitud['nombre']; ?><a/><br><br>
+                                                <b>*</b><a style="color:black;text-decoration:none;" ><?php echo 'Solicitud de visualización de un documento: '.$extraeIDArchivoSolicitud['nombre']; ?><a/><br><br>
                                                 <!-- Al dar clic en el botón, envía la pretición al archivo myperfil.php donde se muestra el mensaje enla línea del 81 al 115-->    
                                             
                                         </li>

@@ -1029,6 +1029,74 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
         <?php 
         
     }else{
+        
+        
+        
+        
+        
+         // notificación correo
+                    /// envio de correos para los responsables del indicador
+                    require '../usuarios/libreria/PHPMailerAutoload.php';
+                                    
+                    $nombreDocEnviar=utf8_encode($nombreRpositorio);
+
+                  
+
+                    $nombreuser = $mysqli->query("SELECT * FROM usuario WHERE id='$idSolicitaSolicitanteUnico' "); //$idQuienDebeSolicitarSolicitante
+                    while($columna = $nombreuser->fetch_array()){
+                        $nombreResponsable=$columna['nombres'].' '.$columna['apellidos']; 
+                        $correoResponsable=$columna['correo']; 
+                        '<br>';
+                        
+                        //Create a new PHPMailer instance
+                        $mail = new PHPMailer();
+                        $mail->IsSMTP();
+                        
+                        //Configuracion servidor mail
+                        require '../../correoEnviar/contenido.php';
+                        
+                        //Agregar destinatario
+                        $mail->isHTML(true);
+                        $mail->AddAddress($correoResponsable);
+                        $mail->Subject = utf8_decode('Solicitud de visualización  '.$nombreDocEnviar);
+                        //$mail->Body = $_POST['message'];
+                        
+                        $mail->Body = utf8_decode('
+                        <html>
+                        <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                        <title>HTML</title>
+                        </head>
+                        <body>
+                        <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
+                        
+                        <p>Estimado (a). <b><em>'.$nombreResponsable.'</em></b>.
+                        <br>
+                        <p>El documento <b>'.$nombreDocEnviar.'.</b> fue rechazado.</p>
+                        Se recomienda ingresar al sistema para visualizar el documento.
+                        
+                        <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
+                        <br><br>
+                        Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                        </p>
+                        </body>
+                        </html>
+                        ');
+                        
+                        //Avisar si fue enviado o no y dirigir al index
+                    
+                        if ($mail->Send()) {
+                        
+                        } else {
+
+                        }
+                    
+                        
+                    }
+                    //// END 
+        // end
+        
+        
+        
        $mysqli->query("UPDATE repositorioArchivoSolicitud SET estado = 'Rechazado', motivoRechazoAprobacion='$motivo'  WHERE idRepositorio='$verificandoID' AND solicitante='$idSolicitaSolicitanteUnico' ") or die(mysqli_error($mysqli));
         
        ?>
