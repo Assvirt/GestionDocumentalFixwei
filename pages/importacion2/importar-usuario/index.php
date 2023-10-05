@@ -1404,13 +1404,13 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                         if($posicion_coincidencia_arl === false){
                                            //echo 'si';
                                         }else{
-                                           echo 'no';
+                                           //echo 'no';
                                           $activarAlertaARL=FALSE;
                                           $enviarResponsableStringLcentroTrabajo=$buscandoEnterArl.',';
                                         }
                                     
                                         if($activarAlertaARL == FALSE){ /// activamos la alerta del mensaje del enter
-                                            echo 'enter encontrado arl';
+                                            //echo 'enter encontrado arl';
                                             $enter_encontrado_arl='1';
                                             $enviarArlStringL=$enviarResponsableStringLcentroTrabajo;
                                         }else{
