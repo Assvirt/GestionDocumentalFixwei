@@ -149,7 +149,7 @@ session_start();
     date_default_timezone_set("America/Bogota");
     
     //construimos el nombre del archivo con la fecha del día presente
-    $guardar_respaldo_fecha='respaldo_'.$fecha=date("Y-m-j").'.sql';
+    $guardar_respaldo_fecha='respaldo_'.$fecha=date("Y-m-d").'.sql';
     
     
     /// listamos los archivos existentes de la carpeta respaldo
@@ -189,6 +189,12 @@ session_start();
              /// enviamos la ruta para descargar el archivo en un formato txt
              $divulgarDocumentoB='https://fixwei.com/plataforma/pages/respaldos/'.$enviarArchivo;
              
+             /// enviamos la ruta para descargar el archivo LM en un formato zip
+             $divulgarDocumentoC='<br><a href="https://fixwei.com/plataforma/pages/archivos/listadoMaestro.zip" target="_blank">Copia de seguridad listado maestro '.date("Y-m-d").'</a>';
+             
+             /// enviamos la ruta para descargar el archivo OB en un formato zip
+             $divulgarDocumentoD='<br><a href="https://fixwei.com/plataforma/pages/archivos/Obsoleto.zip" target="_blank">Copia de seguridad listado maestro '.date("Y-m-d").'</a>';
+             
              //Instanciamos $mail para el envio de correos
                         
                         $mail = new PHPMailer();
@@ -216,7 +222,10 @@ session_start();
                         
                         <p>Descargar y visualiza el script de la copia de seguridad de la base de datos de la empresa Fixwei<b><em></em></b>.
                         <br><br>
-                         Visualizar script base de datos: '.$divulgarDocumento.'
+                        En el correo encontrará los siguientes datos:<br>
+                        - Copia de seguridad de la base de datos '.$divulgarDocumento.'.<br>
+                        - Documentos comprimidos del listado maestro '.$divulgarDocumentoC.'.<br>
+                        - Documentos comprimidos de obsoletos '.$divulgarDocumentoD.'.
                         <br><br>
                         Este correo es informativo y por tanto, le pedimos no responda este mensaje.
                         </p>
