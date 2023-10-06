@@ -547,7 +547,7 @@ $validacionRepiteDuenoProceso=$_POST['validacionRepiteDuenoProceso'];
       <?php
       if($validacionExisteImportacionBMacro != NULL || $validacionExisteImportacionE != NULL || $validacionRepiteDuenoProceso != NULL){
       ?>
-      timer: 9000
+      timer: 12000
       <?php
       }else{
       ?>

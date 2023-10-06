@@ -479,11 +479,11 @@ $mensajeEnviarCampoVacio=" 'Algunos campos están vacios ".$_POST['mensajeEnviar
       <?php
       if($validacionExisteImportacionF != NULL || $_POST['mensajeAsociados'] != NULL){
       ?>
-      timer: 9000
+      timer: 15000
       <?php
       }else{
       ?>
-      timer: 9000
+      timer: 15000
       <?php
       }
       ?>

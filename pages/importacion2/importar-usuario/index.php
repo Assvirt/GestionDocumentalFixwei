@@ -1188,6 +1188,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                      $centroTrabajo=trim($centroTrabajo);
                      $contadorCeldaCentroTrabajo++;
                      $buscandoEnterCentroTrabajo++;
+                     $contandoCeldaCargosAsociados++;
                      
                      if($centroTrabajo == ""){
                         $campoNull = FALSE; 
@@ -1310,8 +1311,11 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                        "¡Hay repetidos!";
                                       $repiteCargoAsociado=FALSE;
                                       for($repetido=0; $repetido<count($arreglo); $repetido++){
-                                          $centroTrabajoEnviarMensaje.=$arreglo[$repetido].', ';
+                                          //$centroTrabajoEnviarMensaje.=$arreglo[$repetido].', ';
+                                          $sacandoVariableArregloCA=$arreglo[$repetido].',';
                                       }
+                                      $centroTrabajoEnviarMensaje.='- En la celda '.($contandoCeldaCargosAsociados+1).' está '.$sacandoVariableArregloCA.'<br>'; /// sacamos en que celda y cuál es el nombre repetido
+                            
                                     }else{
                                        "No hay repetidos";
                                     }
@@ -1384,41 +1388,51 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                             if($tipoValidacionArl == '1'){
                                 
                             }else{
-                                $permitidosArl = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ ";
-                                   for ($i=0; $i<strlen($arl); $i++){
-                                      if (strpos($permitidosArl, substr($arl,$i,1))===false){
-                                         $arl . " no es válido<br>";
-                                         $activarAlerta=FALSE;
-                                         $tipoValidacionArl='2';
-                                         $enviarArlStringL=$arl;
-                                         //return false;
-                                      }
-                                   }
+                                
+                                    $permitidosArl = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ ";
+                                    for ($i=0; $i<strlen($arl); $i++){
+                                        if (strpos($permitidosArl, substr($arl,$i,1))===false){
+                                            $arl . " no es válido<br>";
+                                            
+                                            $posicion_coincidencia_arl = strpos($arl, $cadena_buscada_arl);
+                                            if($posicion_coincidencia_arl === false){
+                                                $activarAlerta=FALSE;
+                                            }else{
+                                                
+                                            }
+                                            
+                                            $tipoValidacionArl='2';
+                                            $enviarArlStringL=$arl;
+                                            //return false;
+                                        }
+                                    }
                                    
-                                   //// validamos el enter antes de enviar la alerta
-                                   //echo 'alkert arl: '.$arl;
-                                  //echo '<br>';
-                                  $activarAlertaARL=TRUE;
+                                   
+                                        $activarAlertaARL=TRUE;
                                         $cadena_buscada_arl = '\n';
                                         $posicion_coincidencia_arl = strpos($arl, $cadena_buscada_arl);
+                                        
                                         if($posicion_coincidencia_arl === false){
-                                           //echo 'si';
+                                            'si '.$arl;
                                         }else{
-                                           //echo 'no';
+                                           'no '.$arl;
                                           $activarAlertaARL=FALSE;
                                           $enviarResponsableStringLcentroTrabajo=$buscandoEnterArl.',';
                                         }
-                                    
+                                        
+                                        
                                         if($activarAlertaARL == FALSE){ /// activamos la alerta del mensaje del enter
-                                            //echo 'enter encontrado arl';
+                                             'enter encontrado arl: ( '.$arl.' )';
                                             $enter_encontrado_arl='1';
-                                            $enviarArlStringL=$enviarResponsableStringLcentroTrabajo;
+                                             '<br>numero capsula: '.$enviarArlStringL=$enviarResponsableStringLcentroTrabajo;
+                                                                        $envioARLOculto=$enviarResponsableStringLcentroTrabajo;
                                         }else{
                                             $enviarArlStringL;
                                         }
+                                    
                                         
                                     /// end
-                            }
+                            } 
                             //// end
                      }
                 }
@@ -1571,6 +1585,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                     $grupos=trim($grupos);
                     $contadorCeldaGrupo++;
                     $buscandoEnterGrupo++;
+                    $contandoCeldagruposDistribucion++;
                      
                      if($grupos == ""){
                         $campoNull = FALSE; 
@@ -1679,8 +1694,10 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                            "¡Hay repetidos!";
                                           $repiteGrupos=FALSE;
                                           for($repetidoGrupos=0; $repetidoGrupos<count($arregloGrupo); $repetidoGrupos++){
-                                              $gruposEnviarMensaje.=$arregloGrupo[$repetidoGrupos].', ';
+                                              //$gruposEnviarMensaje.=$arregloGrupo[$repetidoGrupos].', ';
+                                              $sacandoVariableGrupoDeDistribucion=$arregloGrupo[$repetidoGrupos].', ';
                                           }
+                                          $gruposEnviarMensaje.='- En la celda '.($contandoCeldagruposDistribucion+1).' está '.$sacandoVariableGrupoDeDistribucion.'<br>';
                                         }else{
                                            "No hay repetidos";
                                         }
@@ -1732,9 +1749,9 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
              /// colocamos el simulador de conteo de demora
             ?>
             <script>
-                //setTimeout(myGreeting, 5000);
+                setTimeout(myGreeting, 5000);
                 function myGreeting() {
-                    //    document.forms["formularioFallaFecha"].submit();
+                        document.forms["formularioFallaFecha"].submit();
                 }
             </script>
             
@@ -2652,7 +2669,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                      
                                     <form name="miformularioRepiteDuenoPr" action="../../usuarios" method="POST" onsubmit="procesar(this.action);" >
                                         <input type="hidden" name="validacionRepiteRepiteCentroTrabajo" value="1">
-                                        <input name="mensajeRepetidoCentroTrabajo" value="<?php echo $centroTrabajoEnviarMensaje;?>" type="hidden">
+                                        <input name="mensajeRepetidoCentroTrabajo" value="<?php echo '<br>'.$centroTrabajoEnviarMensaje;?>" type="hidden">
                                     </form> 
                                 <?php
     }
@@ -2669,7 +2686,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                      
                                     <form name="miformularioRepiteGrupos" action="../../usuarios" method="POST" onsubmit="procesar(this.action);" >
                                         <input type="hidden" name="validacionRepiteRepiteGruposDistri" value="1">
-                                        <input name="mensajeRepetidoGrupos" value="<?php echo $gruposEnviarMensaje;?>" type="hidden">
+                                        <input name="mensajeRepetidoGrupos" value="<?php echo '<br>'.$gruposEnviarMensaje;?>" type="hidden">
                                     </form> 
                                 <?php 
     }
@@ -2876,7 +2893,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
             if($tipoValidacionLider == '2'){ 
                 if($enter_encontrado_lider == '1'){ /// identificamos la alerta activa
                     $enter_encontrado='1';
-                    $titulo='El lider';
+                    $titulo='El líder';
                     $almacenajeAlertaCaracterCelda=$enviarLiderStringL+1;
                     $almacenajeAlertaCaracterTipo='caracterLider';
                 }else{
@@ -2905,7 +2922,8 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
             }
             
         }
-         'L: '.$enviarArlStringL;
+         
+         '<br>L: '.$enviarArlStringL;
          '<br> '.$enviarArlString;
         if($enviarArlString != NULL || $enviarArlStringL != NULL){ //echo 'alerta arl';
             if($tipoValidacionArl == '1'){ 
@@ -2916,10 +2934,11 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                 if($enter_encontrado_arl == '1'){ /// identificamos la alerta activa
                     $enter_encontrado='1';
                     $titulo='La ARL';
-                    $almacenajeAlertaCaracterCelda=$enviarArlStringL+1;
+                    'dato oculto: '.$envioARLOculto;
+                    '<br>celda: '.$almacenajeAlertaCaracterCelda=$envioARLOculto+1; //$enviarArlStringL
                     $almacenajeAlertaCaracterTipo='caracterArl';
                 }else{
-                    $almacenajeAlertaCaracter=$enviarArlStringL;
+                    'respuesta caracter: '.$almacenajeAlertaCaracter=$enviarArlStringL;
                     $almacenajeAlertaCaracterTipo='caracterArl';
                 }
             }
@@ -2993,6 +3012,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                             <form name="miformulario" action="../../usuarios" method="POST" onsubmit="procesar(this.action);" >
                                 <?php
                                 if($enter_encontrado == '1'){ //// mandamos la alerta del enter, reemplazando la alerta de caractares
+                                //echo 'Enter encontrado';
                                 ?>
                                 <input type="hidden" name="alertaEnter"  value="<?php echo $almacenajeAlertaCaracterCelda;?>" >
                                 <input type="hidden" name="titulo"  value="<?php echo $titulo;?>" >
@@ -3004,7 +3024,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                 <?php
                                 }
                                 ?>
-                               
+                                <!--<input type="submit">-->
                             </form> 
     <?php  
     }

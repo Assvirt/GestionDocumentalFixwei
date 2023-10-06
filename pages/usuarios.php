@@ -855,7 +855,7 @@ if(!isset($_SESSION["session_username"])){
   $validacionExisteImportacionC=$_POST['validacionExisteImportacionC'];
   $validacionExisteImportacionD=$_POST['validacionExisteImportacionD'];
   $validacionExisteImportacionE=$_POST['validacionExisteImportacionE'];
-  $validacionExisteImportacionF=$_POST['validacionExisteImportacionF'];
+  echo 'alerta grupos: '.$validacionExisteImportacionF=$_POST['validacionExisteImportacionF']; echo ' - mensaje: '.$_POST['mensajeRepiteGrupo'];
   $validacionExisteImportacionG=$_POST['validacionExisteImportacionG'];
   $validacionExisteImportacionI=$_POST['validacionExisteImportacionI'];
  
@@ -899,7 +899,19 @@ $validacionExisteImportacionGExiste=$_POST['validacionExisteImportacionGExiste']
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
+        
+        <?php
+        if($validacionRepiteRepiteCentroTrabajo == 1 || $validacionRepiteRepiteGruposDistri == 1){
+        ?>
+        timer: 12000
+        <?php
+        }else{
+        ?>
         timer: 7000
+        <?php
+        }
+        ?>
+        
       });
       
       

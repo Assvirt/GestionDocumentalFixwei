@@ -389,6 +389,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                      $dueno=trim($dueno);
                      $contadorCeldaAsociados++;
                      $buscandoEnterDuenoProceso++;
+                     $contandoCeldaCargosAsociados++;
                      
                     if($dueno == ""){
                         $campoNull = FALSE;
@@ -497,9 +498,11 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                               //echo "¡Hay repetidos!";
                               $repiteDuenoProceso=FALSE;
                               for($i=0; $i<count($arreglo); $i++){
-                                  $duenossEnviarMensaje.=$arreglo[$i].', ';
+                                  //$duenossEnviarMensaje.=$arreglo[$i].', ';
+                                  $sacandoVariableArregloCA=$arreglo[$i].',';
                               }
-                              
+                                $duenossEnviarMensaje.='- En la celda '.($contandoCeldaCargosAsociados+1).' está '.$sacandoVariableArregloCA.'<br>'; /// sacamos en que celda y cuál es el nombre repetido
+                            
                             }else{
                               //echo "No hay repetidos";
                             }
@@ -1261,7 +1264,7 @@ if($activarAlertaDuenoProceso == '1'){
                                      
                                     <form name="miformularioRepiteDuenoPr" action="../../procesos" method="POST" onsubmit="procesar(this.action);" >
                                         <input type="hidden" name="validacionRepiteDuenoProceso" value="1">
-                                        <input type="hidden" name="mensajeRepetidoDuenoProceso" value="<?php echo $duenossEnviarMensaje;?>">
+                                        <input type="hidden" name="mensajeRepetidoDuenoProceso" value="<?php echo '<br>'.$duenossEnviarMensaje;?>">
                                     </form> 
                                 <?php     
 }

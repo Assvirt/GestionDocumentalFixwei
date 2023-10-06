@@ -59,7 +59,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                             		//Reemplazamos la N, n, C y c
                             		$nombre = str_replace(
                             		array('Ñ', 'ñ', 'Ç', 'ç'),
-                            		array('N', 'n', 'C', 'c'),
+                            		array('Ñ', 'ñ', 'C', 'c'),
                             		$nombre
                             		);
                             		
@@ -217,7 +217,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                         }
                     }
                     
-                   $nombre=trim($nombre);
+                    $nombre=trim($nombre);
                     
                     $validacion1 = $con->query("SELECT * FROM definicion WHERE nombre = '$nombre' ");
                     $num = mysqli_num_rows($validacion1);
@@ -264,7 +264,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                  
                         //compruebo que los caracteres sean los permitidos
                         $descripcion_carecteres=['"'];
-                        /*for($bc=0; $bc<count($descripcion_carecteres); $bc++){
+                        for($bc=0; $bc<count($descripcion_carecteres); $bc++){
                             $descripcion_carecteres[$bc]; 
                              $cadena_carecteres_descripcion = $descripcion_carecteres[$bc];
                              ' - '.$coincidencia_caracteres= strpos($definicion, $cadena_carecteres_descripcion);
@@ -274,7 +274,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                 $tipoValidacionDescripcion='1';
                             }
                              '<br>';
-                        }*/
+                        }
                         
                         if($tipoValidacionDescripcion == '1'){
                             

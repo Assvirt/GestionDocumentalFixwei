@@ -308,7 +308,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                     
                     if($nombre == ""){
                         $campoNull = FALSE;
-                        $mensajeCampoVacio='en la columna nombre';
+                        $mensajeCampoVacio='en la columna centro de trabajo';
                     }else{
                         array_push($arrayNombres,$nombre);
                     }
@@ -417,7 +417,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                     $asociados=trim($asociados);
                     $contadorCeldaAsociados++;
                     $buscandoEnterAsociado++;
-                    
+                    $contandoCeldaCargosAsociados++;
                     if($asociados == "" || $asociados == " "){
                         $campoNull = FALSE;
                         $mensajeCampoVacio='en la columna cargos asociados';
@@ -517,8 +517,8 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                         $f_outputString = str_replace($f_searchString, $f_replaceString, $f_originalString, $count); 
                         //// end
                         
-                        $asociadoss=$f_outputString;
-                        
+                         $asociadoss=$f_outputString;
+                         '<br>';
                         
                         /// le retiramos las comillas vacias al inicio del documento
                          $retirarComillasInicioCelda=$asociadoss;
@@ -535,9 +535,10 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                               //echo "¡Hay repetidos!";
                               $repiteCargoAsociado=FALSE;
                               for($i=0; $i<count($arreglo); $i++){
-                                  $asociadosEnviarMensaje.=$arreglo[$i].', ';
+                                    $sacandoVariableArregloCA=$arreglo[$i].',';
+                                   //$asociadosEnviarMensaje.=$arreglo[$i].', ';
                               }
-                              
+                              $asociadosEnviarMensaje.='- En la celda '.($contandoCeldaCargosAsociados+1).' está '.$sacandoVariableArregloCA.'<br>'; /// sacamos en que celda y cuál es el nombre repetido
                             }else{
                               //echo "No hay repetidos";
                             }
@@ -766,20 +767,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                         }
                         
                         if($repiteCargoAsociado == FALSE){  
-                        
-                        ?>
-                            <script> 
-                                 window.onload=function(){
-                              
-                                     document.forms["miformularioRepetido"].submit();
-                                 }
-                            </script>
-                             
-                            <form name="miformularioRepetido" action="../../centrodetrabajo" method="POST" onsubmit="procesar(this.action);" >
-                                <input type="hidden" name="validacionExisteImportacionRepiteAsociado" value="1">
-                                <input type="hidden" name="mensajeAsociados" value="<?php echo $asociadosEnviarMensaje;?>">
-                            </form> 
-                        <?php
+                            $activandoRepetidosCargoAsociado='1';
                         }
                         
                         if($repitePrefijo == FALSE){ 
@@ -934,7 +922,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
         if($tipoValidacionNombre == '2'){ 
             if($enter_encontrado_nombre == '1'){ /// identificamos la alerta activa
                 $enter_encontrado='1';
-                $titulo='El nombre';
+                $titulo='El centro de trabajo';
                 $almacenajeAlertaCaracter=$enviarNombreStringL+1;
                 $almacenajeAlertaCaracterTipo='caracterNombre';
             }else{
@@ -942,49 +930,7 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                 $almacenajeAlertaCaracterTipo='caracterNombre';
             }
         }
-        
-    }
-    
-    if($enviarPrefijoString != NULL || $enviarPrefijoStringL != NULL){ 
-        if($tipoValidacionPrefijo == '1'){ 
-            $almacenajeAlertaCaracter='en la celda '.($enviarPrefijoString+1);
-            $almacenajeAlertaCaracterTipo='celdaPrefijo';
-        }
-        if($tipoValidacionPrefijo == '2'){ 
-            if($enter_encontrado_prefijo == '1'){ /// identificamos la alerta activa
-                $enter_encontrado='1';
-                $titulo='El prefijo';
-                $almacenajeAlertaCaracter=$enviarPrefijoStringL+1;
-                $almacenajeAlertaCaracterTipo='caracterPrefijo';
-            }else{
-                $almacenajeAlertaCaracter=$enviarPrefijoStringL;
-                $almacenajeAlertaCaracterTipo='caracterPrefijo';
-            }
-        }
-        
-    }
-    
-    if($enviarAsociadosString != NULL || $enviarAsociadosStringL != NULL){ 
-        if($tipoValidacionAsociado == '1'){ 
-            $almacenajeAlertaCaracter='en la celda '.($enviarAsociadosString+1);
-            $almacenajeAlertaCaracterTipo='celdaAsociado';
-        }
-        if($tipoValidacionAsociado == '2'){
-            if($enter_encontrado_cargo_asociado == '1'){ /// identificamos la alerta activa
-                $enter_encontrado='1';
-                $titulo='El cargo asociado';
-                $almacenajeAlertaCaracter=$enviarAsociadosStringL+1;
-                $almacenajeAlertaCaracterTipo='caracterAsociado';
-            }else{
-                $almacenajeAlertaCaracter=$enviarAsociadosStringL;
-                $almacenajeAlertaCaracterTipo='caracterAsociado';
-            }
-        }
-        
-    }
-    
-   
-    ?>
+        ?>
                             <script> 
                                  window.onload=function(){
                                      document.forms["miformulario"].submit();
@@ -1007,9 +953,120 @@ $allowedFileType = ['application/vnd.ms-excel','text/xls','text/xlsx','applicati
                                 ?>
                                
                             </form> 
-    <?php  
+        <?php  
+        
+    }
+    
+    if($enviarPrefijoString != NULL || $enviarPrefijoStringL != NULL){ 
+        if($tipoValidacionPrefijo == '1'){ 
+            $almacenajeAlertaCaracter='en la celda '.($enviarPrefijoString+1);
+            $almacenajeAlertaCaracterTipo='celdaPrefijo';
+        }
+        if($tipoValidacionPrefijo == '2'){ 
+            if($enter_encontrado_prefijo == '1'){ /// identificamos la alerta activa
+                $enter_encontrado='1';
+                $titulo='El prefijo';
+                $almacenajeAlertaCaracter=$enviarPrefijoStringL+1;
+                $almacenajeAlertaCaracterTipo='caracterPrefijo';
+            }else{
+                $almacenajeAlertaCaracter=$enviarPrefijoStringL;
+                $almacenajeAlertaCaracterTipo='caracterPrefijo';
+            }
+        }
+     
+        ?>
+                            <script> 
+                                 window.onload=function(){
+                                     document.forms["miformulario"].submit();
+                                 }
+                            </script>
+                             
+                            <form name="miformulario" action="../../centrodetrabajo" method="POST" onsubmit="procesar(this.action);" >
+                                <?php
+                                if($enter_encontrado == '1'){ //// mandamos la alerta del enter, reemplazando la alerta de caractares
+                                ?>
+                                <input type="hidden" name="alertaEnter"  value="<?php echo $almacenajeAlertaCaracter;?>" >
+                                <input type="hidden" name="titulo"  value="<?php echo $titulo;?>" >
+                                <?php    
+                                }else{
+                                ?>
+                                <input type="hidden" name="enviarMensajeCaracter"  value="<?php echo $almacenajeAlertaCaracter;?>" >
+                                <input type="hidden" name="enviarMensajeCaracterTipo"  value="<?php echo $almacenajeAlertaCaracterTipo;?>" >
+                                <?php
+                                }
+                                ?>
+                               
+                            </form> 
+        <?php  
+        
+    }
+    
+    if($enviarAsociadosString != NULL || $enviarAsociadosStringL != NULL){ 
+        if($tipoValidacionAsociado == '1'){ 
+            $almacenajeAlertaCaracter='en la celda '.($enviarAsociadosString+1);
+            $almacenajeAlertaCaracterTipo='celdaAsociado';
+        }
+        if($tipoValidacionAsociado == '2'){
+            if($enter_encontrado_cargo_asociado == '1'){ /// identificamos la alerta activa
+                $enter_encontrado='1';
+                $titulo='El cargo asociado';
+                $almacenajeAlertaCaracter=$enviarAsociadosStringL+1;
+                $almacenajeAlertaCaracterTipo='caracterAsociado';
+            }else{
+                $almacenajeAlertaCaracter=$enviarAsociadosStringL;
+                $almacenajeAlertaCaracterTipo='caracterAsociado';
+            }
+        }
+        
+        
+        ?>
+                            <script> 
+                                 window.onload=function(){
+                                     document.forms["miformulario"].submit();
+                                 }
+                            </script>
+                             
+                            <form name="miformulario" action="../../centrodetrabajo" method="POST" onsubmit="procesar(this.action);" >
+                                <?php
+                                if($enter_encontrado == '1'){ //// mandamos la alerta del enter, reemplazando la alerta de caractares
+                                ?>
+                                <input type="hidden" name="alertaEnter"  value="<?php echo $almacenajeAlertaCaracter;?>" >
+                                <input type="hidden" name="titulo"  value="<?php echo $titulo;?>" >
+                                <?php    
+                                }else{
+                                ?>
+                                <input type="hidden" name="enviarMensajeCaracter"  value="<?php echo $almacenajeAlertaCaracter;?>" >
+                                <input type="hidden" name="enviarMensajeCaracterTipo"  value="<?php echo $almacenajeAlertaCaracterTipo;?>" >
+                                <?php
+                                }
+                                ?>
+                               
+                            </form> 
+        <?php  
+        
+        
+    }
+    
+   
+    
   }
   
+  if($activandoRepetidosCargoAsociado == '1'){
+                        ?>
+                            <script> 
+                                 window.onload=function(){
+                              
+                                     document.forms["miformularioRepetido"].submit();
+                                 }
+                            </script>
+                             
+                            <form name="miformularioRepetido" action="../../centrodetrabajo" method="POST" onsubmit="procesar(this.action);" >
+                                <input type="hidden" name="validacionExisteImportacionRepiteAsociado" value="1">
+                                <input type="hidden" name="mensajeAsociados" value="<?php echo '<br>'.$asociadosEnviarMensaje;?>">
+                               <!-- <input type="submit">-->
+                            </form> 
+                        <?php
+  }
   
 if($enviarAsociadosString != NULL || $enviarAsociadosStringL != NULL){
     
