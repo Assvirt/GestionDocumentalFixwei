@@ -29,7 +29,7 @@ if(!isset($_SESSION["session_username"])){
         <script>
         setInterval(function(){
             pushNotify();
-        }, 10000);
+        }, 1000);
         
         function pushNotify() {
             if (!("Notification" in window)) {
@@ -49,7 +49,7 @@ if(!isset($_SESSION["session_username"])){
                 
                 setTimeout(function() {
                 notification.close();
-                }, 5000);
+                }, 9000);
                 }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {}
