@@ -1068,6 +1068,50 @@ if(isset($_POST['seguimiento'])){
         echo '<script language="javascript">window.location.href="../../solicitudDocumentos"</script>';
     }
     
+    
+    
+    /// preguntamos si el documento ya fue aprobado, de ser así, debe retornar a la otra persona que ya ha sido aprobada o rechazada
+    $pregunta_solicitud_aprobado_rechazado=$mysqli->query("SELECT estado,id FROM solicitudDocumentos WHERE id='$id' ");
+    $extraer_pregunta_solicitud_rechazado_aprobado=$pregunta_solicitud_aprobado_rechazado->fetch_array(MYSQLI_ASSOC);
+    
+    
+    
+    
+    if($extraer_pregunta_solicitud_rechazado_aprobado['estado'] == 'Aprobado'){
+        //echo 'documento aprobado';
+        ?>
+                <script> 
+                     window.onload=function(){
+                   
+                         document.forms["miformularioAProbado"].submit();
+                         //alert("Proceda a asignar elaborador, revisor y aprobador.");
+                     }
+                </script>
+                 
+                <form name="miformularioAProbado" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
+                    <input type="hidden" name="alertaAprobado" value="<?php echo $extraer_pregunta_solicitud_rechazado_aprobado['id'];?>">
+                </form> 
+        <?php 
+        
+    }elseif($extraer_pregunta_solicitud_rechazado_aprobado['estado'] == 'Rechazado'){
+        //echo 'documento rechazado';
+        ?>
+                <script> 
+                     window.onload=function(){
+                   
+                         document.forms["miformularioRechazado"].submit();
+                         //alert("Proceda a asignar elaborador, revisor y aprobador.");
+                     }
+                </script>
+                 
+                <form name="miformularioRechazado" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
+                    <input type="hidden" name="alertaRechazado" value="1">
+                </form> 
+        <?php
+    }else{
+        //echo 'continue';
+    
+    
     if($accion == 'Aprobado' && $tipoSolicitud == 1){//Creacion
         
         if($dias != NULL){
@@ -1094,9 +1138,6 @@ if(isset($_POST['seguimiento'])){
                     <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
                 </form> 
         <?php 
-        /*
-        echo '<script language="javascript">alert("Agregado con Exito");
-        window.location.href="../../solicitudDocumentos"</script>';*/
     }
 
     
@@ -1374,7 +1415,9 @@ if(isset($_POST['seguimiento'])){
                 <input type="hidden" name="<?php echo $nombreEnvio;?>" value="1">
             </form> 
         <?php
+
     }
+}
     
 //////// seguimiento para cuando se carga los datos para un documento que es cargado
 if(isset($_POST['seguimientoSolicitudDocumentoCargado'])){
