@@ -478,7 +478,7 @@ require_once 'permisosPlataforma.php';
 $validacionExiste=$_POST['validacionExiste'];
 $validacionAgregar=$_POST['validacionAgregar'];
 $validacionActualizar=$_POST['validacionActualizar'];
-$validacionEliminar=$_POST['validacionEliminar'];
+$validacionEliminar=$_POST['validacionEliminar']; 
 ?>
 <script type="text/javascript">
   $(function() {
@@ -486,7 +486,7 @@ $validacionEliminar=$_POST['validacionEliminar'];
       toast: true,
       position: 'top-end',
       showConfirmButton: false,
-      timer: 3000
+      timer: 9000
     });
     
     
@@ -527,6 +527,32 @@ $validacionEliminar=$_POST['validacionEliminar'];
     
     <?php
     }if($_POST['validacionAgregarRechazado'] == 1){
+    ?>
+        Toast.fire({
+            type: 'error',
+            title: 'solicitud rechazada.'
+        })
+    
+    <?php
+    }
+    
+    if($_POST['alertaAprobado'] > 0){ 
+        $validaQuienAprueba=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE id='".$_POST['alertaAprobado']."' ");
+        $extraerValidacionQuienAprueba=$validaQuienAprueba->fetch_array(MYSQLI_ASSOC);
+        $validaQuienApruebaUsuariuo=$mysqli->query("SELECT * FROM usuario WHERE cedula='".$extraerValidacionQuienAprueba['QuienAprueba']."' ");
+        $extraerValidacionQuienApruebaUsuariuo=$validaQuienApruebaUsuariuo->fetch_array(MYSQLI_ASSOC);
+        $ocupadoAprobacionSD=$extraerValidacionQuienApruebaUsuariuo['nombres'].' '.$extraerValidacionQuienApruebaUsuariuo['apellidos'];
+        
+    ?>
+        Toast.fire({
+            type: 'warning',
+            title: 'El usuario <?php echo $ocupadoAprobacionSD;?> ya se encargo de la solicitud.'
+        })
+    
+    <?php
+    }
+    
+    if($_POST['alertaRechazado'] == 1){
     ?>
         Toast.fire({
             type: 'error',
