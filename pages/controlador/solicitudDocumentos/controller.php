@@ -1928,7 +1928,7 @@ if(isset($_POST['ActualizarAgregarSolicitud'])){
                     }
                     
                     
-                }else{
+                }else{ 
                     ?>
                         <script> 
                              window.onload=function(){
