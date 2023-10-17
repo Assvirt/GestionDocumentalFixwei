@@ -18,7 +18,7 @@ $nomGrupo = strtoupper($rowNombre['nombre']);
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>FIXWEI - PERMISOS</title>
+  <title>FIXWEI - ELIMINACIÓN</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -46,7 +46,7 @@ $nomGrupo = strtoupper($rowNombre['nombre']);
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1> <?php echo $nomGrupo;?></h1>
+            <h1> <?php //echo $nomGrupo;?></h1>
           </div>
           
           <div class="col-sm-6">
