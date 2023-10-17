@@ -176,51 +176,18 @@ require_once 'conexion/bd.php';
               </div>
               <div class="card-body">
                 <div class="row">
-                    <div class="col-sm-2">
-                    <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
-                    </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xlCTU">
-                    Agregar Usuario Parte 1
-                    </button>
-                    <div class="modal fade" id="modal-xlCTU">
-                      <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                          <div class="modal-header" style="background:#17a2b8;color:white;">
-                            <h4 class="modal-title">Agregar Usuario Parte 1</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body" style="background:#17a2b8;color:white;">
-                          <center>
-                            <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/AgregarUsuario.mp4" type="video/mp4" >
-                            </video>
-                          </center>
-                          </div>
-                          
-                          <div class="modal-footer justify-content-between" style="background:#17a2b8;color:white;">
-                            <button style="background:#17a2b8;color:white;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                          </div>
-                        </div>
-                        <!-- /.modal-content -->
-                      </div>
-                      <!-- /.modal-dialog -->
-                    </div>
-                  
-                  </div>
-                  
+                    
                 <div class="col-sm-2">
                     <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
                     </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xlCTU2">
-                    Agregar Usuario Parte 2
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xl">
+                    Cargos
                     </button>
-                    <div class="modal fade" id="modal-xlCTU2">
+                    <div class="modal fade" id="modal-xl">
                       <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header" style="background:#17a2b8;color:white;">
-                            <h4 class="modal-title">Agregar Usuario Parte 2</h4>
+                            <h4 class="modal-title">Cargos</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -228,11 +195,10 @@ require_once 'conexion/bd.php';
                           <div class="modal-body" style="background:#17a2b8;color:white;">
                           <center>
                             <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/AgregarUsuario2.mp4" type="video/mp4" >
+                              <source src="tutoriales/1 - Cargos.mp4" type="video/mp4" >
                             </video>
                           </center>
                           </div>
-                          
                           <div class="modal-footer justify-content-between" style="background:#17a2b8;color:white;">
                             <button style="background:#17a2b8;color:white;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                           </div>
@@ -241,19 +207,21 @@ require_once 'conexion/bd.php';
                       </div>
                       <!-- /.modal-dialog -->
                     </div>
+                    
                   
-                  </div>
-                  <div class="col-sm-2">
+                </div>    
+                    
+                <div class="col-sm-2">
                     <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
                     </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-EXU">
-                  Usuarios
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xlProcesos">
+                    Procesos
                     </button>
-                    <div class="modal fade" id="modal-EXU">
+                    <div class="modal fade" id="modal-xlProcesos">
                       <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header" style="background:#17a2b8;color:white;">
-                            <h4 class="modal-title">Usuario</h4>
+                            <h4 class="modal-title">Procesos</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -261,7 +229,42 @@ require_once 'conexion/bd.php';
                           <div class="modal-body" style="background:#17a2b8;color:white;">
                           <center>
                             <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/ExplicacionUsuarios.mp4" type="video/mp4" >
+                              <source src="tutoriales/2 - Procesos.mp4" type="video/mp4" >
+                            </video>
+                          </center>
+                          </div>
+                          <div class="modal-footer justify-content-between" style="background:#17a2b8;color:white;">
+                            <button style="background:#17a2b8;color:white;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                    
+                  
+                </div>    
+                
+                
+                <div class="col-sm-2">
+                    <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
+                    </button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xlCT">
+                    Centro de trabajo
+                    </button>
+                    <div class="modal fade" id="modal-xlCT">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header" style="background:#17a2b8;color:white;">
+                            <h4 class="modal-title">Centro de trabajo</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body" style="background:#17a2b8;color:white;">
+                          <center>
+                            <video   controls poster="tutoriales/video.poster.png" width="90%">
+                              <source src="tutoriales/3 - Centro de trabajo.mp4" type="video/mp4" >
                             </video>
                           </center>
                           </div>
@@ -274,8 +277,11 @@ require_once 'conexion/bd.php';
                       </div>
                       <!-- /.modal-dialog -->
                     </div>
-                </div> 
+                    
                   
+                </div>
+                
+                
                 <div class="col-sm-2">
                     <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
                     </button>
@@ -294,7 +300,7 @@ require_once 'conexion/bd.php';
                           <div class="modal-body" style="background:#17a2b8;color:white;">
                           <center>
                             <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/GrupoDeDistribucion.mp4" type="video/mp4" >
+                              <source src="tutoriales/4 - Grupos de distribución.mp4" type="video/mp4" >
                             </video>
                           </center>
                           </div>
@@ -306,23 +312,20 @@ require_once 'conexion/bd.php';
                       </div>
                       <!-- /.modal-dialog -->
                     </div>
+                </div>
+                
                     
-                  
-                  </div>
-                  
-                  
-                  
-                  <div class="col-sm-2">
+                <div class="col-sm-2">
                     <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
                     </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xl">
-                    Cargos
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xlCTU">
+                    Usuario
                     </button>
-                    <div class="modal fade" id="modal-xl">
+                    <div class="modal fade" id="modal-xlCTU">
                       <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header" style="background:#17a2b8;color:white;">
-                            <h4 class="modal-title">Cargos</h4>
+                            <h4 class="modal-title">Usuarios</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -330,41 +333,7 @@ require_once 'conexion/bd.php';
                           <div class="modal-body" style="background:#17a2b8;color:white;">
                           <center>
                             <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/Cargos.mp4" type="video/mp4" >
-                            </video>
-                          </center>
-                          </div>
-                          <div class="modal-footer justify-content-between" style="background:#17a2b8;color:white;">
-                            <button style="background:#17a2b8;color:white;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                          </div>
-                        </div>
-                        <!-- /.modal-content -->
-                      </div>
-                      <!-- /.modal-dialog -->
-                    </div>
-                    
-                  
-                  </div>
-                  
-                  <div class="col-sm-2">
-                    <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
-                    </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xlCT">
-                    Centro de trabajo
-                    </button>
-                    <div class="modal fade" id="modal-xlCT">
-                      <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                          <div class="modal-header" style="background:#17a2b8;color:white;">
-                            <h4 class="modal-title">Centro de trabajo</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body" style="background:#17a2b8;color:white;">
-                          <center>
-                            <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/CentroTrabajo.mp4" type="video/mp4" >
+                              <source src="tutoriales/5 - usuarios.mp4" type="video/mp4" >
                             </video>
                           </center>
                           </div>
@@ -377,24 +346,20 @@ require_once 'conexion/bd.php';
                       </div>
                       <!-- /.modal-dialog -->
                     </div>
-                    
-                  
-                  </div>
                   
                 </div>
-                <br><br>
-                <div class="row">
-                    <div class="col-sm-2">
+                  
+                <div class="col-sm-2">
                     <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
                     </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xlProcesos">
-                    Procesos
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-CENTROCOSTO">
+                   Centro de costo
                     </button>
-                    <div class="modal fade" id="modal-xlProcesos">
+                    <div class="modal fade" id="modal-CENTROCOSTO">
                       <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header" style="background:#17a2b8;color:white;">
-                            <h4 class="modal-title">Procesos</h4>
+                            <h4 class="modal-title">Centro de costo</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -402,75 +367,7 @@ require_once 'conexion/bd.php';
                           <div class="modal-body" style="background:#17a2b8;color:white;">
                           <center>
                             <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/Procesos.mp4" type="video/mp4" >
-                            </video>
-                          </center>
-                          </div>
-                          <div class="modal-footer justify-content-between" style="background:#17a2b8;color:white;">
-                            <button style="background:#17a2b8;color:white;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                          </div>
-                        </div>
-                        <!-- /.modal-content -->
-                      </div>
-                      <!-- /.modal-dialog -->
-                    </div>
-                    
-                  
-                  </div>
-                
-                    <div class="col-sm-2">
-                        <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
-                        </button>
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-xlMacroprocesos">
-                        Macroprocesos
-                        </button>
-                        <div class="modal fade" id="modal-xlMacroprocesos">
-                          <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                              <div class="modal-header" style="background:#17a2b8;color:white;">
-                                <h4 class="modal-title">Macroprocesos</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body" style="background:#17a2b8;color:white;">
-                              <center>
-                                <video   controls poster="tutoriales/video.poster.png" width="90%">
-                                  <source src="tutoriales/Macroproceso.mp4" type="video/mp4" >
-                                </video>
-                              </center>
-                              </div>
-                              <div class="modal-footer justify-content-between" style="background:#17a2b8;color:white;">
-                                <button style="background:#17a2b8;color:white;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                              </div>
-                            </div>
-                            <!-- /.modal-content -->
-                          </div>
-                          <!-- /.modal-dialog -->
-                        </div>
-                        
-                      
-                      </div>
-                  
-                    <div class="col-sm-2">
-                    <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
-                    </button>
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-DEF">
-                   Definiciones
-                    </button>
-                    <div class="modal fade" id="modal-DEF">
-                      <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                          <div class="modal-header" style="background:#17a2b8;color:white;">
-                            <h4 class="modal-title">Definiciones</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body" style="background:#17a2b8;color:white;">
-                          <center>
-                            <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/Definiciones.mp4" type="video/mp4" >
+                              <source src="tutoriales/6 - Centro de costo.mp4" type="video/mp4" >
                             </video>
                           </center>
                           </div>
@@ -484,9 +381,52 @@ require_once 'conexion/bd.php';
                       <!-- /.modal-dialog -->
                     </div>
                   
-                  </div> 
+                </div>  
+                
+                
                   
-                    <div class="col-sm-2">
+                
+                </div>
+                
+                <br><br>
+                <div class="row">
+                <br><br>
+                
+                <div class="col-sm-2">
+                    <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
+                    </button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-TIPODocumento">
+                   Tipo de documento
+                    </button>
+                    <div class="modal fade" id="modal-TIPODocumento">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header" style="background:#17a2b8;color:white;">
+                            <h4 class="modal-title">Tipo de documento</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body" style="background:#17a2b8;color:white;">
+                          <center>
+                            <video   controls poster="tutoriales/video.poster.png" width="90%">
+                              <source src="tutoriales/7 - Tipo de documento.mp4" type="video/mp4" >
+                            </video>
+                          </center>
+                          </div>
+                          
+                          <div class="modal-footer justify-content-between" style="background:#17a2b8;color:white;">
+                            <button style="background:#17a2b8;color:white;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                  
+                </div>  
+                
+                <div class="col-sm-2">
                     <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
                     </button>
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-COD">
@@ -504,7 +444,7 @@ require_once 'conexion/bd.php';
                           <div class="modal-body" style="background:#17a2b8;color:white;">
                           <center>
                             <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/Codificacion.mp4" type="video/mp4" >
+                              <source src="tutoriales/8 - codificación.mp4" type="video/mp4" >
                             </video>
                           </center>
                           </div>
@@ -518,9 +458,45 @@ require_once 'conexion/bd.php';
                       <!-- /.modal-dialog -->
                     </div>
                   
-                  </div>
+                </div>  
+                
+                
+                <div class="col-sm-2">
+                    <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
+                    </button>
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-DEF">
+                   Definiciones
+                    </button>
+                    <div class="modal fade" id="modal-DEF">
+                      <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header" style="background:#17a2b8;color:white;">
+                            <h4 class="modal-title">Definiciones</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body" style="background:#17a2b8;color:white;">
+                          <center>
+                            <video   controls poster="tutoriales/video.poster.png" width="90%">
+                              <source src="tutoriales/9 - definición.mp4" type="video/mp4" >
+                            </video>
+                          </center>
+                          </div>
+                          
+                          <div class="modal-footer justify-content-between" style="background:#17a2b8;color:white;">
+                            <button style="background:#17a2b8;color:white;" type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                          </div>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                </div> 
                   
-                    <div class="col-sm-2">
+                    
+                  
+                <div class="col-sm-2">
                     <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
                     </button>
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-Normatividad">
@@ -538,7 +514,7 @@ require_once 'conexion/bd.php';
                           <div class="modal-body" style="background:#17a2b8;color:white;">
                           <center>
                             <video   controls poster="tutoriales/video.poster.png" width="90%">
-                              <source src="tutoriales/Normatividad.mp4" type="video/mp4" >
+                              <source src="tutoriales/10 - normatividad.mp4" type="video/mp4" >
                             </video>
                           </center>
                           </div>
@@ -551,8 +527,9 @@ require_once 'conexion/bd.php';
                       </div>
                       <!-- /.modal-dialog -->
                     </div>
+                </div>   
                   
-                  </div>
+                    
                     
                 <div class="col-sm-2">
                     <img src="tutoriales/video.poster.png" class="img-fluid mb-2" width=""  height=""  alt="black sample"/>
