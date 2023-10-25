@@ -452,6 +452,7 @@ if(!isset($_SESSION["session_username"])){
                   }
                ?>
                 </div>
+                <input name="idValidandoasignacion" type="hidden" value="<?php echo $id;?>">
               </form>
                <div class="card-footer" >
                    

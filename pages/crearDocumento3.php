@@ -49,603 +49,631 @@ require_once 'conexion/bd.php';
     $rol = "Encargado(a) solicitud";
 
 
-    if(!file_exists('archivos/documentos/')){
-    	mkdir('archivos/documentos',0777,true);
-    	if(file_exists('archivos/documentos/')){
-    		if(move_uploaded_file($rutaPDF, 'archivos/documentos/'.$fecha.$nombrePDF)){
-    			
-    		}else{
-    			 "Archivo no se pudo guardar";
-    		}
-    	}
-    }else{
-    	if(move_uploaded_file($rutaPDF, 'archivos/documentos/'.$fecha.$nombrePDF)){
-    	    
-    	     "Archivo guardado con exito - acá se hace la validación PDF ";
-    	    
-    	    if($nombrePDF != NULL){ 
-    	        
-    	        
-    	        /// volvemos el texto totalmente en minuscula
-                $validandoDocumentoCaracteresPdf=mb_strtolower($nombrePDF);
-                
-                $activarAlerta=TRUE;
-                
-    	        $descripcion_carecteres = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ0123456789-_,.()/ ";
-                for ($i=0; $i<strlen($validandoDocumentoCaracteresPdf); $i++){
-                    if (strpos($descripcion_carecteres, substr($validandoDocumentoCaracteresPdf,$i,1))===false){
-                        $validandoDocumentoCaracteresPdf . " no es válido<br>";
-                        $activarAlerta=FALSE;
-                        //return false;
-                    }
-                }
-    	        
-    	        if($activarAlerta == FALSE){ 
-    	             $idSolicitud = $_POST['idSolicitud'];
-                                $nombreDoc = $_POST['nombreDocumento'];
-                                $norma2 = $_POST['norma'];
-                                $proceso = $_POST['proceso'];
-                                $metodo = $_POST['rad_metodo'];
-                                $tipoDoc = $_POST['tipoDoc'];
-                                $ubicacion = $_POST['ubicacion'];
-                                $elabora2 = $_POST['select_encargadoE'];
-                                $revisa2 = $_POST['select_encargadoR'];
-                                $aprueba2 = $_POST['select_encargadoA'];
-                                $codificacion = $_POST['radCodificacion'];
-                                $versionDeclarada = $_POST['versionDeclarada'];
-                                $consecutivoDeclarada = $_POST['consecutivoDeclarado']; 
-                                
-                                $radElabora = $_POST['radiobtnE'];
-                                $radRevisa = $_POST['radiobtnR'];
-                                $radAprueba = $_POST['radiobtnA'];
-                                $rol = $_POST['rol'];
-                                
-                                $documetosExternos = serialize($_POST['documentos_externos']);
-                                $documetosExternosAlm = unserialize($documetosExternos);
-                                $documetosExternosAlm = json_encode($documetosExternosAlm);
-                                
-                                $definiciones = serialize($_POST['definiciones']);
-                                $definicionesAlm = unserialize($definiciones);
-                                $definicionesAlm = json_encode($definicionesAlm);
-                                
-                                $enviarRespnsableEncargado=serialize($_POST['select_encargadoD']);
-                                $escargadoDispo = unserialize($enviarRespnsableEncargado);
-                                $radDispoDoc = $_POST['radiobtnD'];
-                                array_unshift($escargadoDispo,$radDispoDoc); 
-                                $escargadoDispo = json_encode($escargadoDispo);
-                                
-                                
-                                /// guardamos los datos de definiciones de manera temporal
-                                $consultamosExistenciaParametros=$mysqli->query("SELECT * FROM documentoDatosTemporales WHERE solicitud='$idSolicitud' ");
-                                $extraerConsultamosExistenciaParametros=$consultamosExistenciaParametros->fetch_array(MYSQLI_ASSOC);
-                                
-                                if($extraerConsultamosExistenciaParametros['id'] != NULL){
-                                $mysqli->query("UPDATE documentoDatosTemporales SET definicion='$definicionesAlm' , externo='$documetosExternosAlm', responsable='$escargadoDispo' WHERE solicitud='$idSolicitud' ");
-                                }else{
-                                $mysqli->query("INSERT INTO documentoDatosTemporales (solicitud,definicion,externo,responsable)VALUES('$idSolicitud','".$definicionesAlm."','".$documetosExternosAlm."','".$escargadoDispo."') ");
-                                } 
-    	            ?>
-                                <script> 
-                                    window.onload=function(){
-                                        document.forms["miformularioPdf"].submit();
-                                    }
-                                    setTimeout(clickbuttonPDF, 2000);
-                                    function clickbuttonPDF() { 
-                                             document.forms["miformularioPdf"].submit();
-                                    }
-                                </script>
-                                         
-                                <form name="miformularioPdf" action="crearDocumento2" method="POST" onsubmit="procesar(this.action);" >
-                                    <input type="hidden" name="rol" value="<?php echo $rol;?>"> 
-                                    <input type="hidden" name="idSolicitud" value="<?php echo $idSolicitud ;?>" >
-                                    <input type="hidden" name="nombreDocumento" value="<?php echo $nombreDoc ;?>" >
-                                    <input type="hidden" name="normaRT" value='<?php echo $norma2;?>' >
-                                    <input type="hidden" name="proceso" value="<?php echo $proceso ;?>" >
-                                    <input type="hidden" name="rad_metodo" value="<?php echo $metodo ;?>" >
-                                    <input type="hidden" name="tipoDoc" value="<?php echo $tipoDoc ;?>" >
-                                    <input type="hidden" name="ubicacion" value="<?php echo $ubicacion ;?>" >
-                                    <input type="hidden" name="select_encargadoERT" value='<?php echo $elabora2;?>' >
-                                    <input type="hidden" name="select_encargadoRRT" value='<?php echo $revisa2;?>' >
-                                    <input type="hidden" name="select_encargadoART" value='<?php echo $aprueba2;?>' >
-                                    <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
-                                    <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
-                                    <input type="hidden" name="versionDeclarada" value="<?php echo $versionDeclarada;?>">
-                                    <input type="hidden" name="consecutivoDeclarado" value="<?php echo $consecutivoDeclarada;?>">
-                                    
-                                    <input type="hidden" name="radiobtnE" value="<?php echo $radElabora; ?>">
-                                    <input type="hidden" name="radiobtnR" value="<?php echo $radRevisa; ?>">
-                                    <input type="hidden" name="radiobtnA" value="<?php echo $radAprueba; ?>">
-                                    
-                                    <input type="hidden" name="archivo_gestion" value="<?php echo $archivo_gestion ;?>">
-                                    <input type="hidden" name="archivo_central" value="<?php echo $archivo_central ;?>">
-                                    <input type="hidden" name="archivo_historico" value="<?php echo $archivo_historico ;?>">
-                                    <input type="hidden" name="diposicion_documental" value="<?php echo $diposicion_documental ;?>">
-                                    
-                                    
-                                    <input name="alerta" value="1" type="hidden">
-                                    <!--<input type="submit" value="1">-->
-                                   
-                                </form> 
-                                <?php
-    	        }else{
-    	        
-    	        
-    	        
-    		    $mysqli->query("INSERT INTO documentoArchivoTemporal (pdf,solicitud)VALUES('".utf8_decode($fecha.$nombrePDF)."','$idSolicitud') "); 
-    		    
-    		    $preguntadoValidacion=$mysqli->query("SELECT * FROM documentoArchivoTemporal WHERE  pdf='".utf8_decode($fecha.$nombrePDF)."' ");
-        		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
-        		    ' - '.$documentoExtraido2=utf8_encode($extraerPreguntaValidacion['pdf']);
-        		    
-        		        
-                
-                        //echo '<br><br>';
-                
-                        //Lista de letras abecedario
-                        $carpeta="archivos/documentos/";
-                        $ruta="/".$carpeta."/";
-                        $directorio=opendir($carpeta);
-                        //recoger los  datos
-                        $datos=array();
-                        $conteoArchivosB=0;
-                        while ($archivo = readdir($directorio)) { 
-                          if(($archivo != '.')&&($archivo != '..')){
-                             
-                            if($documentoExtraido2 == $datos[]=$archivo){
-                                $conteoArchivosB++;
-                                 $datos[]=$archivo; //echo '<br>';
-                            }
-                             
-                             
-                          } 
-                        }
-                        closedir($directorio);
-                            
-                        if($conteoArchivosB > 0){
-                           $documentoHabilitado2='1'; 
-                        }else{
-                           $documentoHabilitado2='no coincide';
-                        }
-                         '<br>B: '.$documentoHabilitado2;
-                           if($documentoHabilitado2 == 1){ 
-    	       
-                    	   }else{ //echo 'Redir..';
-                    	        $idSolicitud = $_POST['idSolicitud'];
-                                $nombreDoc = $_POST['nombreDocumento'];
-                                $norma2 = $_POST['norma'];
-                                $proceso = $_POST['proceso'];
-                                $metodo = $_POST['rad_metodo'];
-                                $tipoDoc = $_POST['tipoDoc'];
-                                $ubicacion = $_POST['ubicacion'];
-                                $elabora2 = $_POST['select_encargadoE'];
-                                $revisa2 = $_POST['select_encargadoR'];
-                                $aprueba2 = $_POST['select_encargadoA'];
-                                $codificacion = $_POST['radCodificacion'];
-                                $versionDeclarada = $_POST['versionDeclarada'];
-                                $consecutivoDeclarada = $_POST['consecutivoDeclarado']; 
-                                
-                                $radElabora = $_POST['radiobtnE'];
-                                $radRevisa = $_POST['radiobtnR'];
-                                $radAprueba = $_POST['radiobtnA'];
-                                $rol = $_POST['rol'];
-                                
-                                $documetosExternos = serialize($_POST['documentos_externos']);
-                                $documetosExternosAlm = unserialize($documetosExternos);
-                                $documetosExternosAlm = json_encode($documetosExternosAlm);
-                                
-                                $definiciones = serialize($_POST['definiciones']);
-                                $definicionesAlm = unserialize($definiciones);
-                                $definicionesAlm = json_encode($definicionesAlm);
-                                
-                                $enviarRespnsableEncargado=serialize($_POST['select_encargadoD']);
-                                $escargadoDispo = unserialize($enviarRespnsableEncargado);
-                                $radDispoDoc = $_POST['radiobtnD'];
-                                array_unshift($escargadoDispo,$radDispoDoc); 
-                                $escargadoDispo = json_encode($escargadoDispo);
-                                
-                                
-                                /// guardamos los datos de definiciones de manera temporal
-                                $consultamosExistenciaParametros=$mysqli->query("SELECT * FROM documentoDatosTemporales WHERE solicitud='$idSolicitud' ");
-                                $extraerConsultamosExistenciaParametros=$consultamosExistenciaParametros->fetch_array(MYSQLI_ASSOC);
-                                
-                                if($extraerConsultamosExistenciaParametros['id'] != NULL){
-                                $mysqli->query("UPDATE documentoDatosTemporales SET definicion='$definicionesAlm' , externo='$documetosExternosAlm', responsable='$escargadoDispo' WHERE solicitud='$idSolicitud' ");
-                                }else{
-                                $mysqli->query("INSERT INTO documentoDatosTemporales (solicitud,definicion,externo,responsable)VALUES('$idSolicitud','".$definicionesAlm."','".$documetosExternosAlm."','".$escargadoDispo."') ");
-                                } 
-                    	        ?>
-                                <script> 
-                                     window.onload=function(){
-                                        document.forms["miformularioDocumentoMal"].submit();
-                                     }
-                                     setTimeout(clickbuttonPDF2, 1000);
-                                    function clickbuttonPDF2() { 
-                                             document.forms["miformularioDocumentoMal"].submit();
-                                    }
-                                </script>
-                                         
-                                <form name="miformularioDocumentoMal" action="crearDocumento2" method="POST" onsubmit="procesar(this.action);" >
-                                    <input type="hidden" name="rol" value="<?php echo $rol;?>"> 
-                                    <input type="hidden" name="idSolicitud" value="<?php echo $idSolicitud ;?>" >
-                                    <input type="hidden" name="nombreDocumento" value="<?php echo $nombreDoc ;?>" >
-                                    <input type="hidden" name="normaRT" value='<?php echo $norma2;?>' >
-                                    <input type="hidden" name="proceso" value="<?php echo $proceso ;?>" >
-                                    <input type="hidden" name="rad_metodo" value="<?php echo $metodo ;?>" >
-                                    <input type="hidden" name="tipoDoc" value="<?php echo $tipoDoc ;?>" >
-                                    <input type="hidden" name="ubicacion" value="<?php echo $ubicacion ;?>" >
-                                    <input type="hidden" name="select_encargadoERT" value='<?php echo $elabora2;?>' >
-                                    <input type="hidden" name="select_encargadoRRT" value='<?php echo $revisa2;?>' >
-                                    <input type="hidden" name="select_encargadoART" value='<?php echo $aprueba2;?>' >
-                                    <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
-                                    <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
-                                    <input type="hidden" name="versionDeclarada" value="<?php echo $versionDeclarada;?>">
-                                    <input type="hidden" name="consecutivoDeclarado" value="<?php echo $consecutivoDeclarada;?>">
-                                    
-                                    <input type="hidden" name="radiobtnE" value="<?php echo $radElabora; ?>">
-                                    <input type="hidden" name="radiobtnR" value="<?php echo $radRevisa; ?>">
-                                    <input type="hidden" name="radiobtnA" value="<?php echo $radAprueba; ?>">
-                                    
-                                    <input type="hidden" name="archivo_gestion" value="<?php echo $archivo_gestion ;?>">
-                                    <input type="hidden" name="archivo_central" value="<?php echo $archivo_central ;?>">
-                                    <input type="hidden" name="archivo_historico" value="<?php echo $archivo_historico ;?>">
-                                    <input type="hidden" name="diposicion_documental" value="<?php echo $diposicion_documental ;?>">
-                                    
-                                    
-                                    
-                                    <input name="alerta2" value="1" type="hidden">
-                                    <!--<input type="submit" value="1">-->
-                                   
-                                </form> 
-                                <?php
-                    	   }
-    	    }
-        		    
-    		}
-    	    
-    	    
-    	}else{
-    		 "Archivo no se pudo guardar";
-    	}
-    }
+    /// verificar el encargado
     
-    if(!file_exists('archivos/documentos/')){
-    	mkdir('archivos/documentos',0777,true);
-    	if(file_exists('archivos/documentos/')){
-    		if(move_uploaded_file($rutaOtro, 'archivos/documentos/'.$fecha.$nombreOtro)){
-    			 "Archivo guardado con exito";
-    			
-    		}else{
-    			 "Archivo no se pudo guardar";
-    		}
-    	}
-    }else{
-    	if(move_uploaded_file($rutaOtro, 'archivos/documentos/'.$fecha.$nombreOtro)){
-    		 "Archivo guardado con exito - acá se hace la validación WORD";
-    		
-    		
-    		
-    		//// realizamos un ingreso del archivo de manera temporal para poder verificar si es un documento bien o mal
-    		
-    		if($nombreOtro != NULL){ 
-    		    
-    		    
-    		    
-    		    /// volvemos el texto totalmente en minuscula
-                $validandoDocumentoCaractereseditable=mb_strtolower($nombreOtro);
-                
-                
-                $activarAlerta=TRUE;
-                /*$descripcion_carecteres=["'"];
-                for($bc=0; $bc<count($descripcion_carecteres); $bc++){
-                    $descripcion_carecteres[$bc]; 
-                     $cadena_carecteres_descripcion = $descripcion_carecteres[$bc];
-                     ' - '.$coincidencia_caracteres= strpos($validandoDocumentoCaractereseditable, $cadena_carecteres_descripcion);
-                    if($coincidencia_caracteres != NULL){
-                        $activarAlerta=FALSE;
-                    }    
-                }*/
-                
-                $permitidosNombreOtro = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ0123456789-_,.()/ ";
-                for ($i=0; $i<strlen($validandoDocumentoCaractereseditable); $i++){
-                    if (strpos($permitidosNombreOtro, substr($validandoDocumentoCaractereseditable,$i,1))===false){
-                        $validandoDocumentoCaractereseditable . " no es válido<br>";
-                        $activarAlerta=FALSE;
-                        //return false;
+    $query_busqueda_cargo = $mysqli->query("SELECT  cedula,cargo FROM usuario WHERE cedula = '".$_SESSION["session_username"]."'");
+    $nombres_busqueda_cargo = $query_busqueda_cargo->fetch_array(MYSQLI_ASSOC);
+            
+    $query_busqueda_cargo_solicitud = $mysqli->query("SELECT  id,encargadoAprobar FROM solicitudDocumentos WHERE id = '$idSolicitud' AND encargadoAprobar='".$nombres_busqueda_cargo['cargo']."' ");
+    $nombres_busqueda_cargo_solicitud = $query_busqueda_cargo_solicitud->fetch_array(MYSQLI_ASSOC);
+    
+    if($nombres_busqueda_cargo_solicitud['id'] != NULL){//// si el encargado de la solicitud si es igual al encargado del usuario me deja continuar, caso contrario me debe sacar
+       
+        if(!file_exists('archivos/documentos/')){
+        	mkdir('archivos/documentos',0777,true);
+        	if(file_exists('archivos/documentos/')){
+        		if(move_uploaded_file($rutaPDF, 'archivos/documentos/'.$fecha.$nombrePDF)){
+        			
+        		}else{
+        			 "Archivo no se pudo guardar";
+        		}
+        	}
+        }else{
+        	if(move_uploaded_file($rutaPDF, 'archivos/documentos/'.$fecha.$nombrePDF)){
+        	    
+        	     "Archivo guardado con exito - acá se hace la validación PDF ";
+        	    
+        	    if($nombrePDF != NULL){ 
+        	        
+        	        
+        	        /// volvemos el texto totalmente en minuscula
+                    $validandoDocumentoCaracteresPdf=mb_strtolower($nombrePDF);
+                    
+                    $activarAlerta=TRUE;
+                    
+        	        $descripcion_carecteres = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ0123456789-_,.()/ ";
+                    for ($i=0; $i<strlen($validandoDocumentoCaracteresPdf); $i++){
+                        if (strpos($descripcion_carecteres, substr($validandoDocumentoCaracteresPdf,$i,1))===false){
+                            $validandoDocumentoCaracteresPdf . " no es válido<br>";
+                            $activarAlerta=FALSE;
+                            //return false;
+                        }
                     }
-                }
-    	        
-    	        if($activarAlerta == FALSE){
-    	             $idSolicitud = $_POST['idSolicitud'];
-                                $nombreDoc = $_POST['nombreDocumento'];
-                                $norma2 = $_POST['norma'];
-                                $proceso = $_POST['proceso'];
-                                $metodo = $_POST['rad_metodo'];
-                                $tipoDoc = $_POST['tipoDoc'];
-                                $ubicacion = $_POST['ubicacion'];
-                                $elabora2 = $_POST['select_encargadoE'];
-                                $revisa2 = $_POST['select_encargadoR'];
-                                $aprueba2 = $_POST['select_encargadoA'];
-                                $codificacion = $_POST['radCodificacion'];
-                                $versionDeclarada = $_POST['versionDeclarada'];
-                                $consecutivoDeclarada = $_POST['consecutivoDeclarado']; 
-                                
-                                $radElabora = $_POST['radiobtnE'];
-                                $radRevisa = $_POST['radiobtnR'];
-                                $radAprueba = $_POST['radiobtnA'];
-                                $rol = $_POST['rol'];
-                                
-                                $documetosExternos = serialize($_POST['documentos_externos']);
-                                $documetosExternosAlm = unserialize($documetosExternos);
-                                $documetosExternosAlm = json_encode($documetosExternosAlm);
-                                
-                                $definiciones = serialize($_POST['definiciones']);
-                                $definicionesAlm = unserialize($definiciones);
-                                $definicionesAlm = json_encode($definicionesAlm);
-                                
-                                $enviarRespnsableEncargado=serialize($_POST['select_encargadoD']);
-                                $escargadoDispo = unserialize($enviarRespnsableEncargado);
-                                $radDispoDoc = $_POST['radiobtnD'];
-                                array_unshift($escargadoDispo,$radDispoDoc); 
-                                $escargadoDispo = json_encode($escargadoDispo);
-                                
-                                /// guardamos los datos de definiciones de manera temporal
-                                $consultamosExistenciaParametros=$mysqli->query("SELECT * FROM documentoDatosTemporales WHERE solicitud='$idSolicitud' ");
-                                $extraerConsultamosExistenciaParametros=$consultamosExistenciaParametros->fetch_array(MYSQLI_ASSOC);
-                                
-                                if($extraerConsultamosExistenciaParametros['id'] != NULL){
-                                $mysqli->query("UPDATE documentoDatosTemporales SET definicion='$definicionesAlm' , externo='$documetosExternosAlm', responsable='$escargadoDispo' WHERE solicitud='$idSolicitud' ");
-                                }else{
-                                $mysqli->query("INSERT INTO documentoDatosTemporales (solicitud,definicion,externo,responsable)VALUES('$idSolicitud','".$definicionesAlm."','".$documetosExternosAlm."','".$escargadoDispo."') ");
-                                } 
-                    	        ?>
-                                <script> 
-                                     window.onload=function(){
-                                   
-                                         document.forms["miformularioeditable"].submit();
-                                     }
-                                     setTimeout(clickbuttonPDF3, 2000);
-                                    function clickbuttonPDF3() { 
-                                             document.forms["miformularioeditable"].submit();
-                                    }
-                                </script>
-                                         
-                                <form name="miformularioeditable" action="crearDocumento2" method="POST" onsubmit="procesar(this.action);" >
-                                    <input type="hidden" name="rol" value="<?php echo $rol;?>"> 
-                                    <input type="hidden" name="idSolicitud" value="<?php echo $idSolicitud ;?>" >
-                                    <input type="hidden" name="nombreDocumento" value="<?php echo $nombreDoc ;?>" >
-                                    <input type="hidden" name="normaRT" value='<?php echo $norma2;?>' >
-                                    <input type="hidden" name="proceso" value="<?php echo $proceso ;?>" >
-                                    <input type="hidden" name="rad_metodo" value="<?php echo $metodo ;?>" >
-                                    <input type="hidden" name="tipoDoc" value="<?php echo $tipoDoc ;?>" >
-                                    <input type="hidden" name="ubicacion" value="<?php echo $ubicacion ;?>" >
-                                    <input type="hidden" name="select_encargadoERT" value='<?php echo $elabora2;?>' >
-                                    <input type="hidden" name="select_encargadoRRT" value='<?php echo $revisa2;?>' >
-                                    <input type="hidden" name="select_encargadoART" value='<?php echo $aprueba2;?>' >
-                                    <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
-                                    <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
-                                    <input type="hidden" name="versionDeclarada" value="<?php echo $versionDeclarada;?>">
-                                    <input type="hidden" name="consecutivoDeclarado" value="<?php echo $consecutivoDeclarada;?>">
+        	        
+        	        if($activarAlerta == FALSE){ 
+        	             $idSolicitud = $_POST['idSolicitud'];
+                                    $nombreDoc = $_POST['nombreDocumento'];
+                                    $norma2 = $_POST['norma'];
+                                    $proceso = $_POST['proceso'];
+                                    $metodo = $_POST['rad_metodo'];
+                                    $tipoDoc = $_POST['tipoDoc'];
+                                    $ubicacion = $_POST['ubicacion'];
+                                    $elabora2 = $_POST['select_encargadoE'];
+                                    $revisa2 = $_POST['select_encargadoR'];
+                                    $aprueba2 = $_POST['select_encargadoA'];
+                                    $codificacion = $_POST['radCodificacion'];
+                                    $versionDeclarada = $_POST['versionDeclarada'];
+                                    $consecutivoDeclarada = $_POST['consecutivoDeclarado']; 
                                     
-                                    <input type="hidden" name="radiobtnE" value="<?php echo $radElabora; ?>">
-                                    <input type="hidden" name="radiobtnR" value="<?php echo $radRevisa; ?>">
-                                    <input type="hidden" name="radiobtnA" value="<?php echo $radAprueba; ?>">
+                                    $radElabora = $_POST['radiobtnE'];
+                                    $radRevisa = $_POST['radiobtnR'];
+                                    $radAprueba = $_POST['radiobtnA'];
+                                    $rol = $_POST['rol'];
                                     
-                                    <input type="hidden" name="archivo_gestion" value="<?php echo $archivo_gestion ;?>">
-                                    <input type="hidden" name="archivo_central" value="<?php echo $archivo_central ;?>">
-                                    <input type="hidden" name="archivo_historico" value="<?php echo $archivo_historico ;?>">
-                                    <input type="hidden" name="diposicion_documental" value="<?php echo $diposicion_documental ;?>">
+                                    $documetosExternos = serialize($_POST['documentos_externos']);
+                                    $documetosExternosAlm = unserialize($documetosExternos);
+                                    $documetosExternosAlm = json_encode($documetosExternosAlm);
+                                    
+                                    $definiciones = serialize($_POST['definiciones']);
+                                    $definicionesAlm = unserialize($definiciones);
+                                    $definicionesAlm = json_encode($definicionesAlm);
+                                    
+                                    $enviarRespnsableEncargado=serialize($_POST['select_encargadoD']);
+                                    $escargadoDispo = unserialize($enviarRespnsableEncargado);
+                                    $radDispoDoc = $_POST['radiobtnD'];
+                                    array_unshift($escargadoDispo,$radDispoDoc); 
+                                    $escargadoDispo = json_encode($escargadoDispo);
                                     
                                     
-                                    <input name="alerta" value="1" type="hidden">
-                                    <!--<input type="submit" value="1">-->
-                                   
-                                </form>  
-                                <?php
-    	        }else{
-    		    
-    		    
-    		    
-    		     '<br>Ruta ingresar: '.utf8_decode($fecha.$nombreOtro);
-    		    $mysqli->query("INSERT INTO documentoArchivoTemporal (otro,solicitud)VALUES('".utf8_decode($fecha.$nombreOtro)."','$idSolicitud') ")or die(mysqli_error($mysqli)); 
-    		    
-    		    $preguntadoValidacion=$mysqli->query("SELECT * FROM documentoArchivoTemporal WHERE otro='".utf8_decode($fecha.$nombreOtro)."' ");
-        		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
-        		    $documentoExtraido=utf8_encode($extraerPreguntaValidacion['otro']);
+                                    /// guardamos los datos de definiciones de manera temporal
+                                    $consultamosExistenciaParametros=$mysqli->query("SELECT * FROM documentoDatosTemporales WHERE solicitud='$idSolicitud' ");
+                                    $extraerConsultamosExistenciaParametros=$consultamosExistenciaParametros->fetch_array(MYSQLI_ASSOC);
+                                    
+                                    if($extraerConsultamosExistenciaParametros['id'] != NULL){
+                                    $mysqli->query("UPDATE documentoDatosTemporales SET definicion='$definicionesAlm' , externo='$documetosExternosAlm', responsable='$escargadoDispo' WHERE solicitud='$idSolicitud' ");
+                                    }else{
+                                    $mysqli->query("INSERT INTO documentoDatosTemporales (solicitud,definicion,externo,responsable)VALUES('$idSolicitud','".$definicionesAlm."','".$documetosExternosAlm."','".$escargadoDispo."') ");
+                                    } 
+        	            ?>
+                                    <script> 
+                                        window.onload=function(){
+                                            document.forms["miformularioPdf"].submit();
+                                        }
+                                        setTimeout(clickbuttonPDF, 2000);
+                                        function clickbuttonPDF() { 
+                                                 document.forms["miformularioPdf"].submit();
+                                        }
+                                    </script>
+                                             
+                                    <form name="miformularioPdf" action="crearDocumento2" method="POST" onsubmit="procesar(this.action);" >
+                                        <input type="hidden" name="rol" value="<?php echo $rol;?>"> 
+                                        <input type="hidden" name="idSolicitud" value="<?php echo $idSolicitud ;?>" >
+                                        <input type="hidden" name="nombreDocumento" value="<?php echo $nombreDoc ;?>" >
+                                        <input type="hidden" name="normaRT" value='<?php echo $norma2;?>' >
+                                        <input type="hidden" name="proceso" value="<?php echo $proceso ;?>" >
+                                        <input type="hidden" name="rad_metodo" value="<?php echo $metodo ;?>" >
+                                        <input type="hidden" name="tipoDoc" value="<?php echo $tipoDoc ;?>" >
+                                        <input type="hidden" name="ubicacion" value="<?php echo $ubicacion ;?>" >
+                                        <input type="hidden" name="select_encargadoERT" value='<?php echo $elabora2;?>' >
+                                        <input type="hidden" name="select_encargadoRRT" value='<?php echo $revisa2;?>' >
+                                        <input type="hidden" name="select_encargadoART" value='<?php echo $aprueba2;?>' >
+                                        <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
+                                        <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
+                                        <input type="hidden" name="versionDeclarada" value="<?php echo $versionDeclarada;?>">
+                                        <input type="hidden" name="consecutivoDeclarado" value="<?php echo $consecutivoDeclarada;?>">
+                                        
+                                        <input type="hidden" name="radiobtnE" value="<?php echo $radElabora; ?>">
+                                        <input type="hidden" name="radiobtnR" value="<?php echo $radRevisa; ?>">
+                                        <input type="hidden" name="radiobtnA" value="<?php echo $radAprueba; ?>">
+                                        
+                                        <input type="hidden" name="archivo_gestion" value="<?php echo $archivo_gestion ;?>">
+                                        <input type="hidden" name="archivo_central" value="<?php echo $archivo_central ;?>">
+                                        <input type="hidden" name="archivo_historico" value="<?php echo $archivo_historico ;?>">
+                                        <input type="hidden" name="diposicion_documental" value="<?php echo $diposicion_documental ;?>">
+                                        
+                                        
+                                        <input name="alerta" value="1" type="hidden">
+                                        <!--<input type="submit" value="1">-->
+                                       
+                                    </form> 
+                                    <?php
+        	        }else{
+        	        
+        	        
+        	        
+        		    $mysqli->query("INSERT INTO documentoArchivoTemporal (pdf,solicitud)VALUES('".utf8_decode($fecha.$nombrePDF)."','$idSolicitud') "); 
         		    
-        		        
-                
-                         '<br><br>';
-                
-                        //Lista de letras abecedario
-                        $carpeta="archivos/documentos/";
-                        $ruta="/".$carpeta."/";
-                        $directorio=opendir($carpeta);
-                        //recoger los  datos
-                        $datos=array();
-                        $conteoArchivos=0;
-                        while ($archivo = readdir($directorio)) { 
-                          if(($archivo != '.')&&($archivo != '..')){
-                             
-                            if($documentoExtraido == $datos[]=$archivo){
-                                $conteoArchivos++;
-                                 $datos[]=$archivo; //echo '<br>';
-                            }
-                             
-                             
-                          } 
-                        }
-                        closedir($directorio);
-                            
-                        if($conteoArchivos > 0){
-                           $documentoHabilitado='1'; 
-                        }else{
-                           $documentoHabilitado='no coincide';
-                        }
-    		    }    
-    		}
-    		
-    		
-    		
-    		///// validmos nuevamente el subir documento con caracteres especiales, parar evitar el error_fatal de codificacion
-    		/// volvemos el texto totalmente en minuscula
-                $validandoDocumentoCaracteresPdf_correcion=mb_strtolower($nombrePDF);
-                
-                $activarAlerta_correcion=TRUE;
-                
-    	        $descripcion_carecteres_correcion = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ0123456789-_,.()/ ";
-                for ($i=0; $i<strlen($validandoDocumentoCaracteresPdf_correcion); $i++){
-                    if (strpos($descripcion_carecteres_correcion, substr($validandoDocumentoCaracteresPdf_correcion,$i,1))===false){
-                        $validandoDocumentoCaracteresPdf_correcion . " no es válido<br>";
-                        $activarAlerta_correcion=FALSE;
-                        //return false;
-                    }
-                }
-    		
-    		
-    		if($activarAlerta_correcion == FALSE){ }else{
-    		
-    		if($nombrePDF != NULL){ 
-    		    $mysqli->query("INSERT INTO documentoArchivoTemporal (pdf,solicitud)VALUES('".utf8_decode($fecha.$nombrePDF)."','$idSolicitud') "); 
-    		    
-    		    $preguntadoValidacion=$mysqli->query("SELECT * FROM documentoArchivoTemporal WHERE  pdf='".utf8_decode($fecha.$nombrePDF)."' ");
-        		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
-        		    ' - '.$documentoExtraido2=utf8_encode($extraerPreguntaValidacion['pdf']);
-        		    
-        		        
-                
-                         '<br><br>';
-                
-                        //Lista de letras abecedario
-                        $carpeta="archivos/documentos/";
-                        $ruta="/".$carpeta."/";
-                        $directorio=opendir($carpeta);
-                        //recoger los  datos
-                        $datos=array();
-                        $conteoArchivosB=0;
-                        while ($archivo = readdir($directorio)) { 
-                          if(($archivo != '.')&&($archivo != '..')){
-                             
-                            if($documentoExtraido2 == $datos[]=$archivo){
-                                $conteoArchivosB++;
-                                 $datos[]=$archivo; //echo '<br>';
-                            }
-                             
-                             
-                          } 
-                        }
-                        closedir($directorio);
-                            
-                        if($conteoArchivosB > 0){
-                           $documentoHabilitado2='1'; 
-                        }else{
-                           $documentoHabilitado2='no coincide';
-                        }
-        		    
-    		}
-    		
-    		}
-    		
-    	    'A: '.$documentoHabilitado;
-    	    '<br>B: '.$documentoHabilitado2;
-    	   
-    	   
-    	   
-    	   if($documentoHabilitado == 1 && $documentoHabilitado2 == 1){ 
-    	       
-    	   }elseif($documentoHabilitado == 1 && $nombrePDF == NULL){ 
-    	       
-    	   }elseif($documentoHabilitado2 == 1 && $nombreOtro == NULL){ 
-    	       
-    	   }else{ //echo 'Redir..';
-                    	        $idSolicitud = $_POST['idSolicitud'];
-                                $nombreDoc = $_POST['nombreDocumento'];
-                                $norma2 = $_POST['norma'];
-                                $proceso = $_POST['proceso'];
-                                $metodo = $_POST['rad_metodo'];
-                                $tipoDoc = $_POST['tipoDoc'];
-                                $ubicacion = $_POST['ubicacion'];
-                                $elabora2 = $_POST['select_encargadoE'];
-                                $revisa2 = $_POST['select_encargadoR'];
-                                $aprueba2 = $_POST['select_encargadoA'];
-                                $codificacion = $_POST['radCodificacion'];
-                                $versionDeclarada = $_POST['versionDeclarada'];
-                                $consecutivoDeclarada = $_POST['consecutivoDeclarado']; 
-                                
-                                $radElabora = $_POST['radiobtnE'];
-                                $radRevisa = $_POST['radiobtnR'];
-                                $radAprueba = $_POST['radiobtnA'];
-                                $rol = $_POST['rol'];
-                                
-                                $documetosExternos = serialize($_POST['documentos_externos']);
-                                $documetosExternosAlm = unserialize($documetosExternos);
-                                $documetosExternosAlm = json_encode($documetosExternosAlm);
-                                
-                                $definiciones = serialize($_POST['definiciones']);
-                                $definicionesAlm = unserialize($definiciones);
-                                $definicionesAlm = json_encode($definicionesAlm);
-                                
-                                $enviarRespnsableEncargado=serialize($_POST['select_encargadoD']);
-                                $escargadoDispo = unserialize($enviarRespnsableEncargado);
-                                $radDispoDoc = $_POST['radiobtnD'];
-                                array_unshift($escargadoDispo,$radDispoDoc); 
-                                $escargadoDispo = json_encode($escargadoDispo);
-                                
-                                /// guardamos los datos de definiciones de manera temporal
-                                $consultamosExistenciaParametros=$mysqli->query("SELECT * FROM documentoDatosTemporales WHERE solicitud='$idSolicitud' ");
-                                $extraerConsultamosExistenciaParametros=$consultamosExistenciaParametros->fetch_array(MYSQLI_ASSOC);
-                                
-                                if($extraerConsultamosExistenciaParametros['id'] != NULL){
-                                $mysqli->query("UPDATE documentoDatosTemporales SET definicion='$definicionesAlm' , externo='$documetosExternosAlm', responsable='$escargadoDispo' WHERE solicitud='$idSolicitud' ");
-                                }else{
-                                $mysqli->query("INSERT INTO documentoDatosTemporales (solicitud,definicion,externo,responsable)VALUES('$idSolicitud','".$definicionesAlm."','".$documetosExternosAlm."','".$escargadoDispo."') ");
+        		    $preguntadoValidacion=$mysqli->query("SELECT * FROM documentoArchivoTemporal WHERE  pdf='".utf8_decode($fecha.$nombrePDF)."' ");
+            		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
+            		    ' - '.$documentoExtraido2=utf8_encode($extraerPreguntaValidacion['pdf']);
+            		    
+            		        
+                    
+                            //echo '<br><br>';
+                    
+                            //Lista de letras abecedario
+                            $carpeta="archivos/documentos/";
+                            $ruta="/".$carpeta."/";
+                            $directorio=opendir($carpeta);
+                            //recoger los  datos
+                            $datos=array();
+                            $conteoArchivosB=0;
+                            while ($archivo = readdir($directorio)) { 
+                              if(($archivo != '.')&&($archivo != '..')){
+                                 
+                                if($documentoExtraido2 == $datos[]=$archivo){
+                                    $conteoArchivosB++;
+                                     $datos[]=$archivo; //echo '<br>';
                                 }
-                    	        ?>
-                                <script> 
-                                     window.onload=function(){
-                                   
-                                         document.forms["miformulario"].submit();
-                                     }
-                                </script>
-                                         
-                                <form name="miformulario" action="crearDocumento2" method="POST" onsubmit="procesar(this.action);" >
-                                    <input type="hidden" name="rol" value="<?php echo $rol;?>"> 
-                                    <input type="hidden" name="idSolicitud" value="<?php echo $idSolicitud ;?>" >
-                                    <input type="hidden" name="nombreDocumento" value="<?php echo $nombreDoc ;?>" >
-                                    <input type="hidden" name="normaRT" value='<?php echo $norma2;?>' >
-                                    <input type="hidden" name="proceso" value="<?php echo $proceso ;?>" >
-                                    <input type="hidden" name="rad_metodo" value="<?php echo $metodo ;?>" >
-                                    <input type="hidden" name="tipoDoc" value="<?php echo $tipoDoc ;?>" >
-                                    <input type="hidden" name="ubicacion" value="<?php echo $ubicacion ;?>" >
-                                    <input type="hidden" name="select_encargadoERT" value='<?php echo $elabora2;?>' >
-                                    <input type="hidden" name="select_encargadoRRT" value='<?php echo $revisa2;?>' >
-                                    <input type="hidden" name="select_encargadoART" value='<?php echo $aprueba2;?>' >
-                                    <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
-                                    <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
-                                    <input type="hidden" name="versionDeclarada" value="<?php echo $versionDeclarada;?>">
-                                    <input type="hidden" name="consecutivoDeclarado" value="<?php echo $consecutivoDeclarada;?>">
+                                 
+                                 
+                              } 
+                            }
+                            closedir($directorio);
+                                
+                            if($conteoArchivosB > 0){
+                               $documentoHabilitado2='1'; 
+                            }else{
+                               $documentoHabilitado2='no coincide';
+                            }
+                             '<br>B: '.$documentoHabilitado2;
+                               if($documentoHabilitado2 == 1){ 
+        	       
+                        	   }else{ //echo 'Redir..';
+                        	        $idSolicitud = $_POST['idSolicitud'];
+                                    $nombreDoc = $_POST['nombreDocumento'];
+                                    $norma2 = $_POST['norma'];
+                                    $proceso = $_POST['proceso'];
+                                    $metodo = $_POST['rad_metodo'];
+                                    $tipoDoc = $_POST['tipoDoc'];
+                                    $ubicacion = $_POST['ubicacion'];
+                                    $elabora2 = $_POST['select_encargadoE'];
+                                    $revisa2 = $_POST['select_encargadoR'];
+                                    $aprueba2 = $_POST['select_encargadoA'];
+                                    $codificacion = $_POST['radCodificacion'];
+                                    $versionDeclarada = $_POST['versionDeclarada'];
+                                    $consecutivoDeclarada = $_POST['consecutivoDeclarado']; 
                                     
-                                    <input type="hidden" name="radiobtnE" value="<?php echo $radElabora; ?>">
-                                    <input type="hidden" name="radiobtnR" value="<?php echo $radRevisa; ?>">
-                                    <input type="hidden" name="radiobtnA" value="<?php echo $radAprueba; ?>">
+                                    $radElabora = $_POST['radiobtnE'];
+                                    $radRevisa = $_POST['radiobtnR'];
+                                    $radAprueba = $_POST['radiobtnA'];
+                                    $rol = $_POST['rol'];
                                     
-                                    <input type="hidden" name="archivo_gestion" value="<?php echo $archivo_gestion ;?>">
-                                    <input type="hidden" name="archivo_central" value="<?php echo $archivo_central ;?>">
-                                    <input type="hidden" name="archivo_historico" value="<?php echo $archivo_historico ;?>">
-                                    <input type="hidden" name="diposicion_documental" value="<?php echo $diposicion_documental ;?>">
+                                    $documetosExternos = serialize($_POST['documentos_externos']);
+                                    $documetosExternosAlm = unserialize($documetosExternos);
+                                    $documetosExternosAlm = json_encode($documetosExternosAlm);
+                                    
+                                    $definiciones = serialize($_POST['definiciones']);
+                                    $definicionesAlm = unserialize($definiciones);
+                                    $definicionesAlm = json_encode($definicionesAlm);
+                                    
+                                    $enviarRespnsableEncargado=serialize($_POST['select_encargadoD']);
+                                    $escargadoDispo = unserialize($enviarRespnsableEncargado);
+                                    $radDispoDoc = $_POST['radiobtnD'];
+                                    array_unshift($escargadoDispo,$radDispoDoc); 
+                                    $escargadoDispo = json_encode($escargadoDispo);
                                     
                                     
-                                    <input name="alerta2" value="1" type="hidden">
-                                   
-                                </form> 
-                                <?php
-                    	   }
-    		
-    		//// END
-    		
-    		
-    	}else{
-    		 "Archivo no se pudo guardar";
-    	}
+                                    /// guardamos los datos de definiciones de manera temporal
+                                    $consultamosExistenciaParametros=$mysqli->query("SELECT * FROM documentoDatosTemporales WHERE solicitud='$idSolicitud' ");
+                                    $extraerConsultamosExistenciaParametros=$consultamosExistenciaParametros->fetch_array(MYSQLI_ASSOC);
+                                    
+                                    if($extraerConsultamosExistenciaParametros['id'] != NULL){
+                                    $mysqli->query("UPDATE documentoDatosTemporales SET definicion='$definicionesAlm' , externo='$documetosExternosAlm', responsable='$escargadoDispo' WHERE solicitud='$idSolicitud' ");
+                                    }else{
+                                    $mysqli->query("INSERT INTO documentoDatosTemporales (solicitud,definicion,externo,responsable)VALUES('$idSolicitud','".$definicionesAlm."','".$documetosExternosAlm."','".$escargadoDispo."') ");
+                                    } 
+                        	        ?>
+                                    <script> 
+                                         window.onload=function(){
+                                            document.forms["miformularioDocumentoMal"].submit();
+                                         }
+                                         setTimeout(clickbuttonPDF2, 1000);
+                                        function clickbuttonPDF2() { 
+                                                 document.forms["miformularioDocumentoMal"].submit();
+                                        }
+                                    </script>
+                                             
+                                    <form name="miformularioDocumentoMal" action="crearDocumento2" method="POST" onsubmit="procesar(this.action);" >
+                                        <input type="hidden" name="rol" value="<?php echo $rol;?>"> 
+                                        <input type="hidden" name="idSolicitud" value="<?php echo $idSolicitud ;?>" >
+                                        <input type="hidden" name="nombreDocumento" value="<?php echo $nombreDoc ;?>" >
+                                        <input type="hidden" name="normaRT" value='<?php echo $norma2;?>' >
+                                        <input type="hidden" name="proceso" value="<?php echo $proceso ;?>" >
+                                        <input type="hidden" name="rad_metodo" value="<?php echo $metodo ;?>" >
+                                        <input type="hidden" name="tipoDoc" value="<?php echo $tipoDoc ;?>" >
+                                        <input type="hidden" name="ubicacion" value="<?php echo $ubicacion ;?>" >
+                                        <input type="hidden" name="select_encargadoERT" value='<?php echo $elabora2;?>' >
+                                        <input type="hidden" name="select_encargadoRRT" value='<?php echo $revisa2;?>' >
+                                        <input type="hidden" name="select_encargadoART" value='<?php echo $aprueba2;?>' >
+                                        <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
+                                        <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
+                                        <input type="hidden" name="versionDeclarada" value="<?php echo $versionDeclarada;?>">
+                                        <input type="hidden" name="consecutivoDeclarado" value="<?php echo $consecutivoDeclarada;?>">
+                                        
+                                        <input type="hidden" name="radiobtnE" value="<?php echo $radElabora; ?>">
+                                        <input type="hidden" name="radiobtnR" value="<?php echo $radRevisa; ?>">
+                                        <input type="hidden" name="radiobtnA" value="<?php echo $radAprueba; ?>">
+                                        
+                                        <input type="hidden" name="archivo_gestion" value="<?php echo $archivo_gestion ;?>">
+                                        <input type="hidden" name="archivo_central" value="<?php echo $archivo_central ;?>">
+                                        <input type="hidden" name="archivo_historico" value="<?php echo $archivo_historico ;?>">
+                                        <input type="hidden" name="diposicion_documental" value="<?php echo $diposicion_documental ;?>">
+                                        
+                                        
+                                        
+                                        <input name="alerta2" value="1" type="hidden">
+                                        <!--<input type="submit" value="1">-->
+                                       
+                                    </form> 
+                                    <?php
+                        	   }
+        	    }
+            		    
+        		}
+        	    
+        	    
+        	}else{
+        		 "Archivo no se pudo guardar";
+        	}
+        }
+        
+        if(!file_exists('archivos/documentos/')){
+        	mkdir('archivos/documentos',0777,true);
+        	if(file_exists('archivos/documentos/')){
+        		if(move_uploaded_file($rutaOtro, 'archivos/documentos/'.$fecha.$nombreOtro)){
+        			 "Archivo guardado con exito";
+        			
+        		}else{
+        			 "Archivo no se pudo guardar";
+        		}
+        	}
+        }else{
+        	if(move_uploaded_file($rutaOtro, 'archivos/documentos/'.$fecha.$nombreOtro)){
+        		 "Archivo guardado con exito - acá se hace la validación WORD";
+        		
+        		
+        		
+        		//// realizamos un ingreso del archivo de manera temporal para poder verificar si es un documento bien o mal
+        		
+        		if($nombreOtro != NULL){ 
+        		    
+        		    
+        		    
+        		    /// volvemos el texto totalmente en minuscula
+                    $validandoDocumentoCaractereseditable=mb_strtolower($nombreOtro);
+                    
+                    
+                    $activarAlerta=TRUE;
+                    /*$descripcion_carecteres=["'"];
+                    for($bc=0; $bc<count($descripcion_carecteres); $bc++){
+                        $descripcion_carecteres[$bc]; 
+                         $cadena_carecteres_descripcion = $descripcion_carecteres[$bc];
+                         ' - '.$coincidencia_caracteres= strpos($validandoDocumentoCaractereseditable, $cadena_carecteres_descripcion);
+                        if($coincidencia_caracteres != NULL){
+                            $activarAlerta=FALSE;
+                        }    
+                    }*/
+                    
+                    $permitidosNombreOtro = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ0123456789-_,.()/ ";
+                    for ($i=0; $i<strlen($validandoDocumentoCaractereseditable); $i++){
+                        if (strpos($permitidosNombreOtro, substr($validandoDocumentoCaractereseditable,$i,1))===false){
+                            $validandoDocumentoCaractereseditable . " no es válido<br>";
+                            $activarAlerta=FALSE;
+                            //return false;
+                        }
+                    }
+        	        
+        	        if($activarAlerta == FALSE){
+        	             $idSolicitud = $_POST['idSolicitud'];
+                                    $nombreDoc = $_POST['nombreDocumento'];
+                                    $norma2 = $_POST['norma'];
+                                    $proceso = $_POST['proceso'];
+                                    $metodo = $_POST['rad_metodo'];
+                                    $tipoDoc = $_POST['tipoDoc'];
+                                    $ubicacion = $_POST['ubicacion'];
+                                    $elabora2 = $_POST['select_encargadoE'];
+                                    $revisa2 = $_POST['select_encargadoR'];
+                                    $aprueba2 = $_POST['select_encargadoA'];
+                                    $codificacion = $_POST['radCodificacion'];
+                                    $versionDeclarada = $_POST['versionDeclarada'];
+                                    $consecutivoDeclarada = $_POST['consecutivoDeclarado']; 
+                                    
+                                    $radElabora = $_POST['radiobtnE'];
+                                    $radRevisa = $_POST['radiobtnR'];
+                                    $radAprueba = $_POST['radiobtnA'];
+                                    $rol = $_POST['rol'];
+                                    
+                                    $documetosExternos = serialize($_POST['documentos_externos']);
+                                    $documetosExternosAlm = unserialize($documetosExternos);
+                                    $documetosExternosAlm = json_encode($documetosExternosAlm);
+                                    
+                                    $definiciones = serialize($_POST['definiciones']);
+                                    $definicionesAlm = unserialize($definiciones);
+                                    $definicionesAlm = json_encode($definicionesAlm);
+                                    
+                                    $enviarRespnsableEncargado=serialize($_POST['select_encargadoD']);
+                                    $escargadoDispo = unserialize($enviarRespnsableEncargado);
+                                    $radDispoDoc = $_POST['radiobtnD'];
+                                    array_unshift($escargadoDispo,$radDispoDoc); 
+                                    $escargadoDispo = json_encode($escargadoDispo);
+                                    
+                                    /// guardamos los datos de definiciones de manera temporal
+                                    $consultamosExistenciaParametros=$mysqli->query("SELECT * FROM documentoDatosTemporales WHERE solicitud='$idSolicitud' ");
+                                    $extraerConsultamosExistenciaParametros=$consultamosExistenciaParametros->fetch_array(MYSQLI_ASSOC);
+                                    
+                                    if($extraerConsultamosExistenciaParametros['id'] != NULL){
+                                    $mysqli->query("UPDATE documentoDatosTemporales SET definicion='$definicionesAlm' , externo='$documetosExternosAlm', responsable='$escargadoDispo' WHERE solicitud='$idSolicitud' ");
+                                    }else{
+                                    $mysqli->query("INSERT INTO documentoDatosTemporales (solicitud,definicion,externo,responsable)VALUES('$idSolicitud','".$definicionesAlm."','".$documetosExternosAlm."','".$escargadoDispo."') ");
+                                    } 
+                        	        ?>
+                                    <script> 
+                                         window.onload=function(){
+                                       
+                                             document.forms["miformularioeditable"].submit();
+                                         }
+                                         setTimeout(clickbuttonPDF3, 2000);
+                                        function clickbuttonPDF3() { 
+                                                 document.forms["miformularioeditable"].submit();
+                                        }
+                                    </script>
+                                             
+                                    <form name="miformularioeditable" action="crearDocumento2" method="POST" onsubmit="procesar(this.action);" >
+                                        <input type="hidden" name="rol" value="<?php echo $rol;?>"> 
+                                        <input type="hidden" name="idSolicitud" value="<?php echo $idSolicitud ;?>" >
+                                        <input type="hidden" name="nombreDocumento" value="<?php echo $nombreDoc ;?>" >
+                                        <input type="hidden" name="normaRT" value='<?php echo $norma2;?>' >
+                                        <input type="hidden" name="proceso" value="<?php echo $proceso ;?>" >
+                                        <input type="hidden" name="rad_metodo" value="<?php echo $metodo ;?>" >
+                                        <input type="hidden" name="tipoDoc" value="<?php echo $tipoDoc ;?>" >
+                                        <input type="hidden" name="ubicacion" value="<?php echo $ubicacion ;?>" >
+                                        <input type="hidden" name="select_encargadoERT" value='<?php echo $elabora2;?>' >
+                                        <input type="hidden" name="select_encargadoRRT" value='<?php echo $revisa2;?>' >
+                                        <input type="hidden" name="select_encargadoART" value='<?php echo $aprueba2;?>' >
+                                        <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
+                                        <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
+                                        <input type="hidden" name="versionDeclarada" value="<?php echo $versionDeclarada;?>">
+                                        <input type="hidden" name="consecutivoDeclarado" value="<?php echo $consecutivoDeclarada;?>">
+                                        
+                                        <input type="hidden" name="radiobtnE" value="<?php echo $radElabora; ?>">
+                                        <input type="hidden" name="radiobtnR" value="<?php echo $radRevisa; ?>">
+                                        <input type="hidden" name="radiobtnA" value="<?php echo $radAprueba; ?>">
+                                        
+                                        <input type="hidden" name="archivo_gestion" value="<?php echo $archivo_gestion ;?>">
+                                        <input type="hidden" name="archivo_central" value="<?php echo $archivo_central ;?>">
+                                        <input type="hidden" name="archivo_historico" value="<?php echo $archivo_historico ;?>">
+                                        <input type="hidden" name="diposicion_documental" value="<?php echo $diposicion_documental ;?>">
+                                        
+                                        
+                                        <input name="alerta" value="1" type="hidden">
+                                        <!--<input type="submit" value="1">-->
+                                       
+                                    </form>  
+                                    <?php
+        	        }else{
+        		    
+        		    
+        		    
+        		     '<br>Ruta ingresar: '.utf8_decode($fecha.$nombreOtro);
+        		    $mysqli->query("INSERT INTO documentoArchivoTemporal (otro,solicitud)VALUES('".utf8_decode($fecha.$nombreOtro)."','$idSolicitud') ")or die(mysqli_error($mysqli)); 
+        		    
+        		    $preguntadoValidacion=$mysqli->query("SELECT * FROM documentoArchivoTemporal WHERE otro='".utf8_decode($fecha.$nombreOtro)."' ");
+            		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
+            		    $documentoExtraido=utf8_encode($extraerPreguntaValidacion['otro']);
+            		    
+            		        
+                    
+                             '<br><br>';
+                    
+                            //Lista de letras abecedario
+                            $carpeta="archivos/documentos/";
+                            $ruta="/".$carpeta."/";
+                            $directorio=opendir($carpeta);
+                            //recoger los  datos
+                            $datos=array();
+                            $conteoArchivos=0;
+                            while ($archivo = readdir($directorio)) { 
+                              if(($archivo != '.')&&($archivo != '..')){
+                                 
+                                if($documentoExtraido == $datos[]=$archivo){
+                                    $conteoArchivos++;
+                                     $datos[]=$archivo; //echo '<br>';
+                                }
+                                 
+                                 
+                              } 
+                            }
+                            closedir($directorio);
+                                
+                            if($conteoArchivos > 0){
+                               $documentoHabilitado='1'; 
+                            }else{
+                               $documentoHabilitado='no coincide';
+                            }
+        		    }    
+        		}
+        		
+        		
+        		
+        		///// validmos nuevamente el subir documento con caracteres especiales, parar evitar el error_fatal de codificacion
+        		/// volvemos el texto totalmente en minuscula
+                    $validandoDocumentoCaracteresPdf_correcion=mb_strtolower($nombrePDF);
+                    
+                    $activarAlerta_correcion=TRUE;
+                    
+        	        $descripcion_carecteres_correcion = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ0123456789-_,.()/ ";
+                    for ($i=0; $i<strlen($validandoDocumentoCaracteresPdf_correcion); $i++){
+                        if (strpos($descripcion_carecteres_correcion, substr($validandoDocumentoCaracteresPdf_correcion,$i,1))===false){
+                            $validandoDocumentoCaracteresPdf_correcion . " no es válido<br>";
+                            $activarAlerta_correcion=FALSE;
+                            //return false;
+                        }
+                    }
+        		
+        		
+        		if($activarAlerta_correcion == FALSE){ }else{
+        		
+        		if($nombrePDF != NULL){ 
+        		    $mysqli->query("INSERT INTO documentoArchivoTemporal (pdf,solicitud)VALUES('".utf8_decode($fecha.$nombrePDF)."','$idSolicitud') "); 
+        		    
+        		    $preguntadoValidacion=$mysqli->query("SELECT * FROM documentoArchivoTemporal WHERE  pdf='".utf8_decode($fecha.$nombrePDF)."' ");
+            		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
+            		    ' - '.$documentoExtraido2=utf8_encode($extraerPreguntaValidacion['pdf']);
+            		    
+            		        
+                    
+                             '<br><br>';
+                    
+                            //Lista de letras abecedario
+                            $carpeta="archivos/documentos/";
+                            $ruta="/".$carpeta."/";
+                            $directorio=opendir($carpeta);
+                            //recoger los  datos
+                            $datos=array();
+                            $conteoArchivosB=0;
+                            while ($archivo = readdir($directorio)) { 
+                              if(($archivo != '.')&&($archivo != '..')){
+                                 
+                                if($documentoExtraido2 == $datos[]=$archivo){
+                                    $conteoArchivosB++;
+                                     $datos[]=$archivo; //echo '<br>';
+                                }
+                                 
+                                 
+                              } 
+                            }
+                            closedir($directorio);
+                                
+                            if($conteoArchivosB > 0){
+                               $documentoHabilitado2='1'; 
+                            }else{
+                               $documentoHabilitado2='no coincide';
+                            }
+            		    
+        		}
+        		
+        		}
+        		
+        	    'A: '.$documentoHabilitado;
+        	    '<br>B: '.$documentoHabilitado2;
+        	   
+        	   
+        	   
+        	   if($documentoHabilitado == 1 && $documentoHabilitado2 == 1){ 
+        	       
+        	   }elseif($documentoHabilitado == 1 && $nombrePDF == NULL){ 
+        	       
+        	   }elseif($documentoHabilitado2 == 1 && $nombreOtro == NULL){ 
+        	       
+        	   }else{ //echo 'Redir..';
+                        	        $idSolicitud = $_POST['idSolicitud'];
+                                    $nombreDoc = $_POST['nombreDocumento'];
+                                    $norma2 = $_POST['norma'];
+                                    $proceso = $_POST['proceso'];
+                                    $metodo = $_POST['rad_metodo'];
+                                    $tipoDoc = $_POST['tipoDoc'];
+                                    $ubicacion = $_POST['ubicacion'];
+                                    $elabora2 = $_POST['select_encargadoE'];
+                                    $revisa2 = $_POST['select_encargadoR'];
+                                    $aprueba2 = $_POST['select_encargadoA'];
+                                    $codificacion = $_POST['radCodificacion'];
+                                    $versionDeclarada = $_POST['versionDeclarada'];
+                                    $consecutivoDeclarada = $_POST['consecutivoDeclarado']; 
+                                    
+                                    $radElabora = $_POST['radiobtnE'];
+                                    $radRevisa = $_POST['radiobtnR'];
+                                    $radAprueba = $_POST['radiobtnA'];
+                                    $rol = $_POST['rol'];
+                                    
+                                    $documetosExternos = serialize($_POST['documentos_externos']);
+                                    $documetosExternosAlm = unserialize($documetosExternos);
+                                    $documetosExternosAlm = json_encode($documetosExternosAlm);
+                                    
+                                    $definiciones = serialize($_POST['definiciones']);
+                                    $definicionesAlm = unserialize($definiciones);
+                                    $definicionesAlm = json_encode($definicionesAlm);
+                                    
+                                    $enviarRespnsableEncargado=serialize($_POST['select_encargadoD']);
+                                    $escargadoDispo = unserialize($enviarRespnsableEncargado);
+                                    $radDispoDoc = $_POST['radiobtnD'];
+                                    array_unshift($escargadoDispo,$radDispoDoc); 
+                                    $escargadoDispo = json_encode($escargadoDispo);
+                                    
+                                    /// guardamos los datos de definiciones de manera temporal
+                                    $consultamosExistenciaParametros=$mysqli->query("SELECT * FROM documentoDatosTemporales WHERE solicitud='$idSolicitud' ");
+                                    $extraerConsultamosExistenciaParametros=$consultamosExistenciaParametros->fetch_array(MYSQLI_ASSOC);
+                                    
+                                    if($extraerConsultamosExistenciaParametros['id'] != NULL){
+                                    $mysqli->query("UPDATE documentoDatosTemporales SET definicion='$definicionesAlm' , externo='$documetosExternosAlm', responsable='$escargadoDispo' WHERE solicitud='$idSolicitud' ");
+                                    }else{
+                                    $mysqli->query("INSERT INTO documentoDatosTemporales (solicitud,definicion,externo,responsable)VALUES('$idSolicitud','".$definicionesAlm."','".$documetosExternosAlm."','".$escargadoDispo."') ");
+                                    }
+                        	        ?>
+                                    <script> 
+                                         window.onload=function(){
+                                       
+                                             document.forms["miformulario"].submit();
+                                         }
+                                    </script>
+                                             
+                                    <form name="miformulario" action="crearDocumento2" method="POST" onsubmit="procesar(this.action);" >
+                                        <input type="hidden" name="rol" value="<?php echo $rol;?>"> 
+                                        <input type="hidden" name="idSolicitud" value="<?php echo $idSolicitud ;?>" >
+                                        <input type="hidden" name="nombreDocumento" value="<?php echo $nombreDoc ;?>" >
+                                        <input type="hidden" name="normaRT" value='<?php echo $norma2;?>' >
+                                        <input type="hidden" name="proceso" value="<?php echo $proceso ;?>" >
+                                        <input type="hidden" name="rad_metodo" value="<?php echo $metodo ;?>" >
+                                        <input type="hidden" name="tipoDoc" value="<?php echo $tipoDoc ;?>" >
+                                        <input type="hidden" name="ubicacion" value="<?php echo $ubicacion ;?>" >
+                                        <input type="hidden" name="select_encargadoERT" value='<?php echo $elabora2;?>' >
+                                        <input type="hidden" name="select_encargadoRRT" value='<?php echo $revisa2;?>' >
+                                        <input type="hidden" name="select_encargadoART" value='<?php echo $aprueba2;?>' >
+                                        <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
+                                        <input type="hidden" name="radCodificacion" value="<?php echo $codificacion;?>">
+                                        <input type="hidden" name="versionDeclarada" value="<?php echo $versionDeclarada;?>">
+                                        <input type="hidden" name="consecutivoDeclarado" value="<?php echo $consecutivoDeclarada;?>">
+                                        
+                                        <input type="hidden" name="radiobtnE" value="<?php echo $radElabora; ?>">
+                                        <input type="hidden" name="radiobtnR" value="<?php echo $radRevisa; ?>">
+                                        <input type="hidden" name="radiobtnA" value="<?php echo $radAprueba; ?>">
+                                        
+                                        <input type="hidden" name="archivo_gestion" value="<?php echo $archivo_gestion ;?>">
+                                        <input type="hidden" name="archivo_central" value="<?php echo $archivo_central ;?>">
+                                        <input type="hidden" name="archivo_historico" value="<?php echo $archivo_historico ;?>">
+                                        <input type="hidden" name="diposicion_documental" value="<?php echo $diposicion_documental ;?>">
+                                        
+                                        
+                                        <input name="alerta2" value="1" type="hidden">
+                                       
+                                    </form> 
+                                    <?php
+                        	   }
+        		
+        		//// END
+        		
+        		
+        	}else{
+        		 "Archivo no se pudo guardar";
+        	}
+        }
+    
+    }else{
+        ?>
+                    <script> 
+                         window.onload=function(){
+                             document.forms["documentoValidarSinEstado"].submit();
+                         }
+                         setTimeout(clickbuttonArchivoPerfil, 2000);
+                         function clickbuttonArchivoPerfil() { 
+                            document.forms["documentoValidarSinEstado"].submit();
+                         }
+                    </script>
+                     
+                    <form name="documentoValidarSinEstado" action="solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
+                        <input value="1" name="alertaSinMensaje" type="hidden">
+                    </form>
+                <?php
     }
     
 ?>

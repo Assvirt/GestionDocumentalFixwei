@@ -10,7 +10,36 @@ require_once 'conexion/bd.php';
 $idSolicitud = $_POST['idSolicitud'];
 $rol = $_POST['rol'];
 
-
+/// verificar el encargado
+    
+    $query_busqueda_cargo = $mysqli->query("SELECT  cedula,cargo FROM usuario WHERE cedula = '".$_SESSION["session_username"]."'");
+    $nombres_busqueda_cargo = $query_busqueda_cargo->fetch_array(MYSQLI_ASSOC);
+            
+    $query_busqueda_cargo_solicitud = $mysqli->query("SELECT  id,encargadoAprobar FROM solicitudDocumentos WHERE id = '$idSolicitud' AND encargadoAprobar='".$nombres_busqueda_cargo['cargo']."' ");
+    $nombres_busqueda_cargo_solicitud = $query_busqueda_cargo_solicitud->fetch_array(MYSQLI_ASSOC);
+    
+    if($nombres_busqueda_cargo_solicitud['id'] != NULL){//// si el encargado de la solicitud si es igual al encargado del usuario me deja continuar, caso contrario me debe sacar
+    
+        
+    }else{
+        
+        ?>
+                    <script> 
+                         window.onload=function(){
+                             document.forms["documentoValidarSinEstado"].submit();
+                         }
+                         setTimeout(clickbuttonArchivoPerfil, 2000);
+                         function clickbuttonArchivoPerfil() { 
+                            document.forms["documentoValidarSinEstado"].submit();
+                         }
+                    </script>
+                     
+                    <form name="documentoValidarSinEstado" action="solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
+                        <input value="1" name="alertaSinMensaje" type="hidden">
+                    </form>
+                <?php
+    
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -619,7 +648,7 @@ $validacionEliminar=$_POST['validacionEliminar'];
             type: 'info',
             title: 'Registro actualizado.'
         })
-    <?php 
+    <?php
     }
     
     if($validacionEliminar == 1){

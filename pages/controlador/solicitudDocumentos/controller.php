@@ -1074,348 +1074,375 @@ if(isset($_POST['seguimiento'])){
     $pregunta_solicitud_aprobado_rechazado=$mysqli->query("SELECT estado,id FROM solicitudDocumentos WHERE id='$id' ");
     $extraer_pregunta_solicitud_rechazado_aprobado=$pregunta_solicitud_aprobado_rechazado->fetch_array(MYSQLI_ASSOC);
     
+    /// verificar el encargado
     
+    $query_busqueda_cargo = $mysqli->query("SELECT  cedula,cargo FROM usuario WHERE cedula = '".$quienElabora."'");
+    $nombres_busqueda_cargo = $query_busqueda_cargo->fetch_array(MYSQLI_ASSOC);
+     '<br>'.$quienElabora;
+     '<br>id soli: '.$idValidandoasignacion=$_POST['idValidandoasignacion'];
+     '<br> cargo '.$nombres_busqueda_cargo['cargo'];
+    $query_busqueda_cargo_solicitud = $mysqli->query("SELECT  id,encargadoAprobar FROM solicitudDocumentos WHERE id = '$idValidandoasignacion' AND encargadoAprobar='".$nombres_busqueda_cargo['cargo']."' ");
+    $nombres_busqueda_cargo_solicitud = $query_busqueda_cargo_solicitud->fetch_array(MYSQLI_ASSOC);
     
-    
-    if($extraer_pregunta_solicitud_rechazado_aprobado['estado'] == 'Aprobado'){
-        //echo 'documento aprobado';
-        ?>
-                <script> 
-                     window.onload=function(){
-                   
-                         document.forms["miformularioAProbado"].submit();
-                         //alert("Proceda a asignar elaborador, revisor y aprobador.");
-                     }
-                </script>
-                 
-                <form name="miformularioAProbado" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
-                    <input type="hidden" name="alertaAprobado" value="<?php echo $extraer_pregunta_solicitud_rechazado_aprobado['id'];?>">
-                </form> 
-        <?php 
-        
-    }elseif($extraer_pregunta_solicitud_rechazado_aprobado['estado'] == 'Rechazado'){
-        //echo 'documento rechazado';
-        ?>
-                <script> 
-                     window.onload=function(){
-                   
-                         document.forms["miformularioRechazado"].submit();
-                         //alert("Proceda a asignar elaborador, revisor y aprobador.");
-                     }
-                </script>
-                 
-                <form name="miformularioRechazado" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
-                    <input type="hidden" name="alertaRechazado" value="1">
-                </form> 
-        <?php
-    }else{
-        //echo 'continue';
-    
-    
-    if($accion == 'Aprobado' && $tipoSolicitud == 1){//Creacion
-        
-        if($dias != NULL){
-            $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', tiempoRespuesta = '$dias', QuienAprueba='$quienElabora' WHERE id = '$id'");
-        }else{
-            $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', QuienAprueba='$quienElabora' WHERE id = '$id'");
-        }
-        
-        $mysqli->query("INSERT INTO comentarioSolicitud (idSolicitud,comentario) VALUES ('$id','$comentarios')");
-        
-        
-        ?>
-                <script> 
-                     window.onload=function(){
-                   
-                         document.forms["miformulario"].submit();
-                         //alert("Proceda a asignar elaborador, revisor y aprobador.");
-                     }
-                </script>
-                 
-                <form name="miformulario" action="../../crearDocumento" method="POST" onsubmit="procesar(this.action);" >
-                    <input type="hidden" name="validacionAgregar" value="1">
-                    <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
-                    <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
-                </form> 
-        <?php 
-    }
-
-    
-    if($accion == 'Rechazado' && $tipoSolicitud == 2){
-        
-        $fecha = date("Y:m:j");
-        $mysqli->query("UPDATE documento SET ultimaFechaRevision = '$fecha', usuarioRevisa = NULL, revisado = 0 WHERE id='$idDocumento'");
-        
-        //require '../usuarios/libreria/PHPMailerAutoload.php'; 
-        $validamosExistenciaSolicitud=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE id='$id' ");
-        $extraerExistenciaSolicitud=$validamosExistenciaSolicitud->fetch_array(MYSQLI_ASSOC);
-         $nombreSolicitudEnviar=$extraerExistenciaSolicitud['nombreDocumento2'];
-         '<br>';
-         $documentoSolicitante=$extraerExistenciaSolicitud['quienSolicita'];
-        $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cedula ='$documentoSolicitante' ")or die(mysqli_error());
-        $usuariosCargo = $extraerUsuarios->fetch_array(MYSQLI_ASSOC);
-         '<br> solicitante: '.$nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
-        $correoNotificar=$usuariosCargo['correo'];
-        
-    }
-    
-    
-    if($accion == 'Aprobado' && $tipoSolicitud == 2){//Actualizacion
-        
-                    
-        $datosQueryIdAnt = $mysqli->query("SELECT idAnterior FROM documento WHERE idAnterior = '$idDocumento'");
-          
-        if(mysqli_num_rows($datosQueryIdAnt)<=0){
-            
-            //ESTE INSERT LARGO ME COPIA EL DOCUMENTO QUE SE VA A ACTUALIZAR PARA NO ALTERAR EL ORIGINAL
-            $copiaDocumento = $mysqli->query("INSERT INTO `documento`(`codificacion`,`tipoCodificacion`, `consecutivo`,`version`, `nombres`, `proceso`, `nombreProceso`, `norma`, `metodo`, `tipo_documento`, `htmlDoc`, `ubicacion`, `elabora`, `revisa`, `aprueba`, `documento_externo`, `definiciones`, `archivo_gestion`, `archivo_central`, `archivo_historico`, `disposicion_documental`, `responsable_disposicion`, `aprovacion_registro`, `usuario_aprovacion_reg`, `aprobado_elabora`, `aprobado_revisa`, `aprobado_elabora_e`, `aprobado_revisa_e`, `aprobado_aprueba_e`, `estado`, `control_cambios`, `flujo`, `mesesRevision`, `obsoleto`, `id_solicitud`, `estadoCreado`, `usuarioElabora`, `usuarioRevisa`, `usuarioAprueba`, `idAnterior`, `plataformaH`, `plataformaHRevisa`, `plataformaHAprueba`) SELECT `codificacion`,`tipoCodificacion`,`consecutivo`, `version`, `nombres`, `proceso`, `nombreProceso`, `norma`, `metodo`, `tipo_documento`, `htmlDoc`, `ubicacion`, `elabora`, `revisa`, `aprueba`, `documento_externo`, `definiciones`, `archivo_gestion`, `archivo_central`, `archivo_historico`, `disposicion_documental`, `responsable_disposicion`, `aprovacion_registro`, `usuario_aprovacion_reg`, `aprobado_elabora`, `aprobado_revisa`, `aprobado_elabora_e`, `aprobado_revisa_e`, `aprobado_aprueba_e`, `estado`, `control_cambios`, `flujo`, `mesesRevision`, `obsoleto`, `id_solicitud`, `estadoCreado`, `usuarioElabora`, `usuarioRevisa`, `usuarioAprueba`, `idAnterior`, `plataformaH`, `plataformaHRevisa`, `plataformaHAprueba` FROM documento WHERE id = $idDocumento")or die(mysqli_error($mysqli));
-
-            if($copiaDocumento){
-            
-                if($comentarios != NULL){
-                    $mysqli->query("INSERT INTO comentarioSolicitud (idSolicitud,comentario) VALUES ('$id','$comentarios')");
-                }
-                
-                $datosQuery = $mysqli->query("SELECT usuarioElabora FROM documento WHERE id = '$idDocumento'");
-                $datosusuarioElabora = $datosQuery->fetch_array(MYSQLI_ASSOC);
-                $usuarioElabora = $datosusuarioElabora['usuarioElabora'];
-                    
-                //VOY A EXTRAER EL ULRIMO ID DE LA TABLA DOCUMENTOS PARA ACTULIZAR EN LA SOLICITUD EL DOCUMENTO A ACTUALIZAR.
-                $queryId = $mysqli->query("SELECT MAX(id) AS id FROM `documento` WHERE usuarioElabora = '$usuarioElabora' ORDER BY id DESC");
-                $datos = $queryId->fetch_array(MYSQLI_ASSOC);
-                $idNuevo = $datos['id'];
-                $idNuevo = $idNuevo;
-                
-                //Relaciono el documento nuevo con la solicitud
-                $mysqli->query("UPDATE documento SET id_solicitud = '$id', idAnterior='$idDocumento' WHERE id = $idNuevo");
-                
-                if($dias != NULL){
-                    $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idNuevo', tiempoRespuesta = '$dias', QuienAprueba='$quienElabora', regresa = NULL WHERE id = $id"); 
-                }else{
-                    $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idNuevo', QuienAprueba='$quienElabora', regresa = NULL WHERE id = $id");
-                }
-                
-                
-                ?>
-                    <script> 
-                         window.onload=function(){
-                       
-                             document.forms["miformulario"].submit();
-                             //alert("Proceda a asignar elaborador, revisor y aprobador.");
-                         }
-                    </script>
-                     
-                    <form name="miformulario" action="../../actualizarDocRoles" method="POST" onsubmit="procesar(this.action);" >
-                        <input type="hidden" name="validacionAgregar" value="1">
-                        <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
-                        <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
-                        <input type="hidden" name="idDoc" value="<?php echo $idNuevo; ?>">
-                    </form> 
-                <?php
-                
-               
-            
-            }        
-            
-            
-        }else{
-            
-                $datosQuery = $mysqli->query("SELECT usuarioElabora FROM documento WHERE id = '$idDocumento'");
-                $datosusuarioElabora = $datosQuery->fetch_array(MYSQLI_ASSOC);
-                $usuarioElabora = $datosusuarioElabora['usuarioElabora'];
-                    
-                //VOY A EXTRAER EL ULRIMO ID DE LA TABLA DOCUMENTOS PARA ACTULIZAR EN LA SOLICITUD EL DOCUMENTO A ACTUALIZAR.
-                $queryId = $mysqli->query("SELECT MAX(id) AS id FROM `documento` WHERE usuarioElabora = '$usuarioElabora' ORDER BY id DESC");
-                $datos = $queryId->fetch_array(MYSQLI_ASSOC);
-                $idNuevo = $datos['id'];
-                
-                
-                //Relaciono el documento nuevo con la solicitud
-                $mysqli->query("UPDATE documento SET id_solicitud = '$id', idAnterior='$idDocumento' WHERE id = $idNuevo");
-                
-                if($dias != NULL){
-                    $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idNuevo', tiempoRespuesta = '$dias', QuienAprueba='$quienElabora', regresa = NULL WHERE id = $id"); 
-                }else{
-                    $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idNuevo', QuienAprueba='$quienElabora', regresa = NULL WHERE id = $id");
-                }
-            
-                ?>
-                    <script> 
-                         window.onload=function(){
-                       
-                             document.forms["miformulario"].submit();
-                             //alert("Proceda a asignar elaborador, revisor y aprobador.");
-                         }
-                    </script>
-                     
-                    <form name="miformulario" action="../../actualizarDocRoles" method="POST" onsubmit="procesar(this.action);" >
-                        <input type="hidden" name="validacionAgregar" value="1">
-                        <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
-                        <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
-                        <input type="hidden" name="idDoc" value="<?php echo $idNuevo; ?>">
-                    </form> 
-                <?php
-            
-        }
-        
-        
-        
-            
-        
-        
-    }
-    
-    if($accion == 'Aprobado' && $tipoSolicitud == 3){//Eliminacion
-        $recuperandoIDRespaldo=$mysqli->query("SELECT * FROM documento WHERE id='$idDocumento' ");
-        $recuperarRespaldo=$recuperandoIDRespaldo->fetch_array(MYSQLI_ASSOC);
-        $idRespaldo=$recuperarRespaldo['id_solicitud'];
-        $mysqli->query("UPDATE documento SET id_solicitud = '$id', id_solicitudRespaldo='$idRespaldo' WHERE id = $idDocumento");
-        
-        if($dias != NULL){
-            $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idDocumento', tiempoRespuesta = '$dias', QuienAprueba='$quienElabora' WHERE id = '$id'");
-        }else{
-            $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idDocumento', QuienAprueba='$quienElabora' WHERE id = '$id'");
-        }
-        
-        ?>
-                <script> 
-                     window.onload=function(){
-                   
-                         document.forms["miformulario"].submit();
-                         //alert("Proceda a asignar elaborador, revisor y aprobador.");
-                     }
-                </script>
-                 
-                <form name="miformulario" action="../../eliminarDocRoles" method="POST" onsubmit="procesar(this.action);" >
-                    <input type="hidden" name="validacionAgregar" value="1">
-                    <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
-                    <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
-                    <input type="hidden" name="idDocumento" value="<?php echo $idDocumento; ?>">
-                </form> 
-        <?php
-        
-        
-    }
-    
-    
+    if($nombres_busqueda_cargo_solicitud['id'] != NULL){//// si el encargado de la solicitud si es igual al encargado del usuario me deja continuar, caso contrario me debe sacar
    
+        if($extraer_pregunta_solicitud_rechazado_aprobado['estado'] == 'Aprobado'){
+            //echo 'documento aprobado';
+            ?>
+                    <script> 
+                         window.onload=function(){
+                       
+                             document.forms["miformularioAProbado"].submit();
+                             //alert("Proceda a asignar elaborador, revisor y aprobador.");
+                         }
+                    </script>
+                     
+                    <form name="miformularioAProbado" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
+                        <input type="hidden" name="alertaAprobado" value="<?php echo $extraer_pregunta_solicitud_rechazado_aprobado['id'];?>">
+                    </form> 
+            <?php 
+            
+        }elseif($extraer_pregunta_solicitud_rechazado_aprobado['estado'] == 'Rechazado'){
+            //echo 'documento rechazado';
+            ?>
+                    <script> 
+                         window.onload=function(){
+                       
+                             document.forms["miformularioRechazado"].submit();
+                             //alert("Proceda a asignar elaborador, revisor y aprobador.");
+                         }
+                    </script>
+                     
+                    <form name="miformularioRechazado" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
+                        <input type="hidden" name="alertaRechazado" value="1">
+                    </form> 
+            <?php
+        }else{
+            //echo 'continue';
+        
+        
+        if($accion == 'Aprobado' && $tipoSolicitud == 1){//Creacion
+            
+            if($dias != NULL){
+                $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', tiempoRespuesta = '$dias', QuienAprueba='$quienElabora' WHERE id = '$id'");
+            }else{
+                $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', QuienAprueba='$quienElabora' WHERE id = '$id'");
+            }
+            
+            $mysqli->query("INSERT INTO comentarioSolicitud (idSolicitud,comentario) VALUES ('$id','$comentarios')");
+            
+            
+            ?>
+                    <script> 
+                         window.onload=function(){
+                       
+                             document.forms["miformulario"].submit();
+                             //alert("Proceda a asignar elaborador, revisor y aprobador.");
+                         }
+                    </script>
+                     
+                    <form name="miformulario" action="../../crearDocumento" method="POST" onsubmit="procesar(this.action);" >
+                        <input type="hidden" name="validacionAgregar" value="1">
+                        <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
+                        <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
+                    </form> 
+            <?php 
+        }
     
-    if($accion == 'Rechazado' || $accion == 'Pendiente'){
         
-         $mysqli->query("INSERT INTO comentarioSolicitud (idSolicitud,comentario) VALUES ('$id','$comentarios')");
+        if($accion == 'Rechazado' && $tipoSolicitud == 2){
+            
+            $fecha = date("Y:m:j");
+            $mysqli->query("UPDATE documento SET ultimaFechaRevision = '$fecha', usuarioRevisa = NULL, revisado = 0 WHERE id='$idDocumento'");
+            
+            //require '../usuarios/libreria/PHPMailerAutoload.php'; 
+            $validamosExistenciaSolicitud=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE id='$id' ");
+            $extraerExistenciaSolicitud=$validamosExistenciaSolicitud->fetch_array(MYSQLI_ASSOC);
+             $nombreSolicitudEnviar=$extraerExistenciaSolicitud['nombreDocumento2'];
+             '<br>';
+             $documentoSolicitante=$extraerExistenciaSolicitud['quienSolicita'];
+            $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cedula ='$documentoSolicitante' ")or die(mysqli_error());
+            $usuariosCargo = $extraerUsuarios->fetch_array(MYSQLI_ASSOC);
+             '<br> solicitante: '.$nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
+            $correoNotificar=$usuariosCargo['correo'];
+            
+        }
         
-        $fechaCierre = date("Y:m:j");
-         //require '../usuarios/libreria/PHPMailerAutoload.php';
-        $validamosExistenciaSolicitud=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE id='$id' ");
-        $extraerExistenciaSolicitud=$validamosExistenciaSolicitud->fetch_array(MYSQLI_ASSOC);
-         $nombreSolicitudEnviar=utf8_encode($extraerExistenciaSolicitud['nombreDocumento2']);
-         '<br>';
-         $documentoSolicitante=$extraerExistenciaSolicitud['quienSolicita'];
-        $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cedula ='$documentoSolicitante' ")or die(mysqli_error());
-        $usuariosCargo = $extraerUsuarios->fetch_array(MYSQLI_ASSOC);
-         '<br> solicitante: '.$nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
-        $correoNotificar=$usuariosCargo['correo'];
+        
+        if($accion == 'Aprobado' && $tipoSolicitud == 2){//Actualizacion
+            
+                        
+            $datosQueryIdAnt = $mysqli->query("SELECT idAnterior FROM documento WHERE idAnterior = '$idDocumento'");
+              
+            if(mysqli_num_rows($datosQueryIdAnt)<=0){
+                
+                //ESTE INSERT LARGO ME COPIA EL DOCUMENTO QUE SE VA A ACTUALIZAR PARA NO ALTERAR EL ORIGINAL
+                $copiaDocumento = $mysqli->query("INSERT INTO `documento`(`codificacion`,`tipoCodificacion`, `consecutivo`,`version`, `nombres`, `proceso`, `nombreProceso`, `norma`, `metodo`, `tipo_documento`, `htmlDoc`, `ubicacion`, `elabora`, `revisa`, `aprueba`, `documento_externo`, `definiciones`, `archivo_gestion`, `archivo_central`, `archivo_historico`, `disposicion_documental`, `responsable_disposicion`, `aprovacion_registro`, `usuario_aprovacion_reg`, `aprobado_elabora`, `aprobado_revisa`, `aprobado_elabora_e`, `aprobado_revisa_e`, `aprobado_aprueba_e`, `estado`, `control_cambios`, `flujo`, `mesesRevision`, `obsoleto`, `id_solicitud`, `estadoCreado`, `usuarioElabora`, `usuarioRevisa`, `usuarioAprueba`, `idAnterior`, `plataformaH`, `plataformaHRevisa`, `plataformaHAprueba`) SELECT `codificacion`,`tipoCodificacion`,`consecutivo`, `version`, `nombres`, `proceso`, `nombreProceso`, `norma`, `metodo`, `tipo_documento`, `htmlDoc`, `ubicacion`, `elabora`, `revisa`, `aprueba`, `documento_externo`, `definiciones`, `archivo_gestion`, `archivo_central`, `archivo_historico`, `disposicion_documental`, `responsable_disposicion`, `aprovacion_registro`, `usuario_aprovacion_reg`, `aprobado_elabora`, `aprobado_revisa`, `aprobado_elabora_e`, `aprobado_revisa_e`, `aprobado_aprueba_e`, `estado`, `control_cambios`, `flujo`, `mesesRevision`, `obsoleto`, `id_solicitud`, `estadoCreado`, `usuarioElabora`, `usuarioRevisa`, `usuarioAprueba`, `idAnterior`, `plataformaH`, `plataformaHRevisa`, `plataformaHAprueba` FROM documento WHERE id = $idDocumento")or die(mysqli_error($mysqli));
+    
+                if($copiaDocumento){
+                
+                    if($comentarios != NULL){
+                        $mysqli->query("INSERT INTO comentarioSolicitud (idSolicitud,comentario) VALUES ('$id','$comentarios')");
+                    }
+                    
+                    $datosQuery = $mysqli->query("SELECT usuarioElabora FROM documento WHERE id = '$idDocumento'");
+                    $datosusuarioElabora = $datosQuery->fetch_array(MYSQLI_ASSOC);
+                    $usuarioElabora = $datosusuarioElabora['usuarioElabora'];
+                        
+                    //VOY A EXTRAER EL ULRIMO ID DE LA TABLA DOCUMENTOS PARA ACTULIZAR EN LA SOLICITUD EL DOCUMENTO A ACTUALIZAR.
+                    $queryId = $mysqli->query("SELECT MAX(id) AS id FROM `documento` WHERE usuarioElabora = '$usuarioElabora' ORDER BY id DESC");
+                    $datos = $queryId->fetch_array(MYSQLI_ASSOC);
+                    $idNuevo = $datos['id'];
+                    $idNuevo = $idNuevo;
+                    
+                    //Relaciono el documento nuevo con la solicitud
+                    $mysqli->query("UPDATE documento SET id_solicitud = '$id', idAnterior='$idDocumento' WHERE id = $idNuevo");
+                    
+                    if($dias != NULL){
+                        $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idNuevo', tiempoRespuesta = '$dias', QuienAprueba='$quienElabora', regresa = NULL WHERE id = $id"); 
+                    }else{
+                        $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idNuevo', QuienAprueba='$quienElabora', regresa = NULL WHERE id = $id");
+                    }
+                    
+                    
+                    ?>
+                        <script> 
+                             window.onload=function(){
+                           
+                                 document.forms["miformulario"].submit();
+                                 //alert("Proceda a asignar elaborador, revisor y aprobador.");
+                             }
+                        </script>
+                         
+                        <form name="miformulario" action="../../actualizarDocRoles" method="POST" onsubmit="procesar(this.action);" >
+                            <input type="hidden" name="validacionAgregar" value="1">
+                            <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
+                            <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
+                            <input type="hidden" name="idDoc" value="<?php echo $idNuevo; ?>">
+                        </form> 
+                    <?php
+                    
+                   
+                
+                }        
+                
+                
+            }else{
+                
+                    $datosQuery = $mysqli->query("SELECT usuarioElabora FROM documento WHERE id = '$idDocumento'");
+                    $datosusuarioElabora = $datosQuery->fetch_array(MYSQLI_ASSOC);
+                    $usuarioElabora = $datosusuarioElabora['usuarioElabora'];
+                        
+                    //VOY A EXTRAER EL ULRIMO ID DE LA TABLA DOCUMENTOS PARA ACTULIZAR EN LA SOLICITUD EL DOCUMENTO A ACTUALIZAR.
+                    $queryId = $mysqli->query("SELECT MAX(id) AS id FROM `documento` WHERE usuarioElabora = '$usuarioElabora' ORDER BY id DESC");
+                    $datos = $queryId->fetch_array(MYSQLI_ASSOC);
+                    $idNuevo = $datos['id'];
+                    
+                    
+                    //Relaciono el documento nuevo con la solicitud
+                    $mysqli->query("UPDATE documento SET id_solicitud = '$id', idAnterior='$idDocumento' WHERE id = $idNuevo");
+                    
+                    if($dias != NULL){
+                        $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idNuevo', tiempoRespuesta = '$dias', QuienAprueba='$quienElabora', regresa = NULL WHERE id = $id"); 
+                    }else{
+                        $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idNuevo', QuienAprueba='$quienElabora', regresa = NULL WHERE id = $id");
+                    }
+                
+                    ?>
+                        <script> 
+                             window.onload=function(){
+                           
+                                 document.forms["miformulario"].submit();
+                                 //alert("Proceda a asignar elaborador, revisor y aprobador.");
+                             }
+                        </script>
+                         
+                        <form name="miformulario" action="../../actualizarDocRoles" method="POST" onsubmit="procesar(this.action);" >
+                            <input type="hidden" name="validacionAgregar" value="1">
+                            <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
+                            <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
+                            <input type="hidden" name="idDoc" value="<?php echo $idNuevo; ?>">
+                        </form> 
+                    <?php
+                
+            }
+            
+            
+            
+                
+            
+            
+        }
+        
+        if($accion == 'Aprobado' && $tipoSolicitud == 3){//Eliminacion
+            $recuperandoIDRespaldo=$mysqli->query("SELECT * FROM documento WHERE id='$idDocumento' ");
+            $recuperarRespaldo=$recuperandoIDRespaldo->fetch_array(MYSQLI_ASSOC);
+            $idRespaldo=$recuperarRespaldo['id_solicitud'];
+            $mysqli->query("UPDATE documento SET id_solicitud = '$id', id_solicitudRespaldo='$idRespaldo' WHERE id = $idDocumento");
+            
+            if($dias != NULL){
+                $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idDocumento', tiempoRespuesta = '$dias', QuienAprueba='$quienElabora' WHERE id = '$id'");
+            }else{
+                $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', nombreDocumento = '$idDocumento', QuienAprueba='$quienElabora' WHERE id = '$id'");
+            }
+            
+            ?>
+                    <script> 
+                         window.onload=function(){
+                       
+                             document.forms["miformulario"].submit();
+                             //alert("Proceda a asignar elaborador, revisor y aprobador.");
+                         }
+                    </script>
+                     
+                    <form name="miformulario" action="../../eliminarDocRoles" method="POST" onsubmit="procesar(this.action);" >
+                        <input type="hidden" name="validacionAgregar" value="1">
+                        <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
+                        <input type="hidden" name="solicitud" value="<?php echo $solicitud; ?>">
+                        <input type="hidden" name="idDocumento" value="<?php echo $idDocumento; ?>">
+                    </form> 
+            <?php
+            
+            
+        }
         
         
-         
-  
-  
        
-              //Create a new PHPMailer instance
-              $mail = new PHPMailer();
-              $mail->IsSMTP();
-              
-              //Configuracion servidor mail
-              
-              require '../../correoEnviar/contenido.php';
-             
-              //Agregar destinatario
-              $mail->isHTML(true);
-              $mail->AddAddress($correoNotificar);
-               '-Enviar: '.$correoNotificar;
-              /// end
-          
-              $nombreDocumentoEnviarCorreo=$nombre;
-             
-  
-              
-              if($tipoSolicitud == '2'){
-                  $tipoSolicitudNombre='actualización';
-              }
-              if($tipoSolicitud == '3'){
-                  $tipoSolicitudNombre='eliminación';
-              }
-  
-              $mail->Subject='Solicitud de documento rechazado';
-              $mail->Body = utf8_decode('
-              <html>
-              <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-              <title>HTML</title>
-              </head>
-              <body>
-              <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
-              
-              <p>Estimado (a). <b><em>'.$nombredelUsuario.'</em></b>.
-              <br>
-              <p><b>La solicitud del documento '.$nombreSolicitudEnviar.', fue rechazada.</b></p>
-              
-              <br><br>
-              Se recomienda ingresar y verificar su solicitud.
-              <br><br>
-              Este correo es informativo y por tanto, le pedimos no responda este mensaje.
-              </p>
-              </body>
-              </html>
-              ');
-          
-              //Avisar si fue enviado o no y dirigir al index
-              if ($mail->Send()) {
-                  //echo'<script type="text/javascript">
-                  //    alert("Enviado Correctamente");
-                  //    </script>';
-                  
-              } else {
-                  //echo'<script type="text/javascript">
-                  //    alert("NO ENVIADO, intentar de nuevo");
-                  //    </script>';
-              }
-              $mail->ClearAddresses();  
-              
-              //// end
-  
-  
-         
-  
-  
-    }
         
-        
+        if($accion == 'Rechazado' || $accion == 'Pendiente'){
+            
+             $mysqli->query("INSERT INTO comentarioSolicitud (idSolicitud,comentario) VALUES ('$id','$comentarios')");
+            
+            $fechaCierre = date("Y:m:j");
+             //require '../usuarios/libreria/PHPMailerAutoload.php';
+            $validamosExistenciaSolicitud=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE id='$id' ");
+            $extraerExistenciaSolicitud=$validamosExistenciaSolicitud->fetch_array(MYSQLI_ASSOC);
+             $nombreSolicitudEnviar=utf8_encode($extraerExistenciaSolicitud['nombreDocumento2']);
+             '<br>';
+             $documentoSolicitante=$extraerExistenciaSolicitud['quienSolicita'];
+            $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cedula ='$documentoSolicitante' ")or die(mysqli_error());
+            $usuariosCargo = $extraerUsuarios->fetch_array(MYSQLI_ASSOC);
+             '<br> solicitante: '.$nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
+            $correoNotificar=$usuariosCargo['correo'];
+            
+            
+             
+      
+      
            
-        
-        $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', fechaCierre='$fechaCierre', QuienAprueba='$quienElabora' WHERE id = '$id'");
-        //$mysqli->query("INSERT INTO comentarioSolicitud (idSolicitud,comentario) VALUES ('$id','$comentarios')");
-       
-       
-       if($accion == 'Rechazado'){
-           $nombreEnvio='validacionAgregarRechazado';
-       }else{
-           $nombreEnvio='validacionAgregar';
-       }
-       
-       
-        ?>
-            <script> 
-                 window.onload=function(){
-               
-                     document.forms["miformulario"].submit();
-                 }
-            </script>
+                  //Create a new PHPMailer instance
+                  $mail = new PHPMailer();
+                  $mail->IsSMTP();
+                  
+                  //Configuracion servidor mail
+                  
+                  require '../../correoEnviar/contenido.php';
+                 
+                  //Agregar destinatario
+                  $mail->isHTML(true);
+                  $mail->AddAddress($correoNotificar);
+                   '-Enviar: '.$correoNotificar;
+                  /// end
+              
+                  $nombreDocumentoEnviarCorreo=$nombre;
+                 
+      
+                  
+                  if($tipoSolicitud == '2'){
+                      $tipoSolicitudNombre='actualización';
+                  }
+                  if($tipoSolicitud == '3'){
+                      $tipoSolicitudNombre='eliminación';
+                  }
+      
+                  $mail->Subject='Solicitud de documento rechazado';
+                  $mail->Body = utf8_decode('
+                  <html>
+                  <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                  <title>HTML</title>
+                  </head>
+                  <body>
+                  <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
+                  
+                  <p>Estimado (a). <b><em>'.$nombredelUsuario.'</em></b>.
+                  <br>
+                  <p><b>La solicitud del documento '.$nombreSolicitudEnviar.', fue rechazada.</b></p>
+                  
+                  <br><br>
+                  Se recomienda ingresar y verificar su solicitud.
+                  <br><br>
+                  Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                  </p>
+                  </body>
+                  </html>
+                  ');
+              
+                  //Avisar si fue enviado o no y dirigir al index
+                  if ($mail->Send()) {
+                      //echo'<script type="text/javascript">
+                      //    alert("Enviado Correctamente");
+                      //    </script>';
+                      
+                  } else {
+                      //echo'<script type="text/javascript">
+                      //    alert("NO ENVIADO, intentar de nuevo");
+                      //    </script>';
+                  }
+                  $mail->ClearAddresses();  
+                  
+                  //// end
+      
+      
              
-            <form name="miformulario" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
-                <input type="hidden" name="<?php echo $nombreEnvio;?>" value="1">
-            </form> 
-        <?php
-
+      
+      
+        }
+            
+            
+               
+            
+            $mysqli->query("UPDATE solicitudDocumentos SET estado ='$accion', fechaCierre='$fechaCierre', QuienAprueba='$quienElabora' WHERE id = '$id'");
+            //$mysqli->query("INSERT INTO comentarioSolicitud (idSolicitud,comentario) VALUES ('$id','$comentarios')");
+           
+           
+           if($accion == 'Rechazado'){
+               $nombreEnvio='validacionAgregarRechazado';
+           }else{
+               $nombreEnvio='validacionAgregar';
+           }
+           
+           
+            ?>
+                <script> 
+                     window.onload=function(){
+                   
+                         document.forms["miformulario"].submit();
+                     }
+                </script>
+                 
+                <form name="miformulario" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
+                    <input type="hidden" name="<?php echo $nombreEnvio;?>" value="1">
+                </form> 
+            <?php
+    
+        }
+        
+    }else{
+        ?>
+                    <script> 
+                         window.onload=function(){
+                             document.forms["documentoValidarSinEstado"].submit();
+                         }
+                         setTimeout(clickbuttonArchivoPerfil, 0000);
+                         function clickbuttonArchivoPerfil() { 
+                            document.forms["documentoValidarSinEstado"].submit();
+                         }
+                    </script>
+                     
+                    <form name="documentoValidarSinEstado" action="../../solicitudDocumentos" method="POST" onsubmit="procesar(this.action);" >
+                        <input value="1" name="alertaSinMensaje" type="hidden">
+                    </form>
+                <?php
     }
 }
     
@@ -1928,7 +1955,7 @@ if(isset($_POST['ActualizarAgregarSolicitud'])){
                     }
                     
                     
-                }else{ 
+                }else{
                     ?>
                         <script> 
                              window.onload=function(){
