@@ -9,143 +9,149 @@ require_once 'conexion/bd.php';
 
     $queryDoc = $mysqli->query("SELECT * FROM documento WHERE id = '".$_POST['idDocumento']."'")or die(mysqli_error($mysqli));
     $datosDoc = $queryDoc->fetch_assoc();
-    $idUsuario = $_SESSION['session_idUsuario'];
-    if($datosDoc['asumeFlujo'] == $idUsuario){//sE VALIDA QUE SEA EL USUARIO QUE TOMO PRIMERO LA SOLICITUD. 
-        
 
-    }else{ 
-        if($datosDoc['asumeFlujo'] == NULL){
+
+   
+    
+        $idUsuario = $_SESSION['session_idUsuario'];
+        if($datosDoc['asumeFlujo'] == $idUsuario){//sE VALIDA QUE SEA EL USUARIO QUE TOMO PRIMERO LA SOLICITUD. 
+            
+    
+        }else{ 
+            if($datosDoc['asumeFlujo'] == NULL){
+            ?>    
+                <script> 
+                     window.onload=function(){
+                   
+                         document.forms["sacarDelFlujo"].submit();
+                     }
+                     setTimeout(clickbuttonScarFlujo, 0999);
+                     function clickbuttonScarFlujo() { 
+                        document.forms["sacarDelFlujo"].submit();
+                     }
+                </script>
+                 
+                <form name="sacarDelFlujo" action="creacionDocumental" method="POST" onsubmit="procesar(this.action);" >
+                    <input type="hidden" name="idDocumento" value="<?php echo $idDocumento;?>">
+                    <input type="hidden" name="validacionUsuario2" value="1">
+                </form>
+        <?php    
+            }else{
         ?>    
-            <script> 
-                 window.onload=function(){
-               
-                     document.forms["sacarDelFlujo"].submit();
-                 }
-                 setTimeout(clickbuttonScarFlujo, 0999);
-                 function clickbuttonScarFlujo() { 
-                    document.forms["sacarDelFlujo"].submit();
-                 }
-            </script>
-             
-            <form name="sacarDelFlujo" action="creacionDocumental" method="POST" onsubmit="procesar(this.action);" >
-                <input type="hidden" name="idDocumento" value="<?php echo $idDocumento;?>">
-                <input type="hidden" name="validacionUsuario2" value="1">
-            </form>
-    <?php    
-        }else{
-    ?>    
-            <script> 
-                 window.onload=function(){
-               
-                     document.forms["sacarDelFlujo"].submit();
-                 }
-                 setTimeout(clickbuttonScarFlujo, 1000);
-                 function clickbuttonScarFlujo() { 
-                    document.forms["sacarDelFlujo"].submit();
-                 }
-            </script>
-             
-            <form name="sacarDelFlujo" action="creacionDocumental" method="POST" onsubmit="procesar(this.action);" >
-                <input type="hidden" name="idDocumento" value="<?php echo $_POST['idDocumento'];?>">
-                <input type="hidden" name="validacionUsuario" value="1">
-            </form>
-    <?php  
+                <script> 
+                     window.onload=function(){
+                   
+                         document.forms["sacarDelFlujo"].submit();
+                     }
+                     setTimeout(clickbuttonScarFlujo, 1000);
+                     function clickbuttonScarFlujo() { 
+                        document.forms["sacarDelFlujo"].submit();
+                     }
+                </script>
+                 
+                <form name="sacarDelFlujo" action="creacionDocumental" method="POST" onsubmit="procesar(this.action);" >
+                    <input type="hidden" name="idDocumento" value="<?php echo $_POST['idDocumento'];?>">
+                    <input type="hidden" name="validacionUsuario" value="1">
+                </form>
+        <?php  
+            }
+         
         }
-     
-    }
+        
+        
+        //$rolFlujo = $_POST['rol'];
+        $idDocumento = $_POST['idDocumento'];
+        $nombreDoc = $_POST['nombreDocumento'];
+        $norma = $_POST['norma'];
+        $proceso = $_POST['proceso'];
+        $metodo = $_POST['rad_metodo'];
+        $tipoDoc = $_POST['tipoDoc'];
+        $ubicacion = $_POST['ubicacion'];
+        $elabora = $_POST['select_encargadoE'];
+        $revisa = $_POST['select_encargadoR'];
+        $aprueba = $_POST['select_encargadoA'];
+        
+    
+        $html = htmlentities($_POST['editor1']);
+        
+        $nombrePDF =$_FILES['archivopdf']['name']; 
+        $rutaPDF =$_FILES['archivopdf']['tmp_name']; 
+        $nombreOtro =$_FILES['archivootro']['name'];
+        $rutaOtro =$_FILES['archivootro']['tmp_name'];
+        
+        $documetosExternos = $_POST['documentos_externos'];
+        $definiciones = $_POST['definiciones'];
+        
+        $archivo_gestion = $_POST['archivo_gestion']; 
+        $archivo_central = $_POST['archivo_central']; 
+        $archivo_historico = $_POST['archivo_historico']; 
+        
+        $diposicion_documental = $_POST['diposicion_documental'];
+        $select_encargadoD = $_POST['select_encargadoD'];
+        $radDispoDoc = $_POST['radiobtnD'];
+    
+        $fecha = date("Ymjhis");
+    
+        $radElabora = $_POST['radiobtnE'];
+        $radRevisa = $_POST['radiobtnR'];
+        $radAprueba = $_POST['radiobtnA'];
+        
+        $acentos = $mysqli->query("SET NAMES 'utf8'");
+        $queryDoc = $mysqli->query("SELECT * FROM documento WHERE id = $idDocumento")or die(mysqli_error($mysqli));
+        $datosDoc = $queryDoc->fetch_assoc();
+    
+        if(!file_exists('archivos/documentos/')){
+        	mkdir('archivos/documentos',0777,true);
+        	if(file_exists('archivos/documentos/')){
+        		if(move_uploaded_file($rutaPDF, 'archivos/documentos/'.$fecha.$nombrePDF)){
+        			
+        		}else{
+        			//echo "Archivo no se pudo guardar";
+        		}
+        	}
+        }else{
+        	if(move_uploaded_file($rutaPDF, 'archivos/documentos/'.$fecha.$nombrePDF)){
+        	
+        	}else{
+        		//echo "Archivo no se pudo guardar";
+        	}
+        }
+        
+        if(!file_exists('archivos/documentos/')){
+        	mkdir('archivos/documentos',0777,true);
+        	if(file_exists('archivos/documentos/')){
+        		if(move_uploaded_file($rutaOtro, 'archivos/documentos/'.$fecha.$nombreOtro)){
+        			//echo "Archivo guardado con exito";
+        			
+        		}else{
+        			//echo "Archivo no se pudo guardar";
+        		}
+        	}
+        }else{
+        	if(move_uploaded_file($rutaOtro, 'archivos/documentos/'.$fecha.$nombreOtro)){
+        		//echo "Archivo guardado con exito";
+        	}else{
+        		//echo "Archivo no se pudo guardar";
+        	}
+        }
+        
+        if($datosDoc['estadoElimina'] == NULL || $datosDoc['estadoEliminar'] == ''){
+            $rolFlujo = "Encargado(a) solicitud"; 
+        }
+        
+        if($datosDoc['estadoElimina'] == "Pendiente"){
+            $rolFlujo = "Elaborador(a)";
+        }
+        
+        if($datosDoc['estadoElimina'] == "Elaborado"){
+            $rolFlujo = "Revisor(a)";
+        }
+        
+        if($datosDoc['estadoElimina'] == "Revisado"){
+            $rolFlujo = "Aprobador(a)";
+        }
     
     
-    //$rolFlujo = $_POST['rol'];
-    $idDocumento = $_POST['idDocumento'];
-    $nombreDoc = $_POST['nombreDocumento'];
-    $norma = $_POST['norma'];
-    $proceso = $_POST['proceso'];
-    $metodo = $_POST['rad_metodo'];
-    $tipoDoc = $_POST['tipoDoc'];
-    $ubicacion = $_POST['ubicacion'];
-    $elabora = $_POST['select_encargadoE'];
-    $revisa = $_POST['select_encargadoR'];
-    $aprueba = $_POST['select_encargadoA'];
-    
-
-    $html = htmlentities($_POST['editor1']);
-    
-    $nombrePDF =$_FILES['archivopdf']['name']; 
-    $rutaPDF =$_FILES['archivopdf']['tmp_name']; 
-    $nombreOtro =$_FILES['archivootro']['name'];
-    $rutaOtro =$_FILES['archivootro']['tmp_name'];
-    
-    $documetosExternos = $_POST['documentos_externos'];
-    $definiciones = $_POST['definiciones'];
-    
-    $archivo_gestion = $_POST['archivo_gestion']; 
-    $archivo_central = $_POST['archivo_central']; 
-    $archivo_historico = $_POST['archivo_historico']; 
-    
-    $diposicion_documental = $_POST['diposicion_documental'];
-    $select_encargadoD = $_POST['select_encargadoD'];
-    $radDispoDoc = $_POST['radiobtnD'];
-
-    $fecha = date("Ymjhis");
-
-    $radElabora = $_POST['radiobtnE'];
-    $radRevisa = $_POST['radiobtnR'];
-    $radAprueba = $_POST['radiobtnA'];
-    
-    $acentos = $mysqli->query("SET NAMES 'utf8'");
-    $queryDoc = $mysqli->query("SELECT * FROM documento WHERE id = $idDocumento")or die(mysqli_error($mysqli));
-    $datosDoc = $queryDoc->fetch_assoc();
-
-    if(!file_exists('archivos/documentos/')){
-    	mkdir('archivos/documentos',0777,true);
-    	if(file_exists('archivos/documentos/')){
-    		if(move_uploaded_file($rutaPDF, 'archivos/documentos/'.$fecha.$nombrePDF)){
-    			
-    		}else{
-    			//echo "Archivo no se pudo guardar";
-    		}
-    	}
-    }else{
-    	if(move_uploaded_file($rutaPDF, 'archivos/documentos/'.$fecha.$nombrePDF)){
-    	
-    	}else{
-    		//echo "Archivo no se pudo guardar";
-    	}
-    }
-    
-    if(!file_exists('archivos/documentos/')){
-    	mkdir('archivos/documentos',0777,true);
-    	if(file_exists('archivos/documentos/')){
-    		if(move_uploaded_file($rutaOtro, 'archivos/documentos/'.$fecha.$nombreOtro)){
-    			//echo "Archivo guardado con exito";
-    			
-    		}else{
-    			//echo "Archivo no se pudo guardar";
-    		}
-    	}
-    }else{
-    	if(move_uploaded_file($rutaOtro, 'archivos/documentos/'.$fecha.$nombreOtro)){
-    		//echo "Archivo guardado con exito";
-    	}else{
-    		//echo "Archivo no se pudo guardar";
-    	}
-    }
-    
-    if($datosDoc['estadoElimina'] == NULL || $datosDoc['estadoEliminar'] == ''){
-        $rolFlujo = "Encargado(a) solicitud"; 
-    }
-    
-    if($datosDoc['estadoElimina'] == "Pendiente"){
-        $rolFlujo = "Elaborador(a)";
-    }
-    
-    if($datosDoc['estadoElimina'] == "Elaborado"){
-        $rolFlujo = "Revisor(a)";
-    }
-    
-    if($datosDoc['estadoElimina'] == "Revisado"){
-        $rolFlujo = "Aprobador(a)";
-    }
     
 ?>
 <!DOCTYPE html>
@@ -340,6 +346,37 @@ require_once 'conexion/bd.php';
                 }else{
                     $títulRol==NULL;
                 }
+                
+                /// se usa para detectar si el usuario encargado fue reasignado
+                $query_busqueda_cargo = $mysqli->query("SELECT  cedula,cargo FROM usuario WHERE cedula = '".$_SESSION["session_username"]."'");
+                $nombres_busqueda_cargo = $query_busqueda_cargo->fetch_array(MYSQLI_ASSOC);
+                        
+                $query_busqueda_cargo_solicitud = $mysqli->query("SELECT  id,encargadoAprobar FROM solicitudDocumentos WHERE id = '".$datosDoc['id_solicitud']."' AND encargadoAprobar='".$nombres_busqueda_cargo['cargo']."' ");
+                $nombres_busqueda_cargo_solicitud = $query_busqueda_cargo_solicitud->fetch_array(MYSQLI_ASSOC);
+                
+                if($nombres_busqueda_cargo_solicitud['id'] != NULL){//// si el encargado de la solicitud si es igual al encargado del usuario me deja continuar, caso contrario me debe sacar
+                
+                    
+                }else{
+                    
+                    ?>
+                                <script> 
+                                     window.onload=function(){
+                                         document.forms["documentoValidarSinEstado"].submit();
+                                     }
+                                     setTimeout(clickbuttonArchivoPerfil, 2000);
+                                     function clickbuttonArchivoPerfil() { 
+                                        document.forms["documentoValidarSinEstado"].submit();
+                                     }
+                                </script>
+                                 
+                                <form name="documentoValidarSinEstado" action="creacionDocumental" method="POST" onsubmit="procesar(this.action);" >
+                                    <input value="1" name="alertaSinMensaje" type="hidden">
+                                </form>
+                            <?php
+                
+                }
+                
             }
              
              if($títulRol == NULL){

@@ -1407,7 +1407,7 @@ $verObsoletos = $_POST['verObsoletos'];
                                             
                                             
                                             if($listdandoUsuarioCreacion == 1){
-                                                if($extraerDocumentoSolicitadoValidnado['asumeFlujo'] > 0){ /// si encuentra un asignado, muestra el botón para liberar
+                                               // if($extraerDocumentoSolicitadoValidnado['asumeFlujo'] > 0){ /// si encuentra un asignado, muestra el botón para liberar
                                             ?>
                                             <form action="creacionDocumentalAsignacionVerNotificar" method="post">
                                                     <!-- enviamos esta variable para activar alerta y cambio de datos en la BD -->
@@ -1460,7 +1460,7 @@ $verObsoletos = $_POST['verObsoletos'];
                                                     </button>
                                             </form>
                                             <?php
-                                                }
+                                                //}
                                             }
                                         
                                         if($extraerDocumentoSolicitadoValidnado['asumeFlujo'] > 0 && $listdandoUsuarioCreacion <> 1){ // si es mayor a 0 nos debería mostrar el flujo ha cambiar

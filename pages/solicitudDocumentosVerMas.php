@@ -147,6 +147,11 @@ if(!isset($_SESSION["session_username"])){
             $tipoDoc = $row['tpdG'];
         }
         
+        
+        $queryProceso = $mysqli->query("SELECT * FROM procesos WHERE id = '".$row['proceso']."' ");
+        $colProceso = $queryProceso->fetch_array(MYSQLI_ASSOC);
+        $enviarNombreProceso=$colProceso['nombre'];
+        
         //$tipoDoc = $col['nombre'];
         //$nombre = $row['nombreDocumento'];
         $solicitud = $row['solicitud'];
@@ -177,6 +182,10 @@ if(!isset($_SESSION["session_username"])){
                   <div class="form-group">
                     <h6 class="description-header"><b>Tipo Documento:</b></h6>
                     <span class=""><?php echo $tipoDoc;?></span>
+                  </div>
+                  <div class="form-group">
+                    <h6 class="description-header"><b>Proceso:</b></h6>
+                    <span class=""><?php echo $enviarNombreProceso;?></span>
                   </div>
                   <div class="form-group">
                     <h6 class="description-header"><b>Nombre:</b></h6>
