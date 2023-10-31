@@ -302,25 +302,23 @@ $ruta = $_POST['rutaSubir'];
                     </div>
                     
                     
-                <!--     
+                     
                     <div class="form-group">
                         <label>Documento:</label>
                         <div class="custom-file">
-                            
-                           
-                            <button type='button' style="width:15%;"  class='btn btn-block btn-warning btn-sm'>
-                                <i class='fas fa-download'></i>
-                                <a style='color:black' href='< ?php echo $var.$var2;?>' download='' target='_blank'>Descargar</a>
-                            </button>
-                        
-                           
-                            <input type="file" class="custom-file-input" id="exampleInputFile" name="archivo" accept=".xls,.xlsx,.docx,.doc,.pdf, .png, .jpg, .jpeg" required readonly>
+                            <input type="file" class="custom-file-input" id="exampleInputFile" name="archivo" accept=".xls,.xlsx,.docx,.doc,.pdf, .png, .jpg, .jpeg"   >
                             <label class="custom-file-label" for="exampleInputFile">Seleccionar archivo</label>
-                            
-                            
                         </div>
+                        <br><br>
+                        <?php
+                        echo $var.$var2;
+                        ?>
+                        <button type="button" style="width:15%;"  class='btn btn-block btn-warning btn-sm'>
+                                <i class="fas fa-download"></i>
+                                <a style="color:black" href="<?php echo $var.$var2;?>" download="" target="_blank">Descargar</a>
+                        </button>
                     </div>
--->
+
                     
                     
                     <div class="form-group ">
@@ -442,7 +440,47 @@ $ruta = $_POST['rutaSubir'];
         <div class="col">
             </div>
             
-           
+        <?php
+if($_POST['alerta'] != NULL){
+?>
+                        <script>
+                            $(document).ready(function() {
+                              // indicamos que se ejecuta la funcion a los 5 segundos de haberse
+                              // cargado la pagina
+                              setTimeout(clickbutton, 0000);
+                            
+                              function clickbutton() {
+                                // simulamos el click del mouse en el boton del formulario
+                                $("#action-button-bloqueado").click();
+                                //alert("Aqui llega"); //Debugger
+                              }
+                              $('#action-button-bloqueado').on('click',function() {
+                               // console.log('action');
+                              });
+                            });
+                       </script> 
+                       <button id="action-button-bloqueado" style="display:none;" data-toggle="modal" data-target='#modal-danger-alerta-Bloqueo'></button>
+                    
+                        <div class="modal fade" id="modal-danger-alerta-Bloqueo">
+                            <div class="modal-dialog">
+                              <div class="modal-content bg-danger">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Alerta</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <p>El nombre del archivo contiene caracteres inválidos, por favor digite el nombre completo del archivo e intente cargar.</p>
+                                </div>
+                                 <!-- END formulario para eliminar por el id -->
+                              </div>
+                            </div>
+                        </div>
+<?php
+}
+?>
+        
         </div>
         <!-- /.row -->
       </div><!-- /.container-fluid -->

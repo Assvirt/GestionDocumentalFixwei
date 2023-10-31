@@ -586,11 +586,17 @@ if($permisoEliminar == FALSE){
                            $habilitarSeguimieto = "";
                        }
                         
+                        if($root == '1'){
+                         echo"<form action='indicadoresVer' method='POST'>";
+                         echo"<input type='hidden' name='id' value='$id'>";
+                         echo"<td><button type='submit' class='btn btn-block btn-primary btn-sm' ><i class='fas fa-eye'></i> Ver m&aacute;s </button></td>";
+                         echo"</form>";
+                        }else{
                          echo"<form action='indicadoresVer' method='POST'>";
                          echo"<input type='hidden' name='id' value='$id'>";
                          echo"<td><button type='submit' class='btn btn-block btn-primary btn-sm' $habilitarSeguimieto><i class='fas fa-eye'></i> Ver m&aacute;s </button></td>";
                          echo"</form>";
-                         
+                        }
                         
                   
                                 
@@ -622,26 +628,23 @@ if($permisoEliminar == FALSE){
                     
                     
                     if($root == 1){
-                         echo"<form action='indicadoresEditar1' method='POST'>";
-                        echo"<input type='hidden' name='id' value= '$id' >";
-                        echo" <td style='display:;'><button  type='submit' class='btn btn-block btn-success btn-sm' ><i class='fas fa-edit'></i> Editar</button></td>";
-                        echo"</form>";
+                        //echo"<form action='indicadoresEditar1' method='POST'>";
+                        //echo"<input type='hidden' name='id' value= '$id' >";
+                        echo" <td style='display:;'><button  type='submit' class='btn btn-block btn-success btn-sm' disabled><i class='fas fa-edit'></i> Editar</button></td>";
+                        //echo"</form>";
                     }else{
-                    
-                    
-                    echo"<form action='indicadoresEditar1' method='POST'>";
-                    echo"<input type='hidden' name='id' value= '$id' >";
-                    echo" <td style='display:$visibleE;'><button  type='submit' class='btn btn-block btn-success btn-sm' $habilitarEditarIndicador><i class='fas fa-edit'></i> Editar</button></td>";
-                    echo"</form>";
+                        echo"<form action='indicadoresEditar1' method='POST'>";
+                        echo"<input type='hidden' name='id' value= '$id' >";
+                        echo" <td style='display:$visibleE;'><button  type='submit' class='btn btn-block btn-success btn-sm' $habilitarEditarIndicador><i class='fas fa-edit'></i> Editar</button></td>";
+                        echo"</form>";
                     }
                     
-                    /*
-                    echo"<form action='controlador/indicadores/controller' method='POST'>";
-                    echo"<input type='hidden' name='id' value= '$id' >";
-                    echo" <td style='display:$visibleD;'><button  type='submit' name='Eliminar' class='btn btn-block btn-danger btn-sm' onclick='return ConfirmDelete()' ><i class='fas fa-trash-alt'></i> Eliminar</button></td>";
-                    echo"</form>";
-                    */
+                   
                      /// validaci��n de script y funcion de eliminacion
+                        if($root == 1){
+                        echo "<td style='display:".$visibleD."'><button disabled style='color:white;' class='btn btn-block btn-danger btn-sm'><i class='fas fa-trash-alt'></i> Eliminar</button></td>
+                        ";    
+                        }else{
                         ?>
                         <input type='hidden' id='capturaVariable<?php echo $contador++;?>'  value= '<?php echo $id;?>' >
                         <td style='display:<?php echo $visibleD;?>'><a onclick='funcionFormula<?php echo $contador1++;?>()' style='color:white;' data-toggle='modal' data-target='#modal-danger' class='btn btn-block btn-danger btn-sm'><i class='fas fa-trash-alt'></i> Eliminar</a></td>
@@ -652,6 +655,7 @@ if($permisoEliminar == FALSE){
                             }
                        </script>
                         <?php
+                        }
                         /// END
                     
                         $permisoGestionar = FALSE;

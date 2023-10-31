@@ -888,6 +888,10 @@ if(!isset($_SESSION["session_username"])){
     
 <?php
     }
+    
+    if($root == '1'){
+        
+    }else{
 ?>
 
 <section class="content">
@@ -904,7 +908,9 @@ if(!isset($_SESSION["session_username"])){
                             <!-- /.card-footer-->
         </div>
 </section>
-
+<?php
+}
+?>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

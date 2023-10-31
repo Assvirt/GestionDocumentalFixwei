@@ -333,15 +333,20 @@ require_once 'permisosPlataforma.php';
                     /////// si es administrador no debería poder crear archivo o carpeta
                     if($root == '1'){
                         $tamaW='50%';
+                    
                     }else{
                         $tamaW='100%';
-                    }
+                        
                     ?>
-                     <form action="" method="POST" >
+                    <form action="" method="POST" >
                         <input type="hidden" name="recibeCarpeta" id="recibeCarpeta" value=""> 
                         <input type="hidden" name="verCarpetaCreada" value="<?php echo $rutaVer;?>">
                         <button type="submit" name="descarMasiva" class="btn btn-block btn-success float-left btn-sm"  style='color:white;width:<?php echo $tamaW;?>;'><i class='fas fa-edit'></i> Validar descarga</button>
                     </form>
+                    <?php
+                    }
+                    ?>
+                     
                     <?php
                     //}
                     ?>
