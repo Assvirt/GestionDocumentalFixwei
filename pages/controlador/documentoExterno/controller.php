@@ -4,6 +4,7 @@ require_once '../../conexion/bd.php';
 ////////// validamos el ingreso por el name del  boton del formulario
 date_default_timezone_set("America/Bogota");
 $fecha = date("Ymjhis");
+error_reporting(E_ERROR);
 
 if(isset($_POST['agregar'])){
 
