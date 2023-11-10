@@ -374,12 +374,14 @@ require_once 'conexion/bd.php';
                             <label for="exampleInputFile">Documento PDF</label>
                             <?php
                             if($disabledPDF == 'disabled'){
+                                $campoRequeridoPdf='required';
                             ?>
                             <button type='button'  class='btn btn-block btn-warning btn-sm  <?php echo $disabledPDF;?>'>
                                 <a style='color:black' href='#' ><i class='fas fa-download'></i> Descargar</a>
                             </button>
                             <?php
                             }else{
+                                $campoRequeridoPdf='';
                             ?>
                             <button type='button'  class='btn btn-block btn-warning btn-sm  <?php echo $disabledPDF;?>'>
                                 <a style='color:black' href='<?php echo $rutaPDF;?>' target="_blank" ><i class='fas fa-download'></i> Descargar</a>
@@ -389,8 +391,8 @@ require_once 'conexion/bd.php';
                             <br>
                             <label for="exampleInputFile">Nueva versión documento PDF: </label>
                             <div class="input-group">
-                              <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="miInput" name="archivopdf" accept=".pdf" >
+                              <div class="custom-file"> 
+                                <input type="file" class="custom-file-input" id="miInput" name="archivopdf" accept=".pdf" <?php echo $campoRequeridoPdf;?> >
                                     <!-- Agregamos esta linea para validar que solo sea el documento pdf-->
                                     <script>
                                     $('input[name="archivopdf"]').on('change', function(){
@@ -431,12 +433,14 @@ require_once 'conexion/bd.php';
                             <label for="exampleInputFile">Documento editable</label>
                             <?php
                             if($disabledOtro == 'disabled'){
+                                $campoRequeridoOtro='required';
                             ?>
                             <button type='button'  class='btn btn-block btn-warning btn-sm <?php echo $disabledOtro;?>' >
                                 <a style='color:black' href='#' > <i class='fas fa-download'></i> Descargar</a>
                             </button>
                             <?php
                             }else{
+                                $campoRequeridoOtro='';
                             ?>
                             <button type='button'  class='btn btn-block btn-warning btn-sm <?php echo $disabledOtro;?>' >
                                 <a style='color:black' href='<?php echo $rutaOtro;?>' target="_blank" ><i class='fas fa-download'></i> Descargar</a>
@@ -448,7 +452,7 @@ require_once 'conexion/bd.php';
                             <label for="exampleInputFile">Nueva versión del documento editable: (.docx, .xlsx, .dwg, .pptx) </label>
                             <div class="input-group">
                               <div class="custom-file">
-                                <input type="file" class="custom-file-input <?php echo $disabledOtro;?>" id="miInput2" name="archivootro" accept=".xls,.xlsx,.docx,.doc,.dwg">
+                                <input type="file" class="custom-file-input <?php echo $disabledOtro;?>" id="miInput2" name="archivootro" accept=".xls,.xlsx,.docx,.doc,.dwg" <?php echo $campoRequeridoOtro;?> >
                                     <!-- Agregamos esta linea para validar que solo sea el documento pdf-->
                                     <script>
                                     $('input[name="archivootro"]').on('change', function(){
