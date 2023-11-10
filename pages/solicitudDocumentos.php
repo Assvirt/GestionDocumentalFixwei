@@ -177,7 +177,7 @@ require_once 'permisosPlataforma.php';
             if($proceso_activado == 1 && $tipo_documento_activado == 1 && $consecutivo_activado == 1){
             ?>
             <div class="col-sm">
-                <button type="button" class="btn btn-block btn-info btn-sm"><a href="solicitudDocumentosAsignacion"><font color="white"><i class="fas fa-clipboard-check"></i> Asignaciones</font></a></button>
+                <button type="button" class="btn btn-block btn-info btn-sm"><a href="solicitudDocumentosAsignacion"><font color="white"><i class="fas fa-clipboard-check"></i> Reasignaciones</font></a></button>
             </div>
             <?php
             }
@@ -330,7 +330,8 @@ require_once 'permisosPlataforma.php';
                         $querymela = $mysqli->query("SELECT * FROM documento WHERE id = '$idMelo'");
                         $colMela = $querymela->fetch_array(MYSQLI_ASSOC);
                         $nombreMelo = $colMela['nombres'];
-                        echo" <td style='text-align: justify;'>".$nombreMelo."</td>";
+                        //echo" <td style='text-align: justify;'>".$nombreMelo."</td>";
+                        echo" <td style='text-align: justify;'>".$row['nombreDocumento2']."</td>";
                      }else{
                      echo" <td style='text-align: justify;'>".$row['nombreDocumento']."</td>";
                      }
@@ -561,6 +562,17 @@ $validacionEliminar=$_POST['validacionEliminar'];
     
     <?php
     }
+    
+    if($_POST['alertaSinMensaje'] == 1){
+    ?>
+        Toast.fire({
+            type: 'error',
+            title: 'Acceso denegado.'
+        })
+    
+    <?php
+    }
+    
     ?>
     
   });

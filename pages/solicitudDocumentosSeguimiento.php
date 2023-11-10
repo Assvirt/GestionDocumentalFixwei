@@ -132,7 +132,7 @@ if(!isset($_SESSION["session_username"])){
         }else{
             $tipoDoc = $row['tpdG'];
         }
-        //$nombre = $row['nombreDocumento'];
+        $enviarEliminar = $row['nombreDocumento'];
         $solicitud = $row['solicitud'];
         $ruta = $row['documento'];
         $devuelto = $row['regresa'];
@@ -541,7 +541,15 @@ if(!isset($_SESSION["session_username"])){
                     }
                   }
                   
-                  if($solicitudTipo == 2){
+                  if($solicitudTipo == 2){ //echo 'id solicitud: '.$enviarDatosId;
+                  
+                  // validamos que el documento ya ha sido aprobado y evitamos volver a llenar datos que ya existen
+                    $consultandoDocumentos=$mysqli->query("SELECT * FROM documento WHERE id_solicitud='$enviarDatosId' ");
+                    $extraerDocumentoEstado=$consultandoDocumentos->fetch_array(MYSQLI_ASSOC);
+                    $extraerDoEstadoDocumento=$extraerDocumentoEstado['estadoActualiza'];
+                    // end
+                  
+                  if($extraerDoEstadoDocumento == 'Aprobado' || $extraerDoEstadoDocumento == 'Pendiente' || $extraerDoEstadoDocumento == 'Elaborado' || $extraerDoEstadoDocumento == 'Revisado'){ }else{
                     if($estado == 'Rechazado'){ }else{
               ?>
                 <form name="miformulario" action="actualizarDocRoles" method="POST" onsubmit="procesar(this.action);" >
@@ -553,10 +561,22 @@ if(!isset($_SESSION["session_username"])){
                 <?php
                     }
                   }
+                    
+                  }
                   
                   if($solicitudTipo == 3){
                        if(isset($_POST['rechazoAplicar'])){ }else{
                            if(isset($_POST['documentoRegresa'])){ }else{
+                               
+                            'id elimi: '.$enviarEliminar;
+                               
+                            // validamos que el documento ya ha sido aprobado y evitamos volver a llenar datos que ya existen
+                            $consultandoDocumentos=$mysqli->query("SELECT * FROM documento WHERE id='$enviarEliminar' ");
+                            $extraerDocumentoEstado=$consultandoDocumentos->fetch_array(MYSQLI_ASSOC);
+                            '<br>'.$extraerDoEstadoDocumento=$extraerDocumentoEstado['estadoElimina'];
+                            // end
+                 if($extraerDoEstadoDocumento == 'Aprobado' || $extraerDoEstadoDocumento == 'Pendiente' || $extraerDoEstadoDocumento == 'Elaborado' || $extraerDoEstadoDocumento == 'Revisado'){ }else{
+                                
               ?>
                 <form name="miformulario" action="eliminarDoc" method="POST" onsubmit="procesar(this.action);" >
                     <input type="hidden" name="idSolicitud" value="<?php echo $id; ?>">
@@ -565,6 +585,7 @@ if(!isset($_SESSION["session_username"])){
                     <button type="submit" name="seguimiento" class="btn btn-success float-right">Asignar </button>
                 </form>
                 <?php
+                 }
                            }
                        }
                   }

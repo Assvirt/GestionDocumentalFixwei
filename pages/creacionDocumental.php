@@ -178,7 +178,7 @@ require_once 'permisosPlataforma.php';
                 <?php
                  if($root == 1){
                 ?>
-                <button type="button" class="btn btn-block btn-info btn-sm"><a href="creacionDocumentalAsignacion"><font color="white"><i class="fas fa-clipboard-check"></i> Asignaciones</font></a></button>
+                <button type="button" class="btn btn-block btn-info btn-sm"><a href="creacionDocumentalAsignacion"><font color="white"><i class="fas fa-clipboard-check"></i> Reasignaciones</font></a></button>
                 <?php
                  }
                 ?>

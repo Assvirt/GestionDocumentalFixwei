@@ -63,7 +63,7 @@ require_once 'permisosPlataforma.php';
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Asignación solicitud Documental</h1>
+            <h1>Reasignación solicitud Documental</h1>
             <h6>Asigne las solicitudes de actualización, eliminación y/o creación documental a un nuevo usuario.</h6><br>
           </div>
           
