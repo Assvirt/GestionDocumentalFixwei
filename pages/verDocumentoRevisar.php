@@ -209,7 +209,23 @@ $(document).ready(function () {
                                         <div class="card-body">
                                             <div id="example1"></div>
                                         </div>
-                                     <?php } ?>
+                                     <?php } 
+                                     
+                                     
+                                     /// verificar que no permita hacer ora revisión, hasta que sea rechazada o aprobada
+                                     
+                                     $validarActualizacion=$mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE tipoSolicitud=2 AND proceso='$proceso' AND tipoDocumento='$tipo' AND nombreDocumento='$idDocumento' AND estado IS NULL");
+                                     $extraer_validarActualizacion=$validarActualizacion->fetch_array(MYSQLI_ASSOC);
+                                     
+                                     if($extraer_validarActualizacion['id'] != NULL){
+                                        $nombreCargoAsignado=$mysqli->query("SELECT * FROM cargos WHERE id_cargos='".$extraer_validarActualizacion['encargadoAprobar']."' ");
+                                        $extraer_validarEncargadoAsignado=$nombreCargoAsignado->fetch_array(MYSQLI_ASSOC);
+                                        
+                                        echo '<center><font color="blue">La solicitud ya se encuentra en trámite, el cargo <b>"'.$extraer_validarEncargadoAsignado['nombreCargos'].'"</b> la está gestionando</font></center>';
+                                        echo '<br>';
+                                       
+                                     }else{
+                                     ?>
                                      
                                     <form action="controlador/revisionDocumental/controller.php" method="POST">
                                             
@@ -290,7 +306,9 @@ $(document).ready(function () {
                                             </div>
                                         </div>    
                                     </form>
-                                    
+                                    <?php
+                                     }
+                                    ?>
                             </div>
                         </div>
                           </div>

@@ -353,6 +353,13 @@ error_reporting(E_ERROR);
                     //SELECT * FROM documento WHERE vigente = 1 AND revisado = 0 AND pre IS NULL ORDER BY codificacion ASC
                     while($row = $data->fetch_assoc()){
                         
+                        /// parametro de prueba de correo
+                        //if($row['id'] == '157'){
+                            
+                        //}else{
+                        //    continue;
+                        //}
+                        
                          
                         $idProceso2 = $row['proceso'];
                         
@@ -564,7 +571,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Solicitud de documento (revisión documental)');
+                                                                      $mail->Subject=utf8_decode('Dueño de proceso - revisión documental - autorizado para visualizar');
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -611,7 +618,7 @@ error_reporting(E_ERROR);
                                                  'entra al A';
                                                 for($i=0; $i<$longitud; $i++){
                                                         //saco el valor de cada elemento
-                                                         'Dato: '.$array[$i]; echo '<br>';
+                                                         'Dato: '.$array[$i];  '<br>';
                                                            
                                                         $queryNombresCargos = $mysqli->query("SELECT * FROM cargos WHERE id_cargos = '$array[$i]' ");
                                                         $nombresCargos = $queryNombresCargos->fetch_array(MYSQLI_ASSOC); 
@@ -655,7 +662,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Solicitud de documento (revisión documental)');
+                                                                      $mail->Subject=utf8_decode('Dueño de proceso - revisión documental - autorizado para visualizar');
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -718,7 +725,7 @@ error_reporting(E_ERROR);
                                                             '<br>EL USUARIO: <b>'.$nombredelUsuario=($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
                                                             '<br> tiene el id cargo: '.$usuariosCargo['cargo'].'</b>';
                                                             $consultaCedula=$usuariosCargo['cedula'];
-                                                            echo '<br>'.$correoNotificar=$usuariosCargo['correo'];
+                                                             '<br>'.$correoNotificar=$usuariosCargo['correo'];
                                                             
                                                 
     
@@ -747,7 +754,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Solicitud de documento (revisión documental)');
+                                                                      $mail->Subject=utf8_decode('Revisión documental');
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -791,7 +798,7 @@ error_reporting(E_ERROR);
                                                             '<br>EL USUARIO: <b>'.$nombredelUsuario=($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
                                                             '<br> tiene el id cargo: '.$usuariosCargo['cargo'].'</b>';
                                                             $consultaCedula=$usuariosCargo['cedula'];
-                                                            echo '<br>'.$correoNotificar=$usuariosCargo['correo'];
+                                                             '<br>'.$correoNotificar=$usuariosCargo['correo'];
                                                             
                                                 
     
@@ -820,7 +827,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Solicitud de documento (revisión documental)');
+                                                                      $mail->Subject=utf8_decode('Revisión documental');
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -896,7 +903,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Solicitud de documento (revisión documental)');
+                                                                      $mail->Subject=utf8_decode('Revisión documental');
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
