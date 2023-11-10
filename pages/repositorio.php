@@ -603,10 +603,11 @@ require_once 'permisosPlataforma.php';
                                         <tr>
                                             <th>Seleccionar</th>
                                             <th></th>
+                                            <th></th>
                                             <th>Nombre</th>
                                             <th>Fecha de creación</th>
                                             <th>Responsable</th>
-                                            <th>Tipo Documento</th>
+                                            <!--<th>Tipo Documento</th>-->
                                             <th style="text-align:left;">Solicitud de visualización</th> 
                                         </tr>
                                       </thead>
@@ -889,36 +890,54 @@ require_once 'permisosPlataforma.php';
                                         ?>
                                         </td> 
                                         <td class="" style="text-align:left;">
-                                    <?php    
-                                        if(is_dir($rutaVer.$elemento)){
-                                    ?>  <form action="" method="POST"></form>
-                                                 <div class="">
-                                                     <form action="" method="POST">
-                                                         <button <?php echo $habilitarVisualizar; ?> class="btn" type="submit">
-                                                         <span style="float:left;padding:0;"><h6><?php echo $elemento;?></h6></span>
-                                                         </button>
-                                                         <input type="hidden" name="verCarpeta" value="<?php echo $elemento;?>">
-                                                         <input type="hidden" name="nombreCarpeta" value="<?php echo $elemento;?>">
-                                                     </form>
-                                                 </div>
-                                     <?php
-                                        }else{ 
-                                            ?>
+                                            <?php    
+                                                if(is_dir($rutaVer.$elemento)){
+                                            ?>  <form action="" method="POST"></form>
+                                                         <div class="">
+                                                             <form action="" method="POST">
+                                                                 <button <?php echo $habilitarVisualizar; ?> class="btn" type="submit">
+                                                                 <span style="float:left;padding:0;"><h6><?php echo $elemento;?></h6></span>
+                                                                 </button>
+                                                                 <input type="hidden" name="verCarpeta" value="<?php echo $elemento;?>">
+                                                                 <input type="hidden" name="nombreCarpeta" value="<?php echo $elemento;?>">
+                                                             </form>
+                                                         </div>
+                                             <?php
+                                                }else{ 
+                                                    $varArchivo =$elemento;
+                                                    $explorando=explode(".",$varArchivo);
+                                                    $enviarSinExtension= $explorando[0];
+                                                    
+                                                    $consultamosArchivosBNombre=$mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre='$enviarSinExtension' ");
+                                                    $extraeIDArchivoBNombre=$consultamosArchivosBNombre->fetch_array(MYSQLI_ASSOC);
+                                                    $verificandoSolicitudBNombre=$extraeIDArchivoBNombre['nombre'];
+                                                    ?>
+                                                    
+                                                         <button class="btn" type="submit"><span style="float:left;padding:0;" ><h6><?php echo $elemento;?></h6></span></button>
+                                                     
+                                                    <?php
+                                                }
                                             
-                                                 <button class="btn" type="submit"><span style="float:left;padding:0;" ><h6><?php echo $elemento;?></h6></span></button>
-                                             
+                                            ?>
+                                        </td>
+                                        <td>
                                             <?php
-                                        }
-                                    
-                                    ?>
+                                                $varArchivo =$elemento;
+                                                $explorando=explode(".",$varArchivo);
+                                                $enviarSinExtension= $explorando[0];
+                                                    
+                                                $consultamosArchivosBNombre=$mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre='$enviarSinExtension' ");
+                                                $extraeIDArchivoBNombre=$consultamosArchivosBNombre->fetch_array(MYSQLI_ASSOC);
+                                                echo $verificandoSolicitudBNombre=$extraeIDArchivoBNombre['nombre'];
+                                            ?>
                                         </td>
                                         <td class=""  style="text-align:justify;">
                                             <?php 
                                                 ////// id usuario archivos
-                                                echo $extraerDatosArchivos['fechaCreacion'];
+                                                echo substr($extraerDatosArchivos['fechaCreacion'],0,-8);
                                                 //// END
                                                 ///// id usuario carpetas
-                                                echo $extraerDatos['fechaCreacion'];
+                                                echo substr($extraerDatos['fechaCreacion'],0,-8);
                                                 /// END
                                             ?>
                                         </td>
@@ -938,7 +957,9 @@ require_once 'permisosPlataforma.php';
                                                 //// END
                                             ?>
                                         </td> 
-                                        
+                                        <?php
+                                        /*
+                                        ?>
                                         <td class=""  style="text-align:justify;font-size:;"><?php
                                         
                                             if(is_dir($rutaVer.$elemento)){
@@ -949,22 +970,22 @@ require_once 'permisosPlataforma.php';
                                                 json_encode($explorando);
                                                 
                                                 if($enviarConExtension == 'docx' || $enviarConExtension == 'doc'){
-                                                    echo 'Documento de Microsoft Word';
+                                                    echo 'Word'; //'Documento de Microsoft Word';
                                                 }
                                                 elseif($enviarConExtension == 'pdf'){
-                                                    echo 'Microsoft Edge PDF Document';
+                                                    echo 'Pdf';' //Microsoft Edge PDF Document';
                                                 }
                                                 elseif($enviarConExtension == 'pptx'){
-                                                    echo 'Documento de Microsoft PowerPoint';
+                                                    echo 'PowerPoint'; //'Documento de Microsoft PowerPoint';
                                                 }
                                                 elseif($enviarConExtension == 'xlsx' || $enviarConExtension == 'xls'){
-                                                    echo 'Hoja de cálculo de Microsoft Excel';
+                                                    echo 'Excel'; //'Hoja de cálculo de Microsoft Excel';
                                                 }
                                                 elseif($enviarConExtension == 'png'){
-                                                    echo 'Archivo PNG';
+                                                    echo 'Png'; //'Archivo PNG';
                                                 }
                                                 elseif($enviarConExtension == 'jpg'){
-                                                    echo 'Archivo JPG';
+                                                    echo 'Jpg'; //'Archivo JPG';
                                                 }else{
                                                     echo 'No existe descripción del archivo';
                                                 }
@@ -975,6 +996,10 @@ require_once 'permisosPlataforma.php';
                                             }
                                             ?>
                                         </td>
+                                        <?php
+                                        */
+                                        ?>
+                                        
                                         <?php
                                         if(is_dir($rutaVer.$elemento)){
                                         
@@ -1668,7 +1693,7 @@ $validacionEliminarB=$_POST['validacionEliminarB'];
     ?>
         Toast.fire({
             type: 'success',
-            title: 'Registro agregado, su solicitud se encuentra en proceso.'
+            title: 'La solicitud fue enviada.'
         })
     <?php
     }

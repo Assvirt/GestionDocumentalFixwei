@@ -227,7 +227,7 @@ $ruta = $_POST['rutaSubir'];
                             				        ?> -->
                             				        <label>Fecha de Cargue:</label>
                             				        <br>
-                            				        <?php echo $fecha; ?> 
+                            				        <?php echo substr($fecha,0,-8);//$fecha; ?> 
                             				        
                                     </div>
                             </div>
@@ -313,6 +313,21 @@ $ruta = $_POST['rutaSubir'];
                                                     }
                             				        ?>
                                     </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-4">
+                                                <label>Centro de trabajo:</label>
+                                                <br>
+                                                <?php
+                                                $centroT = json_decode($datos["idCentroTrabajo"]);
+                                                foreach($centroT as $key =>$value){
+                                                    $resultadoCT = $mysqli->query("SELECT id_centrodetrabajo, nombreCentrodeTrabajo FROM centrodetrabajo where id_centrodetrabajo = '$value' ");
+                                                    $dato = $resultadoCT->fetch_array(MYSQLI_ASSOC);
+                                                    echo $dato["nombreCentrodeTrabajo"]."<br>";
+                                                   
+                                                }
+                                                ?>   
+                                    </div>
                                     <div class="form-group col-sm-4">
                                         
                                         
@@ -391,11 +406,10 @@ $ruta = $_POST['rutaSubir'];
                                                 }
                                             ?>
                                     </div>
-                                    
                                 </div>
                                 <?php
                                     if($enviarConExtension == 'pdf'){
-                                ?>
+                                ?><br>
                                 <div class="row">
                                     <div class="form-group col-sm-4">
                                         <label>Ver Documento:</label>

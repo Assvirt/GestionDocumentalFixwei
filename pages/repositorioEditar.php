@@ -297,7 +297,7 @@ $ruta = $_POST['rutaSubir'];
                     <div class="form-group row">
                   
                         
-                        <input autocomplete="off" type="text" class="form-control " id="" name="nombreArchivo" placeholder="<?php echo $nombre;?>" value="<?php echo $nombre;?>" required pattern="[a-zA-Z0-9á-úñ ]{1,205}" title="No utilice caracteres especiales" onkeypress="return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 209 || event.charCode == 241 || event.charCode == 32  || event.charCode == 225 || event.charCode == 233 || event.charCode == 237 || event.charCode == 243 || event.charCode == 250 || event.charCode == 193 || event.charCode == 201 || event.charCode == 205 || event.charCode == 211 || event.charCode == 218)"/>
+                        <input autocomplete="off" type="text" class="form-control " id="" name="nombreArchivo" placeholder="<?php echo $nombre;?>" value="<?php echo $nombre;?>" required pattern="[a-zA-Z0-9á-úñ-ZA ]{1,205}" title="No utilice caracteres especiales" onkeypress="return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 209 || event.charCode == 241 || event.charCode == 32  || event.charCode == 225 || event.charCode == 233 || event.charCode == 237 || event.charCode == 243 || event.charCode == 250 || event.charCode == 193 || event.charCode == 201 || event.charCode == 205 || event.charCode == 211 || event.charCode == 218)"/>
                         
                     </div>
                     
@@ -310,9 +310,7 @@ $ruta = $_POST['rutaSubir'];
                             <label class="custom-file-label" for="exampleInputFile">Seleccionar archivo</label>
                         </div>
                         <br><br>
-                        <?php
-                        echo $var.$var2;
-                        ?>
+                         
                         <button type="button" style="width:15%;"  class='btn btn-block btn-warning btn-sm'>
                                 <i class="fas fa-download"></i>
                                 <a style="color:black" href="<?php echo $var.$var2;?>" download="" target="_blank">Descargar</a>
@@ -431,6 +429,12 @@ $ruta = $_POST['rutaSubir'];
                     <input type="hidden" name="ruta" value="<?php echo $var;?>">
                     <input type="hidden" name="nombreAntes" value="<?php echo $enviarSinExtension;?>">
                     <input type="hidden" name="extension" value="<?php echo $enviarConExtension;?>">
+                  
+                    <input type="hidden" name="var" value="<?php echo $var;?>">
+                    <input type="hidden" name="var2" value="<?php echo $var2;?>">
+                      <input type="hidden" value="<?php echo $var;?>" name='verCarpetaCreada'>
+                  
+                  
                   <button type="submit" class="btn btn-primary float-right" name="editarRegistro">Editar Registro</button>
                 </div>
               </form>

@@ -153,7 +153,7 @@ $ruta = $_POST['rutaSubir'];
                     </div>
                     
                     <div class="form-group">
-                            <label>Centro de trabajos:</label>
+                            <label>Centro de trabajo:</label>
                                    
                                     <div class="select2-blue">
                                         <select class="select2" multiple="multiple" data-placeholder=" centro trabajo" style="width: 100%;" name="cTrabajo[]" id="cTrabajo" required>
