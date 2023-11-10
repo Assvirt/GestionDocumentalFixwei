@@ -1068,7 +1068,8 @@ if(isset($_POST['seguimiento'])){
         echo '<script language="javascript">window.location.href="../../solicitudDocumentos"</script>';
     }
     
-    
+    /// eliminamos le registro de la peticon de actualizacion desde la revisión documental
+    $mysqli->query("DELETE FROM `comnetariosRevision` WHERE idDocumento='$idDocumento' ");
     
     /// preguntamos si el documento ya fue aprobado, de ser así, debe retornar a la otra persona que ya ha sido aprobada o rechazada
     $pregunta_solicitud_aprobado_rechazado=$mysqli->query("SELECT estado,id FROM solicitudDocumentos WHERE id='$id' ");

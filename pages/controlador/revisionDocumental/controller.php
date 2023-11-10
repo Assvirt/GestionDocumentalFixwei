@@ -72,7 +72,7 @@ if(isset($_POST['revision'])){
                                                   $tipoSolicitudNombre='eliminación';
                                               }
                                   
-                                              $mail->Subject='Solicitud de documento';
+                                              $mail->Subject=utf8_decode('Revisión documental - autorizado para visualizar');
                                               $mail->Body = utf8_decode('
                                               <html>
                                               <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -146,7 +146,7 @@ if(isset($_POST['revision'])){
                                                   $tipoSolicitudNombre='eliminación';
                                               }
                                   
-                                              $mail->Subject='Solicitud de documento';
+                                              $mail->Subject=utf8_decode('Revisión documental - autorizado para visualizar');
                                               $mail->Body = utf8_decode('
                                               <html>
                                               <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -240,7 +240,7 @@ if(isset($_POST['revision'])){
                                               $tipoSolicitudNombre='eliminación';
                                           }
                               
-                                          $mail->Subject='Solicitud de documento';
+                                          $mail->Subject=utf8_decode('Dueño de proceso - revisión documental - autorizado para visualizar');
                                           $mail->Body = utf8_decode('
                                           <html>
                                           <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -326,7 +326,7 @@ if(isset($_POST['revision'])){
                                               $tipoSolicitudNombre='eliminación';
                                           }
                               
-                                          $mail->Subject='Solicitud de documento';
+                                          $mail->Subject=utf8_decode('Dueño de proceso - revisión documental - autorizado para visualizar');
                                           $mail->Body = utf8_decode('
                                           <html>
                                           <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -421,7 +421,7 @@ if(isset($_POST['revision'])){
                                               $tipoSolicitudNombre='eliminación';
                                           }
                               
-                                          $mail->Subject='Solicitud de documento';
+                                          $mail->Subject=utf8_decode('Revisión documental - encargado para revisión');
                                           $mail->Body = utf8_decode('
                                           <html>
                                           <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -466,7 +466,7 @@ if(isset($_POST['revision'])){
                 VALUES ('$usuario','$tipoSolicitud','$tipoDoc','$encargado','$nombre','".($_POST['nombreDocumento'])."','$proceso','".utf8_encode($solicitud)."','$fecha','sin datos','1')")or die(mysqli_error($mysqli));
          $select_encargadoE=json_encode($select_encargadoE);        
         $mysqli->query("INSERT INTO comnetariosRevision ( idUsuario, comentario, fecha, idDocumento,notificar,notificarQuien,lider)VALUES ('$usuario','".utf8_encode($solicitud)."','$fecha','$nombre','$radiobtnE','$select_encargadoE','".$extraerConsultaProceso['duenoProceso']."')")or die(mysqli_error($mysqli));
-
+    
        
         ?>
             <script> 
