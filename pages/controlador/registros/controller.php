@@ -422,124 +422,92 @@ if(isset($_POST['editarRegistro'])){
     $radiobtnARs = $_POST['radiobtnAut'];
     $encargadoVer = json_encode($_POST['select_encargadoAut']);
     
-    if($encargadoVer == 'null'){
+    
+    
+    /// volvemos el texto totalmente en minuscula
+    $validandoDocumentoCaracteresPdf=mb_strtolower($_FILES['archivo']['name']);
+    $subirdocumentoArchivos=$_FILES['archivo']['tmp_name'];;
+    $activarAlerta=TRUE;
+                
+    $descripcion_carecteres = "áéíóúabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZñ0123456789-_,.()/ ";
+    for ($i=0; $i<strlen($validandoDocumentoCaracteresPdf); $i++){
+        if (strpos($descripcion_carecteres, substr($validandoDocumentoCaracteresPdf,$i,1))===false){
+            $validandoDocumentoCaracteresPdf . " no es válido<br>";
+            $activarAlerta=FALSE;
+            //return false;
+        }
+    }
+                
+    if($activarAlerta == FALSE && $validandoDocumentoCaracteresPdf != NULL){ 
         ?>
-            <script> 
-                 window.onload=function(){
-                    
-                    //alert("Error, Asegurese de asignar usuarios para visualización");
-                    document.forms["miformulario"].submit();
-                     
-                 }
-            </script>
-             
-            <form name="miformulario" action="../../repositorio" method="POST" onsubmit="procesar(this.action);" >
-                <input type="hidden" name="validacionExiste" value="1">
-                <!-- Carpeta creada-->
-                <input type="hidden" name="verCarpetaCreada" value="<?PHP echo $ruta;?>">
-            </form> 
+        <script> 
+             window.onload=function(){
+               document.forms["miformularioAlertaDocumentos"].submit();
+             }
+        </script>
+                                                             
+        <form name="miformularioAlertaDocumentos" action="../../repositorioEditar" method="POST" onsubmit="procesar(this.action);" >
+            <input type="hidden" name="rutaEditar" value="<?php echo $_POST['var'];?>"><br>
+            <input type="hidden" name="nombre" value="<?php echo $_POST['var2'];?>"><br>
+            <input type="hidden" value="<?php echo $_POST['verCarpetaCreada'];?>" name='verCarpetaCreada'><br>
+            <input type="hidden" value="1" name="alerta">
+        </form> 
         <?php 
     }else{
-
-    $nombreAnterior2 = utf8_decode($nombreAnterior);
-    $ruta2 = utf8_decode($ruta);
-
-    $trearData = $mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre ='$nombreAnterior2' AND extension='$extension' AND ruta='$ruta2' ");
-    $datos = $trearData->fetch_array(MYSQLI_ASSOC);
-    $id  = $datos['id'];
-    $nombreValidar=$datos['nombre'];
     
-    //echo "este es el id del archivo :".$id." y este es el nombre ".$nombre;
-    // repositorioRegistro SET nombre = 'no reporte' WHERE id = 4;
-    $nombre2 = utf8_decode($nombre);
-    
-        // funcion para quitar espacios
-        function Quitar_Espacios($nombre2)
-        {
-            $array = explode(' ',$nombre2);  // convierte en array separa por espacios;
-            $nombre2 ='';
-            // quita los campos vacios y pone un solo espacio
-            for ($i=0; $i < count($array); $i++) { 
-                if(strlen($array[$i])>0) {
-                    $nombre2.= ' ' . $array[$i];
-                }
-            }
-          return  trim($nombre2);
-        }
-        /// END
-       
-        $nombre2 = Quitar_Espacios($nombre2);
-        
-        
-        
-        
-        if($nombre2 == $nombreValidar){
-            //echo 'Se actualiza';
+        if($encargadoVer == 'null'){
             ?>
-                    <script> 
-                         window.onload=function(){
-                       
-                             document.forms["miformulario"].submit();
-                             //alert("Registro Editado");
-                         }
-                    </script>
-                     
-                    <form name="miformulario" action="../../repositorio" method="POST" onsubmit="procesar(this.action);" >
-                        <input type="hidden" name="validacionActualizar" value="1">
-                        <input type="hidden" name="verCarpetaCreada" value="<?PHP echo $ruta;?>">  
-                    </form> 
+                <script> 
+                     window.onload=function(){
+                        
+                        //alert("Error, Asegurese de asignar usuarios para visualización");
+                        document.forms["miformulario"].submit();
+                         
+                     }
+                </script>
+                 
+                <form name="miformulario" action="../../repositorio" method="POST" onsubmit="procesar(this.action);" >
+                    <input type="hidden" name="validacionExiste" value="1">
+                    <!-- Carpeta creada-->
+                    <input type="hidden" name="verCarpetaCreada" value="<?PHP echo $ruta;?>">
+                </form> 
             <?php 
         }else{
-            //echo 'Entra a verificar si el nombre existe';
-             $trearDataVerificar = $mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre ='$nombre2' AND extension='$extension' ");
-             $datosVerificar = $trearDataVerificar->fetch_array(MYSQLI_ASSOC);
-             
-             if($datosVerificar['nombre'] == $nombre2){
-                // echo '<br>existe';
-                 ?>
-                    <script> 
-                         window.onload=function(){
-                       
-                             document.forms["miformulario"].submit();
-                             //alert("Registro Editado");
-                         }
-                    </script>
-                     
-                    <form name="miformulario" action="../../repositorio" method="POST" onsubmit="procesar(this.action);" >
-                        <input type="hidden" name="validacionExisteR" value="1">
-                        <input type="hidden" name="verCarpetaCreada" value="<?PHP echo $ruta;?>">  
-                    </form> 
-            <?php 
-             }else{
-                //echo '<br>Actualizado';
+    
+        $nombreAnterior2 = utf8_decode($nombreAnterior);
+        $ruta2 = utf8_decode($ruta);
+    
+        $trearData = $mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre ='$nombreAnterior2' AND extension='$extension' AND ruta='$ruta2' ");
+        $datos = $trearData->fetch_array(MYSQLI_ASSOC);
+        $id  = $datos['id'];
+        $nombreValidar=$datos['nombre'];
         
-                $mysqli->query("UPDATE repositorioRegistro SET nombre = '$nombre2', visualizar = '$radiobtnARs', visualizarID = '$encargadoVer' WHERE repositorioRegistro.id = '$id' ") or die(mysqli_error($mysqli));
-                
-                // funcion para quitar espacios
-                function Quitar_EspaciosB($nombre)
-                {
-                    $arrayB = explode(' ',$nombre);  // convierte en array separa por espacios;
-                    $nombre ='';
-                    // quita los campos vacios y pone un solo espacio
-                    for ($i=0; $i < count($arrayB); $i++) { 
-                        if(strlen($arrayB[$i])>0) {
-                            $nombre.= ' ' . $arrayB[$i];
-                        }
+        //echo "este es el id del archivo :".$id." y este es el nombre ".$nombre;
+        // repositorioRegistro SET nombre = 'no reporte' WHERE id = 4;
+        $nombre2 = utf8_decode($nombre);
+        
+            // funcion para quitar espacios
+            function Quitar_Espacios($nombre2)
+            {
+                $array = explode(' ',$nombre2);  // convierte en array separa por espacios;
+                $nombre2 ='';
+                // quita los campos vacios y pone un solo espacio
+                for ($i=0; $i < count($array); $i++) { 
+                    if(strlen($array[$i])>0) {
+                        $nombre2.= ' ' . $array[$i];
                     }
-                  return  trim($nombre);
                 }
-                /// END
-               
-                $nombre = Quitar_EspaciosB($nombre);
+              return  trim($nombre2);
+            }
+            /// END
+           
+            $nombre2 = Quitar_Espacios($nombre2);
             
             
-                $old = "../../".$ruta.$nombreAnterior.".".$extension;
-                
-                $new = "../../".$ruta.$nombre.".".$extension;
-                
-                //echo "archivo viejo ".$old."archivo nuevo ".$new;
-                rename ("$old", "$new");
-        
+            
+            
+            if($nombre2 == $nombreValidar){
+                //echo 'Se actualiza';
                 ?>
                         <script> 
                              window.onload=function(){
@@ -554,10 +522,168 @@ if(isset($_POST['editarRegistro'])){
                             <input type="hidden" name="verCarpetaCreada" value="<?PHP echo $ruta;?>">  
                         </form> 
                 <?php 
+                
+                /// buscamos la ruta del documento para eliminarlo antes
+                $varArchivoN =$validandoDocumentoCaracteresPdf;
+                $explorandoN=explode(".",$varArchivoN);
+                $enviarSinExtensionN= $explorandoN[0];
+                $enviarConExtensionN= $explorandoN[1];
+                
+                    
+                if($validandoDocumentoCaracteresPdf != NULL){
+                        
+                        // si viene un archivo, no nos dejará cambiar el nombre, pero eliminamos el archivo anterior para subir uno nuevo
+                        $varArchivo =$_POST['var2'];
+                        $explorando=explode(".",$varArchivo);
+                        $enviarSinExtension= $explorando[0];
+                        $enviarConExtension= $explorando[1];
+    
+                        
+                        $trearData = $mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre ='$enviarSinExtension' AND extension='$enviarConExtension' AND ruta='$var'  ");
+                        $datos = $trearData->fetch_array(MYSQLI_ASSOC);
+                        
+                        $archivo = "../../".$ruta.$_POST['var2'];
+                        "<br>el archivo es : ".$archivo;
+                         unlink($archivo);
+                        //echo '<br>documento a cargar';
+                        
+                        $varArchivoN =$validandoDocumentoCaracteresPdf;
+                        $explorandoN=explode(".",$varArchivoN);
+                        $enviarSinExtensionN= $explorandoN[0];
+                        $enviarConExtensionN= $explorandoN[1];
+                        
+                        $uploadFileDir = '../../raiz/';
+                        $dest_path = $uploadFileDir.$_POST["nombreArchivo"].'.'.$enviarConExtensionN;
+                        if(move_uploaded_file($subirdocumentoArchivos, $dest_path))
+                        {
+                           '<br>'.$message ='Si';
+                        }
+                        else
+                        {
+                           '<br>'.$message = 'No';
+                        }
+                        
+                    
+                        $mysqli->query("UPDATE repositorioRegistro SET nombre = '$nombre2', extension='$enviarConExtensionN', visualizar = '$radiobtnARs', visualizarID = '$encargadoVer' WHERE repositorioRegistro.id = '$id' ") or die(mysqli_error($mysqli));
+                
+                    
+                }else{
+                    $mysqli->query("UPDATE repositorioRegistro SET visualizar = '$radiobtnARs', visualizarID = '$encargadoVer' WHERE repositorioRegistro.id = '$id' ") or die(mysqli_error($mysqli));
+                }
+            }else{
+                //echo 'Entra a verificar si el nombre existe';
+                 $trearDataVerificar = $mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre ='$nombre2' AND extension='$extension' ");
+                 $datosVerificar = $trearDataVerificar->fetch_array(MYSQLI_ASSOC);
+                 
+                 if($datosVerificar['nombre'] == $nombre2){
+                    // echo '<br>existe';
+                     ?>
+                        <script> 
+                             window.onload=function(){
+                           
+                                 document.forms["miformulario"].submit();
+                                 //alert("Registro Editado");
+                             }
+                        </script>
+                         
+                        <form name="miformulario" action="../../repositorio" method="POST" onsubmit="procesar(this.action);" >
+                            <input type="hidden" name="validacionExisteR" value="1">
+                            <input type="hidden" name="verCarpetaCreada" value="<?PHP echo $ruta;?>">  
+                        </form> 
+                <?php  
+                 }else{
+                    //echo '<br>Actualizado<br>';
+                    
+                    /// buscamos la ruta del documento para eliminarlo antes
+                    
+                        $varArchivoN =$validandoDocumentoCaracteresPdf;
+                        $explorandoN=explode(".",$varArchivoN);
+                        $enviarSinExtensionN= $explorandoN[0];
+                        $enviarConExtensionN= $explorandoN[1];
+                    
+                    
+                    
+                    
+                    if($validandoDocumentoCaracteresPdf != NULL){
+                        $mysqli->query("UPDATE repositorioRegistro SET nombre = '$nombre2', extension='$enviarConExtensionN', visualizar = '$radiobtnARs', visualizarID = '$encargadoVer' WHERE repositorioRegistro.id = '$id' ") or die(mysqli_error($mysqli));
+                    }else{
+                        $mysqli->query("UPDATE repositorioRegistro SET nombre = '$nombre2', visualizar = '$radiobtnARs', visualizarID = '$encargadoVer' WHERE repositorioRegistro.id = '$id' ") or die(mysqli_error($mysqli));
+                    }
+                    // funcion para quitar espacios 
+                    function Quitar_EspaciosB($nombre)
+                    {
+                        $arrayB = explode(' ',$nombre);  // convierte en array separa por espacios;
+                        $nombre ='';
+                        // quita los campos vacios y pone un solo espacio
+                        for ($i=0; $i < count($arrayB); $i++) { 
+                            if(strlen($arrayB[$i])>0) {
+                                $nombre.= ' ' . $arrayB[$i];
+                            }
+                        }
+                      return  trim($nombre);
+                    }
+                    /// END
+                   
+                    $nombre = Quitar_EspaciosB($nombre);
+                
+                    if($validandoDocumentoCaracteresPdf != NULL){ // si viene un archivo, no nos dejará cambiar el nombre, pero eliminamos el archivo anterior para subir uno nuevo
+                        
+                        $varArchivo =$_POST['var2'];
+                        $explorando=explode(".",$varArchivo);
+                        $enviarSinExtension= $explorando[0];
+                        $enviarConExtension= $explorando[1];
+    
+                        
+                        $trearData = $mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre ='$enviarSinExtension' AND extension='$enviarConExtension' AND ruta='$var'  ");
+                        $datos = $trearData->fetch_array(MYSQLI_ASSOC);
+                        
+                        $archivo = "../../".$ruta.$_POST['var2'];
+                        "<br>el archivo es : ".$archivo;
+                         unlink($archivo);
+                        //echo '<br>documento a cargar';
+                        
+                        $varArchivoN =$validandoDocumentoCaracteresPdf;
+                        $explorandoN=explode(".",$varArchivoN);
+                        $enviarSinExtensionN= $explorandoN[0];
+                        $enviarConExtensionN= $explorandoN[1];
+                        
+                        $uploadFileDir = '../../raiz/';
+                        $dest_path = $uploadFileDir.$_POST["nombreArchivo"].'.'.$enviarConExtensionN;
+                        if(move_uploaded_file($subirdocumentoArchivos, $dest_path))
+                        {
+                           '<br>'.$message ='Si';
+                        }
+                        else
+                        {
+                           '<br>'.$message = 'No';
+                        }
+                        
+                    }else{
+                        $old = "../../".$ruta.$nombreAnterior.".".$extension;
+                        
+                        $new = "../../".$ruta.$nombre.".".$extension;
+                        
+                        //echo "archivo viejo ".$old."archivo nuevo ".$new;
+                        rename ("$old", "$new");
+                    }
+                    ?>
+                            <script> 
+                                 window.onload=function(){
+                               
+                                     document.forms["miformulario"].submit();
+                                 }
+                            </script>
+                             
+                            <form name="miformulario" action="../../repositorio" method="POST" onsubmit="procesar(this.action);" >
+                                <input type="hidden" name="validacionActualizar" value="1">
+                                <input type="hidden" name="verCarpetaCreada" value="<?PHP echo $ruta;?>">  
+                            </form> 
+                    <?php 
+                }
             }
+            
+             
         }
-        
-         
     }
 }
 
