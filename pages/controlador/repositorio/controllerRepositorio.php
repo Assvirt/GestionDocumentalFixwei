@@ -491,7 +491,7 @@ if(isset($_POST['solicitudMotivo'])){
                             //Agregar destinatario
                             $mail->isHTML(true);
                             $mail->AddAddress($correoResponsable);
-                            $mail->Subject = utf8_decode('Solicitud de visualización  '.$nombreDocEnviar);
+                            $mail->Subject = utf8_decode('Solicitud de visualización en repositorio');
                             //$mail->Body = $_POST['message'];
                             
                             $mail->Body = utf8_decode('
@@ -504,7 +504,7 @@ if(isset($_POST['solicitudMotivo'])){
                             
                             <p>Estimado (a). <b><em>'.$nombreResponsable.'</em></b>.
                             <br>
-                            <p>El usuario '.$nombreSolicitante.' solicita poder visualizar la carpeta <b>'.$nombreDocEnviar.'.</b>.</p>
+                            <p>El usuario '.$nombreSolicitante.' solicita autorización de visualización para la carpeta <b>'.$nombreDocEnviar.'</b></p>
                             Se recomienda ingresar al sistema y realizar la actividad encargada establecida en la siguiente ruta:
                             <br>
                             <em>Mi perfil --> mis pendientes --> repositorio --> solicitud pendiente +</em>.
@@ -620,7 +620,7 @@ if(isset($_POST['ejecutaSolicitud'])){
                         //Agregar destinatario
                         $mail->isHTML(true);
                         $mail->AddAddress($correoResponsable);
-                        $mail->Subject = utf8_decode('Solicitud de visualización  '.$nombreDocEnviar);
+                        $mail->Subject = utf8_decode('Solicitud de visualización en repositorio');
                         //$mail->Body = $_POST['message'];
                         
                         $mail->Body = utf8_decode('
@@ -633,7 +633,7 @@ if(isset($_POST['ejecutaSolicitud'])){
                         
                         <p>Estimado (a). <b><em>'.$nombreResponsable.'</em></b>.
                         <br>
-                        <p>La solicitud de visualización de la carpeta <b>'.$nombreDocEnviar.'.</b> fue aprobada.</p>
+                        <p>La solicitud de visualización de la carpeta <b>'.$nombreDocEnviar.'</b> fue aprobada</p>
                         Se recomienda ingresar al sistema para visualizar la carpeta.
                         
                         <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
@@ -732,7 +732,7 @@ if(isset($_POST['ejecutaSolicitud'])){
                         //Agregar destinatario
                         $mail->isHTML(true);
                         $mail->AddAddress($correoResponsable);
-                        $mail->Subject = utf8_decode('Solicitud de visualización  '.$nombreDocEnviar);
+                        $mail->Subject = utf8_decode('Solicitud de visualización en repositorio');
                         //$mail->Body = $_POST['message'];
                         
                         $mail->Body = utf8_decode('
@@ -745,9 +745,10 @@ if(isset($_POST['ejecutaSolicitud'])){
                         
                         <p>Estimado (a). <b><em>'.$nombreResponsable.'</em></b>.
                         <br>
-                        <p>La solicitud de visualización de la carpeta <b>'.$nombreDocEnviar.'.</b> fue rechazada.</p>
-                        Se recomienda ingresar al sistema para visualizar la carpeta.
-                        
+                        <p>La solicitud de visualización de la carpeta <b>'.$nombreDocEnviar.'</b> fue rechazada</p>
+                        <br><br>
+                        Motivo:<br>
+                        '.$motivo.'
                         <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                         <br><br>
                         Este correo es informativo y por tanto, le pedimos no responda este mensaje.
@@ -854,7 +855,7 @@ if(isset($_POST['solicitudMotivoArchivos'])){
                             //Agregar destinatario
                             $mail->isHTML(true);
                             $mail->AddAddress($correoResponsable);
-                            $mail->Subject = utf8_decode('Solicitud de visualización  '.$nombreDocEnviar);
+                            $mail->Subject = utf8_decode('Solicitud de visualización en repositorio');
                             //$mail->Body = $_POST['message'];
                             
                             $mail->Body = utf8_decode('
@@ -867,7 +868,7 @@ if(isset($_POST['solicitudMotivoArchivos'])){
                             
                             <p>Estimado (a). <b><em>'.$nombreResponsable.'</em></b>.
                             <br>
-                            <p>El documento <b>'.$nombreDocEnviar.'.</b> requiere solicitud de visualización por parte del usuario '.$nombreSolicitante.'.</p>
+                            <p>El usuario '.$nombreSolicitante.' solicita autorización de visualización para el archivo <b>'.$nombreDocEnviar.'</b></p>
                             Se recomienda ingresar al sistema y realizar la actividad encargada establecida en la siguiente ruta:
                             <br>
                             <em>Mi perfil --> mis pendientes --> repositorio --> solicitud pendiente +</em>.
@@ -939,6 +940,7 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
     $consultamosArchivosSolicitud2=$mysqli->query("SELECT * FROM repositorioArchivoSolicitud WHERE idRepositorio='$verificandoID' "); //
     $extraeIDArchivoSolicitud2=$consultamosArchivosSolicitud2->fetch_array(MYSQLI_ASSOC);
     $idQuienDebeSolicitarSolicitante=$extraeIDArchivoSolicitud2['solicitante'];
+    $motivoRechazoArchivo=$extraeIDArchivoSolicitud2['motivoRechazoAprobacion'];
     // END
     /// quilo los caracteres [] del JSON
     $solicitudAutomatica=substr($campodeVisualizar, 1, -1);
@@ -977,7 +979,7 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
                         //Agregar destinatario
                         $mail->isHTML(true);
                         $mail->AddAddress($correoResponsable);
-                        $mail->Subject = utf8_decode('Solicitud de visualización  '.$nombreDocEnviar);
+                        $mail->Subject = utf8_decode('Solicitud de visualización en repositorio');
                         //$mail->Body = $_POST['message'];
                         
                         $mail->Body = utf8_decode('
@@ -990,8 +992,8 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
                         
                         <p>Estimado (a). <b><em>'.$nombreResponsable.'</em></b>.
                         <br>
-                        <p>El documento <b>'.$nombreDocEnviar.'.</b> fue autorizado.</p>
-                        Se recomienda ingresar al sistema para visualizar el documento.
+                        <p>La solicitud de visualización del documento <b>'.$nombreDocEnviar.'</b> fue autorizada</p>
+                        Se recomienda ingresar al sistema para visualizar el documento en repositorio.
                         
                         <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                         <br><br>
@@ -1058,7 +1060,7 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
                         //Agregar destinatario
                         $mail->isHTML(true);
                         $mail->AddAddress($correoResponsable);
-                        $mail->Subject = utf8_decode('Solicitud de visualización  '.$nombreDocEnviar);
+                        $mail->Subject = utf8_decode('Solicitud de visualización en repositorio');
                         //$mail->Body = $_POST['message'];
                         
                         $mail->Body = utf8_decode('
@@ -1071,9 +1073,10 @@ if(isset($_POST['ejecutaSolicitudCarpeta'])){
                         
                         <p>Estimado (a). <b><em>'.$nombreResponsable.'</em></b>.
                         <br>
-                        <p>El documento <b>'.$nombreDocEnviar.'.</b> fue rechazado.</p>
-                        Se recomienda ingresar al sistema para visualizar el documento.
-                        
+                        <p>La solicitud de visualización del documento <b>'.$nombreDocEnviar.'</b> fue rechazada</p>
+                        <br><br>
+                        Motivo:<br>
+                        '.$motivo.'
                         <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                         <br><br>
                         Este correo es informativo y por tanto, le pedimos no responda este mensaje.
