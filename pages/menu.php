@@ -414,7 +414,7 @@ if(!isset($_SESSION["session_username"])){
           <?php
           }else{
           ?>
-          <a href="myperfil" class="d-block "><?php echo $nombres." ".$apellidos; ?></a>
+          <a href="myperfil" title="<?php echo $mandarCargoAPresupuesto;?> " class="d-block "><?php echo $nombres." ".$apellidos; ?></a>
           <?php
           }
           ?>

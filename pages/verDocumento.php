@@ -618,18 +618,51 @@ $verObsoletos = $_POST['verObsoletos'];
                                 <?php
                                 //aca voy a validar si son usuarios o cargos los que se encargan de elaborar, revisar, aprobar            
                                 
-                                    // $revisa = json_decode($datosDoc['revisa']);
-                                    $revisa = json_decode($datosDoc['revisaNombre']);
-                                    //$aprueba = json_decode($datosDoc['aprueba']);
-                                    $aprueba = json_decode($datosDoc['apruebaNombre']);
+                                     $revisa = json_decode($datosDoc['revisa']);
+                                    //$revisa = json_decode($datosDoc['revisaNombre']);
+                                    $aprueba = json_decode($datosDoc['aprueba']);
+                                    //$aprueba = json_decode($datosDoc['apruebaNombre']);
+                                    $elabora = json_decode($datosDoc['elabora']);
+                                    //$elabora = json_decode($datosDoc['elaboraNombre']);
                                 ?>
                                 
                                 <div class="form-group col-sm-4">
                                     <label class="text-dark">Elabora creación: </label><br>
                                             <?php 
-                                                $elabora = json_decode($datosDoc['elaboraNombre']);
-                                               
+                                            if($datosDoc['versionTemporal'] > 0){ /// en caso que venga por vigente o obsoleto
+                                                $elabora=json_decode($datosDoc['elabora']);
+                                                    if($elabora[0] == 'cargos' || $elabora[0] == 'usuarios'){
+                                                    
                                                 
+                                                        if($elabora[0] == 'cargos'){
+                                                            $longitud = count($elabora);
+                                                            
+                                                            for($i=1; $i<$longitud; $i++){
+                                                                //saco el valor de cada elemento
+                                                                //echo '<strong>- </strong> '.$elabora[$i].'<br>';
+                                                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$elabora[$i]'");
+                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                
+                                                            	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";
+                                                            }            
+                                                        }
+                                                        
+                                                        if($elabora[0] == 'usuarios'){
+                                                            $longitud = count($elabora);
+                                                            
+                                                            for($i=1; $i<$longitud; $i++){
+                                                            //saco el valor de cada elemento
+                                                            //echo '<strong>- </strong> '.$elabora[$i].'<br>';
+                                                            $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$elabora[$i]'");
+                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                    echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                                
+                                                            } 
+                                                        }
+                                                    }else{
+                                                        echo $datosDoc['elabora'];
+                                                    }
+                                            }else{
                                                 if($elabora[0] == 'cargos' || $elabora[0] == 'usuarios'){
                                                     
                                                 
@@ -638,24 +671,32 @@ $verObsoletos = $_POST['verObsoletos'];
                                                         
                                                         for($i=1; $i<$longitud; $i++){
                                                             //saco el valor de cada elemento
-                                                            echo '<strong>- </strong> '.$elabora[$i].'<br>';
-                                                            /*$queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$elabora[$i]'");
+                                                            //echo '<strong>- </strong> '.$elabora[$i].'<br>';
+                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$elabora[$i]'");
                                                             $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
                                                             
-                                                        	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";*/
+                                                        	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";
                                                         }            
                                                     }
                                                     
-                                                    if($elabora[0] == 'usuarios'){
+                                                    if($elabora[0] == 'usuarios'){ 
                                                         $longitud = count($elabora);
                                                         
                                                         for($i=1; $i<$longitud; $i++){
                                                             //saco el valor de cada elemento
-                                                            echo '<strong>- </strong> '.$elabora[$i].'<br>';
-                                                            //$queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$elabora[$i]'");
-                                                            //$nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                            
-                                                        	//echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                            //echo '<strong>- </strong> '.$elabora[$i].'<br>';
+                                                            $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$elabora[$i]'");
+                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                            if($datosDoc['elaborado'] == $nombres['id']){
+                                                        	    echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                            }else{
+                                                        
+                                                                $accionCreacion = $mysqli->query("SELECT * FROM documento WHERE id = '".$datosDoc['idCreacion']."' ");
+                                                                $extraerAccionCreacion = $accionCreacion->fetch_array(MYSQLI_ASSOC);
+                                                                if($extraerAccionCreacion['versionTemporal'] > 0){ 
+                                                                    echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                                }
+                                                            }
                                                         } 
                                                     }
                                                 }else{
@@ -682,12 +723,13 @@ $verObsoletos = $_POST['verObsoletos'];
                                                             $longitud = count($elabora);
                                                             
                                                             for($i=1; $i<$longitud; $i++){
-                                                                //saco el valor de cada elemento
-                                                                //echo '<strong>- </strong> '.$elabora[$i].'<br>';
-                                                                $queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$elabora[$i]'");
-                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                
-                                                            	echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                            //saco el valor de cada elemento
+                                                            //echo '<strong>- </strong> '.$elabora[$i].'<br>';
+                                                            $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$elabora[$i]'");
+                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                if($datosDoc['elaborado'] == $nombres['id']){
+                                                            	    echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                                }
                                                             } 
                                                         }
                                                     }else{
@@ -696,23 +738,58 @@ $verObsoletos = $_POST['verObsoletos'];
                                                     
                                                     
                                                 }
+                                            }
                                             ?>
                                 </div>
                                 
                                 <div class="form-group col-sm-4">
                                     <label class="text-dark">Revisa creación: </label><br>
                                     <?php
-                                        if($revisa[0] == 'cargos' || $revisa[0] == 'usuarios'){
+                                    if($datosDoc['versionTemporal'] > 0){
+                                        $revisa = json_decode($datosDoc['revisa']);
+                                            if($revisa[0] == 'cargos' || $revisa[0] == 'usuarios'){
+                                                if($revisa[0] == 'cargos'){
+                                                    $longitud = count($revisa);
+                                                    
+                                                    for($i=1; $i<$longitud; $i++){
+                                                        //saco el valor de cada elemento
+                                                        //echo "<strong>- </strong> ".$revisa[$i]."<br>";
+                                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$revisa[$i]'");
+                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                        
+                                                    	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";
+                                                    }            
+                                                }
+                                                
+                                                if($revisa[0] == 'usuarios'){
+                                                    $longitud = count($revisa);
+                                                    
+                                                    for($i=1; $i<$longitud; $i++){
+                                                    //saco el valor de cada elemento
+                                                    //echo "<strong>- </strong> ".$revisa[$i]."<br>";
+                                                    $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$revisa[$i]'");
+                                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                    
+                                                            echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                        
+                                                
+                                                    } 
+                                                }
+                                            }else{
+                                               echo $datosDoc['revisa']; 
+                                            }
+                                    }else{
+                                         if($revisa[0] == 'cargos' || $revisa[0] == 'usuarios'){
                                             if($revisa[0] == 'cargos'){
                                                 $longitud = count($revisa);
                                                 
                                                 for($i=1; $i<$longitud; $i++){
                                                     //saco el valor de cada elemento
-                                                    echo "<strong>- </strong> ".$revisa[$i]."<br>";
-                                                    /*$queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$revisa[$i]'");
+                                                    //echo "<strong>- </strong> ".$revisa[$i]."<br>";
+                                                    $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$revisa[$i]'");
                                                     $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
                                                     
-                                                	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";*/
+                                                	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";
                                                 }            
                                             }
                                             
@@ -721,14 +798,25 @@ $verObsoletos = $_POST['verObsoletos'];
                                                 
                                                 for($i=1; $i<$longitud; $i++){
                                                     //saco el valor de cada elemento
-                                                    echo "<strong>- </strong> ".$revisa[$i]."<br>";
-                                                    /*$queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$revisa[$i]'");
+                                                    //echo "<strong>- </strong> ".$revisa[$i]."<br>";
+                                                    $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$revisa[$i]'");
                                                     $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
                                                     
-                                                	echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";*/
+                                                    if($datosDoc['revisadoo'] == $nombres['id']){
+                                                        echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                    }else{
+                                                        
+                                                            $accionCreacion = $mysqli->query("SELECT * FROM documento WHERE id = '".$datosDoc['idCreacion']."' ");
+                                                            $extraerAccionCreacion = $accionCreacion->fetch_array(MYSQLI_ASSOC);
+                                                            if($extraerAccionCreacion['versionTemporal'] > 0){ 
+                                                                echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                            }
+                                                    }
+                                                
                                                 } 
                                             }
                                         }else{
+                                            
                                             $revisa = json_decode($datosDoc['revisa']);
                                             if($revisa[0] == 'cargos' || $revisa[0] == 'usuarios'){
                                                 if($revisa[0] == 'cargos'){
@@ -748,18 +836,22 @@ $verObsoletos = $_POST['verObsoletos'];
                                                     $longitud = count($revisa);
                                                     
                                                     for($i=1; $i<$longitud; $i++){
-                                                        //saco el valor de cada elemento
-                                                        //echo "<strong>- </strong> ".$revisa[$i]."<br>";
-                                                        $queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$revisa[$i]'");
-                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                        
-                                                    	echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                    //saco el valor de cada elemento
+                                                    //echo "<strong>- </strong> ".$revisa[$i]."<br>";
+                                                    $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$revisa[$i]'");
+                                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                    
+                                                        if($datosDoc['revisadoo'] == $nombres['id']){
+                                                            echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                        }
+                                                
                                                     } 
                                                 }
                                             }else{
                                                echo $datosDoc['revisa']; 
                                             }
                                         }
+                                    }
                                     ?>
                                 </div>
                                 
@@ -767,36 +859,40 @@ $verObsoletos = $_POST['verObsoletos'];
                                 <div class="form-group col-sm-4">
                                     <label class="text-dark">Aprueba creación: </label><br>
                                     <?php
-                                    if($aprueba[0] == 'cargos' || $aprueba[0] == 'usuarios'){
-                                        if($aprueba[0] == 'cargos'){
-                                            $longitud = count($aprueba);
-                                            
-                                            for($i=1; $i<$longitud; $i++){
-                                                //saco el valor de cada elemento
-                                                echo "<strong>- </strong> ".$aprueba[$i]."<br>";
-                                                /*$queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$aprueba[$i]'");
-                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                    if($datosDoc['versionTemporal'] > 0){
+                                         $aprueba = json_decode($datosDoc['aprueba']);
+                                            if($aprueba[0] == 'cargos' || $aprueba[0] == 'usuarios'){
+                                                if($aprueba[0] == 'cargos'){
+                                                    $longitud = count($aprueba);
+                                                    
+                                                    for($i=1; $i<$longitud; $i++){
+                                                        //saco el valor de cada elemento
+                                                        //echo "<strong>- </strong> ".$aprueba[$i]."<br>";
+                                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$aprueba[$i]'");
+                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                        
+                                                    	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";
+                                                    }            
+                                                }
                                                 
-                                            	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";*/
-                                            }            
-                                        }
-                                        
-                                        if($aprueba[0] == 'usuarios'){
-                                            $longitud = count($aprueba);
-                                            
-                                            for($i=1; $i<$longitud; $i++){
-                                                //saco el valor de cada elemento
-                                                echo "<strong>- </strong> ".$aprueba[$i]."<br>";
-                                                /*$queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$aprueba[$i]'");
-                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                
-                                            	echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";*/
-                                            } 
-                                        }
-                                    }else{
-                                        ////// aplicamos esta validación en la creación, actualización, eliminación y en el responsable de disposición
-                                        $aprueba = json_decode($datosDoc['aprueba']);
-                                        if($aprueba[0] == 'cargos' || $aprueba[0] == 'usuarios'){
+                                                if($aprueba[0] == 'usuarios'){
+                                                    $longitud = count($aprueba);
+                                                    
+                                                    for($i=1; $i<$longitud; $i++){
+                                                    //saco el valor de cada elemento
+                                                    //echo "<strong>- </strong> ".$aprueba[$i]."<br>";
+                                                    $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$aprueba[$i]'");
+                                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                    
+                                                            echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                        
+                                                    } 
+                                                }
+                                            }else{
+                                                echo $datosDoc['aprueba'];
+                                            }
+                                    }else{  
+                                        if($aprueba[0] == 'cargos' || $aprueba[0] == 'usuarios'){  
                                             if($aprueba[0] == 'cargos'){
                                                 $longitud = count($aprueba);
                                                 
@@ -810,20 +906,61 @@ $verObsoletos = $_POST['verObsoletos'];
                                                 }            
                                             }
                                             
-                                            if($aprueba[0] == 'usuarios'){
+                                            if($aprueba[0] == 'usuarios'){ 
                                                 $longitud = count($aprueba);
                                                 
                                                 for($i=1; $i<$longitud; $i++){
                                                     //saco el valor de cada elemento
                                                     //echo "<strong>- </strong> ".$aprueba[$i]."<br>";
-                                                    $queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$aprueba[$i]'");
+                                                    $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$aprueba[$i]'");
                                                     $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
                                                     
-                                                	echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                    if($datosDoc['aprobado'] == $nombres['id']){
+                                                        echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                    }else{
+                                                        
+                                                            $accionCreacion = $mysqli->query("SELECT * FROM documento WHERE id = '".$datosDoc['idCreacion']."' ");
+                                                            $extraerAccionCreacion = $accionCreacion->fetch_array(MYSQLI_ASSOC);
+                                                            if($extraerAccionCreacion['versionTemporal'] > 0){ 
+                                                                echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                            }
+                                                    }
                                                 } 
                                             }
                                         }else{
-                                            echo $datosDoc['aprueba'];
+                                            ////// aplicamos esta validación en la creación, actualización, eliminación y en el responsable de disposición
+                                            $aprueba = json_decode($datosDoc['aprueba']);
+                                            if($aprueba[0] == 'cargos' || $aprueba[0] == 'usuarios'){
+                                                if($aprueba[0] == 'cargos'){
+                                                    $longitud = count($aprueba);
+                                                    
+                                                    for($i=1; $i<$longitud; $i++){
+                                                        //saco el valor de cada elemento
+                                                        //echo "<strong>- </strong> ".$aprueba[$i]."<br>";
+                                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$aprueba[$i]'");
+                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                        
+                                                    	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";
+                                                    }            
+                                                }
+                                                
+                                                if($aprueba[0] == 'usuarios'){
+                                                    $longitud = count($aprueba);
+                                                    
+                                                    for($i=1; $i<$longitud; $i++){
+                                                    //saco el valor de cada elemento
+                                                    //echo "<strong>- </strong> ".$aprueba[$i]."<br>";
+                                                    $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$aprueba[$i]'");
+                                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                    
+                                                        if($datosDoc['aprobado'] == $nombres['id']){
+                                                            echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                        }
+                                                    } 
+                                                }
+                                            }else{
+                                                echo $datosDoc['aprueba'];
+                                            }
                                         }
                                     }
                                     ?>
@@ -901,6 +1038,7 @@ $verObsoletos = $_POST['verObsoletos'];
                                                                         $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
                                                                         
                                                                     	echo "<strong>- </strong> ".$nombres['nombreCargos']."<br>";
+                                                                    	
                                                                     }            
                                                                 }
                                                                 
@@ -909,10 +1047,13 @@ $verObsoletos = $_POST['verObsoletos'];
                                                                     
                                                                     for($i=1; $i<$longitud; $i++){
                                                                         //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$elabora[$i]'");
+                                                                        $queryNombres = $mysqli->query("SELECT nombres, apellidos, id FROM usuario WHERE id = '$elabora[$i]'");
                                                                         $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
                                                                         
-                                                                    	echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                                        if($extraerDocumentoSolicitadoValidnadoExistencia['elaborado'] == $nombres['id']){ 
+                                                                            echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                                        }
+                                                                    	 '<br>id documento: '.$extraerDocumentoSolicitadoValidnadoExistencia['id'];
                                                                     } 
                                                                 }
                                                             
@@ -945,10 +1086,11 @@ $verObsoletos = $_POST['verObsoletos'];
                                                                     
                                                                     for($i=1; $i<$longitud; $i++){
                                                                         //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$elabora[$i]'");
+                                                                        $queryNombres = $mysqli->query("SELECT nombres, apellidos,id FROM usuario WHERE id = '$elabora[$i]'");
                                                                         $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                        
-                                                                    	echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                                        if($extraerDocumentoSolicitadoValidnadoExistencia['revisadoo'] == $nombres['id']){
+                                                                    	    echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                                        }
                                                                     } 
                                                                 }
                                                             
@@ -980,10 +1122,11 @@ $verObsoletos = $_POST['verObsoletos'];
                                                                     
                                                                     for($i=1; $i<$longitud; $i++){
                                                                         //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT nombres, apellidos FROM usuario WHERE id = '$elabora[$i]'");
+                                                                        $queryNombres = $mysqli->query("SELECT nombres, apellidos, id FROM usuario WHERE id = '$elabora[$i]'");
                                                                         $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                        
+                                                                        if($extraerDocumentoSolicitadoValidnadoExistencia['aprobado'] == $nombres['id']){
                                                                     	echo "<strong>- </strong> ".$nombres['nombres']." ".$nombres['apellidos']."<br>";
+                                                                        }
                                                                     } 
                                                                 }
                                                             
@@ -1691,7 +1834,10 @@ $verObsoletos = $_POST['verObsoletos'];
                                             <i class="fas fa-user bg-info"></i>
                     
                                             <div class="timeline-item">
-                                              
+                                              <?php
+                                               $row['id'];
+                                               $row['idDocumento'];
+                                              ?>
                                               <h3 class="timeline-header border-0"><b><?php echo $rol?></b> - <a href="#"><?php if($row['nombre'] != NULL){ echo $row['nombre']; }else{ echo $nombreUsuarioSale; } ?></a> <?php echo nl2br($row['comentario']);?>
                                               </h3>
                                             </div>

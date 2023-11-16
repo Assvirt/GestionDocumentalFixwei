@@ -1,4 +1,4 @@
-<div class="card card-primary card-outline">
+ <div class="card card-primary card-outline">
               <div class="card-body box-profile">
                 <div class="text-center">
                     <?php
@@ -946,12 +946,14 @@
                                     		                    if($notificarEnviarNotificacion == 'usuarios'){
                                     		                        $arrayNotificar = json_decode($notificarQuienEnviarNotificaion);
                                                                     $longitudNotificar = count($arrayNotificar);
-                                                                     for($i=0; $i<$longitudNotificar; $i++){  'Entra: '.$arrayNotificar[$i];
-                                                                        $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE id ='$arrayNotificar[$i]' AND cedula='$cc' ")or die(mysqli_error());
+                                                                     for($i=0; $i<$longitudNotificar; $i++){ // echo 'Entra: '.$arrayNotificar[$i];
+                                                                        $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE id ='$arrayNotificar[$i]'  ")or die(mysqli_error()); //AND cedula='$cc'
                                                                         while($usuariosCargo = $extraerUsuarios->fetch_array()){
                                                                         $nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
-                                                                        $confirmandoIdDocumentoSoloMostrarNotificacionNotificaciones=1;
-                                                                        $contadorRevisionDOcumental++;
+                                                                            if($usuariosCargo['cedula'] == $cc){ //echo ' - suma - ';
+                                                                                $confirmandoIdDocumentoSoloMostrarNotificacionNotificaciones=1;
+                                                                                $contadorRevisionDOcumental++;
+                                                                            }
                                                                         }
                                                                      }
                                     		                    }
@@ -969,7 +971,7 @@
                                                                         }
                                                                      }
                                     		                    }
-                                    		                if($extraerNombreNotidicacion['idDocumento'] == $row['nombreDocumento'] && $confirmandoIdDocumentoSoloMostrarNotificacionNotificaciones == 1){  'Debe entrar aca';
+                                    		                if($extraerNombreNotidicacion['idDocumento'] == $row['nombreDocumento'] && $confirmandoIdDocumentoSoloMostrarNotificacionNotificaciones == 1){  //echo 'Debe contar aca';
                                     		                
                                     		                }else{
                                     		                    continue;
@@ -1052,7 +1054,7 @@
                                                 	    
                                                         }
                                 //// END
-                                     'Usyua: '.$contadorRevisionDOcumental;
+                                      ' - Usyua: '.$contadorRevisionDOcumental;
                                       '<br>Cargo: '.$contadorRevisionDOcumentalB;
                                 ?>
                         <div class="card-tools">
@@ -1391,10 +1393,14 @@
                                     		                        $arrayNotificar = json_decode($notificarQuienEnviar);
                                                                     $longitudNotificar = count($arrayNotificar);
                                                                      for($i=0; $i<$longitudNotificar; $i++){  'Entra: '.$arrayNotificar[$i];
-                                                                        $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE id ='$arrayNotificar[$i]' AND cedula='$cc' ")or die(mysqli_error());
+                                                                        $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE id ='$arrayNotificar[$i]' ")or die(mysqli_error()); // AND cedula='$cc'
                                                                         while($usuariosCargo = $extraerUsuarios->fetch_array()){
                                                                         $nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
-                                                                        $confirmandoIdDocumentoSoloMostrar=1;
+                                                                            if($usuariosCargo['cedula'] == $cc){
+                                                                                $confirmandoIdDocumentoSoloMostrar=1;
+                                                                            }else{
+                                                                                $confirmandoIdDocumentoSoloMostrar=0;
+                                                                            }
                                                                         }
                                                                      }
                                     		                    }

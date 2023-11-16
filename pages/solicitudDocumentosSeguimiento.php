@@ -183,7 +183,7 @@ if(!isset($_SESSION["session_username"])){
                   if($extraer_consulta['id'] != NULL){
                   ?>
                   <div class="form-group">
-                    <h6 class="description-header"><b>Notificado para la revisión documental:</b></h6>
+                    <h6 class="description-header"><b>Notificado para la visualización de revisión documental:</b></h6>
                     <span class="">
                     <?php 
                         '<br>Notificar a: '.$notificarEnviar=$extraer_consulta['notificar'];
@@ -195,7 +195,7 @@ if(!isset($_SESSION["session_username"])){
                             for($i=0; $i<$longitudNotificar; $i++){  '<br>Entra: '.$arrayNotificar[$i];
                                 $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE id ='$arrayNotificar[$i]'  ")or die(mysqli_error()); //AND cedula='$cc'
                                 while($usuariosCargo = $extraerUsuarios->fetch_array()){
-                                echo '-'.$nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']).'<br>';
+                                echo '-'.$nombredelUsuario=($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']).'<br>';
                                 }
                             }
                         }
@@ -208,7 +208,7 @@ if(!isset($_SESSION["session_username"])){
                                 $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
                                 $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cargo ='".$arrayNotificar[$i]."'  ")or die(mysqli_error());
                                 while($usuariosCargo = $extraerUsuarios->fetch_array()){
-                                echo '-'.$nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']).'<br>';
+                                echo '-'.$nombredelUsuario=($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']).'<br>';
                                 }
                             }
                         }

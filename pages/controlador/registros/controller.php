@@ -250,7 +250,7 @@ if(isset($_POST['AgregarRegistro'])){
                 $nombreDoc = Quitar_Espacios($nombreDoc);
             
             
-            $var = '../../'.$ruta.$nombreDoc.".".$extension;
+            $var = '../../'.$ruta.$nombreArchivo;//$nombreDoc.".".$extension;
             
            
             if(file_exists($var)){
@@ -299,7 +299,7 @@ if(isset($_POST['AgregarRegistro'])){
                     mkdir('../../archivos/registros',0777,true);
                 	if(file_exists('../../'.$ruta)){
                 	    
-                		if(move_uploaded_file($rutaArchivo, '../../raiz/'.$ruta.$nombreDoc.$extension)){
+                		if(move_uploaded_file($rutaArchivo, '../../raiz/'.$ruta.$nombreArchivo)){ //$nombreDoc.$extension
                 		   
                 		}else{
                 			//echo "Archivo no se pudo guardar";
@@ -324,7 +324,7 @@ if(isset($_POST['AgregarRegistro'])){
                 }else{
                          "entro al else".$rutaArchivo."-> ".$nombre;
                        // echo $ruta.$nombreDoc.'.'.$extension;
-                	if(move_uploaded_file($rutaArchivo, '../../'.$ruta.$nombreDoc.'.'.$extension)){
+                	if(move_uploaded_file($rutaArchivo, '../../'.$ruta.$nombreArchivo)){ //$nombreDoc.'.'.$extension
                 	    
                 	    
                 	}else{
@@ -361,12 +361,15 @@ if(isset($_POST['AgregarRegistro'])){
             //echo $ruta;
             //var_dump($nombre);
            
+            $explorando=explode(".",$nombreArchivo);
+            $enviarSinExtension= $explorando[0];
+           
             if($_POST['radiobtn1'] == 'no'){
                 
-                //var_dump($usuario);
+                //var_dump($usuario); $nombreDoc
                $mysqli->query("INSERT INTO repositorioRegistro (nombre, idCentroTrabajo, ruta,extension,
                                                                  visualizar, visualizarID, fechaCreacion,realiza) VALUES 
-                                                                    ('$nombreDoc',
+                                                                    ('$enviarSinExtension',
                                                                     '$centroTrabajo',
                                                                     '$ruta',
                                                                     '$extension',
@@ -377,7 +380,7 @@ if(isset($_POST['AgregarRegistro'])){
                 $mysqli->query("INSERT INTO repositorioRegistro (idDocumento,nombre, idProceso, idTipoDoc, idCentroTrabajo, ruta,extension,
                                                                  visualizar, visualizarID, fechaCreacion,realiza) VALUES 
                                                     ('$idDocumento',
-                                                    '$nombreDoc',
+                                                    '$enviarSinExtension',
                                                     '$idProceo',
                                                     '$idTipoDocumento',
                                                     '$centroTrabajo',

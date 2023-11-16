@@ -604,7 +604,7 @@ require_once 'permisosPlataforma.php';
                                             <th>Seleccionar</th>
                                             <th></th>
                                             <th></th>
-                                            <th>Nombre</th>
+                                            <!--<th>Nombre</th>-->
                                             <th>Fecha de creación</th>
                                             <th>Responsable</th>
                                             <!--<th>Tipo Documento</th>-->
@@ -920,6 +920,7 @@ require_once 'permisosPlataforma.php';
                                             
                                             ?>
                                         </td>
+                                        <!--
                                         <td>
                                             <?php
                                                 $varArchivo =$elemento;
@@ -928,9 +929,10 @@ require_once 'permisosPlataforma.php';
                                                     
                                                 $consultamosArchivosBNombre=$mysqli->query("SELECT * FROM repositorioRegistro WHERE nombre='$enviarSinExtension' ");
                                                 $extraeIDArchivoBNombre=$consultamosArchivosBNombre->fetch_array(MYSQLI_ASSOC);
-                                                echo $verificandoSolicitudBNombre=$extraeIDArchivoBNombre['nombre'];
+                                                //echo $verificandoSolicitudBNombre=$extraeIDArchivoBNombre['nombre'];
                                             ?>
                                         </td>
+                                        -->
                                         <td class=""  style="text-align:justify;">
                                             <?php 
                                                 ////// id usuario archivos

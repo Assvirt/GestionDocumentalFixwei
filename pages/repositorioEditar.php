@@ -293,8 +293,9 @@ $ruta = $_POST['rutaSubir'];
                               
                                     </div>
                                 </div>
-                    <label>Nombre:</label>
-                    <div class="form-group row">
+                    
+                    <!--<label>Nombre:</label>-->
+                    <div class="form-group row" style="display:none;">
                   
                         
                         <input autocomplete="off" type="text" class="form-control " id="" name="nombreArchivo" placeholder="<?php echo $nombre;?>" value="<?php echo $nombre;?>" required pattern="[a-zA-Z0-9á-úñ-ZA ]{1,205}" title="No utilice caracteres especiales" onkeypress="return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 209 || event.charCode == 241 || event.charCode == 32  || event.charCode == 225 || event.charCode == 233 || event.charCode == 237 || event.charCode == 243 || event.charCode == 250 || event.charCode == 193 || event.charCode == 201 || event.charCode == 205 || event.charCode == 211 || event.charCode == 218)"/>
