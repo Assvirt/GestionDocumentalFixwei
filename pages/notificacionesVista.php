@@ -1376,30 +1376,30 @@
                                                     <?php
                                                         }  
                                                         
+                                                        /*
                                                         $acentos = $mysqli->query("SET NAMES 'utf8'");
                                                         $sql= $mysqli->query("SELECT * FROM solicitudDocumentos WHERE estado IS NULL "); //AND estado='Aprobado' OR AND plataformaH='1' estado IS NULL
                                     		            while($row = $sql->fetch_assoc()){
                                     		                
                                     		                /// reeemplazamos el nnombre
-                                    		                $ConsultaNmbre=$mysqli->query("SELECT documento.*, comnetariosRevision.* FROM documento INNER JOIN comnetariosRevision WHERE comnetariosRevision.idDocumento='".$row['nombreDocumento']."' AND documento.revisado='1' AND documento.vigente='1' ");
+                                    		                $ConsultaNmbre=$mysqli->query("SELECT documento.*, comnetariosRevision.*, comnetariosRevision.id AS idComentariosRevision FROM documento INNER JOIN comnetariosRevision WHERE comnetariosRevision.idDocumento='".$row['nombreDocumento']."' AND documento.revisado='1' AND documento.vigente='1' ");
                                     		                $extraerNombre=$ConsultaNmbre->fetch_array(MYSQLI_ASSOC);
                                     		                $enviarNombreDocyumentoActual=$extraerNombre['nombres'];
                                     		                
+                                    		                 //echo $extraerNombre['idComentariosRevision'].' - ';
+                                    		                     '<br>Notificar a: '.$notificarEnviar=$extraerNombre['notificar'];
+                                    		                     '<br>Notificar Quien: '.$notificarQuienEnviar=$extraerNombre['notificarQuien'];
                                     		                
-                                    		                
-                                    		                    '<br>Notificar a: '.$notificarEnviar=$extraerNombre['notificar'];
-                                    		                    '<br>Notificar Quien: '.$notificarQuienEnviar=$extraerNombre['notificarQuien'];
                                     		                    if($notificarEnviar == 'usuarios'){
                                     		                        $arrayNotificar = json_decode($notificarQuienEnviar);
                                                                     $longitudNotificar = count($arrayNotificar);
-                                                                     for($i=0; $i<$longitudNotificar; $i++){  'Entra: '.$arrayNotificar[$i];
+                                                                     for($i=0; $i<$longitudNotificar; $i++){   'Entra: '.$arrayNotificar[$i];
                                                                         $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE id ='$arrayNotificar[$i]' ")or die(mysqli_error()); // AND cedula='$cc'
                                                                         while($usuariosCargo = $extraerUsuarios->fetch_array()){
                                                                         $nombredelUsuario=utf8_encode($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
-                                                                            if($usuariosCargo['cedula'] == $cc){
+                                                                            if($usuariosCargo['cedula'] == $cc){ //echo '<br>identificado';
+                                                                                $idUsuarioMostrarRD=$usuariosCargo['id']; 
                                                                                 $confirmandoIdDocumentoSoloMostrar=1;
-                                                                            }else{
-                                                                                $confirmandoIdDocumentoSoloMostrar=0;
                                                                             }
                                                                         }
                                                                      }
@@ -1417,8 +1417,19 @@
                                                                         }
                                                                      }
                                     		                    }
-                                    		                if($extraerNombre['idDocumento'] == $row['nombreDocumento'] && $confirmandoIdDocumentoSoloMostrar == 1){  'Debe entrar aca';
-                                    		                
+                                    		                    
+                                    		                    //echo '<br>id: '.$extraerNombre['idDocumento'];
+                                    		                    //echo '<br>id 2: '.$row['nombreDocumento'];
+                                    		                    //echo '<br>act: '.$confirmandoIdDocumentoSoloMostrar;
+                                    		                    echo $idUsuarioMostrarRD; echo '<br>';
+                                    		                    
+                                    		                if($extraerNombre['idDocumento'] == $row['nombreDocumento'] && $confirmandoIdDocumentoSoloMostrar == 1){  
+                                    		                    //echo '<br>Debe entrar aca';
+                                    		                    echo '<br>identificado';
+                                    		                    
+                                    		                    
+                                    		                    
+                                    		                    
                                     		                }else{
                                     		                    continue;
                                     		                }
@@ -1494,12 +1505,7 @@
                                     		                }else{
                                     		                     
                                     		                     $nombreDocumento=$idDocumento=$row['nombreDocumento2'];
-                                    		                     /*
-                                    		                     $acentos = $mysqli->query("SET NAMES 'utf8'");
-                                    		                     $nombreDocumento = $mysqli->query("SELECT nombres FROM `documento` WHERE id = '$idDocumento' ");
-                                                                 $documentoC = $nombreDocumento->fetch_array(MYSQLI_ASSOC);
-                                                                 $nombreDocumento = $documentoC['nombres'];
-                                                                 */
+                                    		                     
                                     		                }
                                     		               
                                                 	?>
@@ -1527,6 +1533,114 @@
                                                     
                                                     <?php
                                                         }
+                                                        */
+                                                        
+                                                        $acentos = $mysqli->query("SET NAMES 'utf8'");
+                                                        $sql= $mysqli->query("SELECT * FROM documento WHERE revisado='1' AND vigente='1' "); //AND estado='Aprobado' OR AND plataformaH='1' estado IS NULL
+                                    		            while($row = $sql->fetch_assoc()){
+                                    		                
+                                    		                $ConsultaNmbre=$mysqli->query("SELECT * FROM comnetariosRevision  WHERE idDocumento='".$row['id']."' ");
+                                    		                $extraerNombre=$ConsultaNmbre->fetch_array(MYSQLI_ASSOC);
+                                    		                '<br>Notificar a: '.$notificarEnviar=$extraerNombre['notificar'];
+                                    		                '<br>Notificar Quien: '.$notificarQuienEnviar=$extraerNombre['notificarQuien'];
+                                    		                     
+                                    		                if($enviarNombreDocyumentoActual=$extraerNombre['id'] != NULL){
+                                    		                    
+                                    		                }else{
+                                    		                    continue;
+                                    		                }
+                                    		                
+                                    		                if($notificarEnviar == 'usuarios'){
+                                    		                        $arrayNotificar = json_decode($notificarQuienEnviar);
+                                                                    $longitudNotificar = count($arrayNotificar);
+                                                                     for($i=0; $i<$longitudNotificar; $i++){   
+                                                                         
+                                                                         'Entra: '.$arrayNotificar[$i]; 
+                                                                         '<br>';
+                                                                        
+                                                                        if($idparaChat == $arrayNotificar[$i]){
+                                                                            $enviaridRD=$arrayNotificar[$i];
+                                                                            $confirmandoIdDocumentoSoloMostrar=1;
+                                                                            $ConsultaNmbreSolicitudDocumental=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE nombreDocumento='".$row['id']."' "); //estado IS NULL
+                                    		                                $extraerNombreSolicitudDocumental=$ConsultaNmbreSolicitudDocumental->fetch_array(MYSQLI_ASSOC);
+                                                                            	?>
+                                                                                <li>
+                                                                                    <form action="solicitudDocumentosSeguimiento" method="POST">
+                                                                                        <?php if($tipoSolicitud == 1){
+                                                                		                     echo '<font color="green">'.$ImprimirTipoSolicitud.'</font>';
+                                                                		                 }elseif($tipoSolicitud == 2){
+                                                                		                     echo '<font color="blue">'.$ImprimirTipoSolicitud.'</font>';
+                                                                		                 }elseif($tipoSolicitud == 3){
+                                                                		                     echo '<font color="red">'.$ImprimirTipoSolicitud.'</font>';
+                                                                		                 } 
+                                                                		                 //echo 'tipo de sol: '.$row['tipoSolicitud'].'(ID1): '.$row['nombreDocumento'].' -- (ID2): '.$capturandoVariables;
+                                                                		                 ?>
+                                                                		                <a style="color:red;text-decoration:none;" class="float-right">
+                                                                                            <button type="submit" style="width:35px;" class="btn btn-block btn-primary btn-sm"><i class="fas fa-eye"></i></button>
+                                                                                        </a>
+                                                                		                <b>*</b><a style="color:black;text-decoration:none;" ><?php echo $row['nombres'].'<br><font color="green">(revisión documental)</font>'; ?></a><br><br>
+                                                                                        <input type="hidden" readonly name="id" value="<?php echo $extraerNombreSolicitudDocumental['id'];?>">
+                                                                                        <input type="hidden" name="revisionDocumental" value="1" >
+                                                                                        <input type="hidden" readonly name="tipoSolicitud" value="<?php '2';//echo $row['tipoSolicitud'];?>">
+                                                                                    </form>
+                                                                                </li>
+                                                                                
+                                                                                
+                                                                                <?php
+                                                                        }
+                                                                        
+                                                                        
+                                                                        
+                                                                     }
+                                    		                }
+                                    		                if($notificarEnviar == 'cargos'){ 
+                                    		                
+                                    		                        $arrayNotificar = json_decode($notificarQuienEnviar);
+                                                                    $longitudNotificar = count($arrayNotificar);
+                                                                     for($i=0; $i<$longitudNotificar; $i++){   
+                                                                         
+                                                                         'Entra: '.$arrayNotificar[$i]; 
+                                                                         '<br>';
+                                                                        
+                                                                        if($cargo == $arrayNotificar[$i]){
+                                                                            $enviaridRD=$arrayNotificar[$i];
+                                                                            $confirmandoIdDocumentoSoloMostrar=1;
+                                                                            $ConsultaNmbreSolicitudDocumental=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE nombreDocumento='".$row['id']."' "); //estado IS NULL
+                                    		                                $extraerNombreSolicitudDocumental=$ConsultaNmbreSolicitudDocumental->fetch_array(MYSQLI_ASSOC);
+                                                                            	?>
+                                                                                <li>
+                                                                                    <form action="solicitudDocumentosSeguimiento" method="POST">
+                                                                                        <?php if($tipoSolicitud == 1){
+                                                                		                     echo '<font color="green">'.$ImprimirTipoSolicitud.'</font>';
+                                                                		                 }elseif($tipoSolicitud == 2){
+                                                                		                     echo '<font color="blue">'.$ImprimirTipoSolicitud.'</font>';
+                                                                		                 }elseif($tipoSolicitud == 3){
+                                                                		                     echo '<font color="red">'.$ImprimirTipoSolicitud.'</font>';
+                                                                		                 } 
+                                                                		                 //echo 'tipo de sol: '.$row['tipoSolicitud'].'(ID1): '.$row['nombreDocumento'].' -- (ID2): '.$capturandoVariables;
+                                                                		                 ?>
+                                                                		                <a style="color:red;text-decoration:none;" class="float-right">
+                                                                                            <button type="submit" style="width:35px;" class="btn btn-block btn-primary btn-sm"><i class="fas fa-eye"></i></button>
+                                                                                        </a>
+                                                                		                <b>*</b><a style="color:black;text-decoration:none;" ><?php echo $row['nombres'].'<br><font color="green">(revisión documental)</font>'; ?></a><br><br>
+                                                                                        <input type="hidden" readonly name="id" value="<?php echo $extraerNombreSolicitudDocumental['id'];?>">
+                                                                                        <input type="hidden" name="revisionDocumental" value="1" >
+                                                                                        <input type="hidden" readonly name="tipoSolicitud" value="<?php '2';//echo $row['tipoSolicitud'];?>">
+                                                                                    </form>
+                                                                                </li>
+                                                                                
+                                                                                
+                                                                                <?php
+                                                                        }
+                                                                        
+                                                                        
+                                                                        
+                                                                     }
+                                    		                
+                                    		                    
+                                    		                }
+                                    		                
+                                    		            }
                                                         
                                                         $acentos = $mysqli->query("SET NAMES 'utf8'");
                                                         $sqlLider= $mysqli->query("SELECT * FROM solicitudDocumentos WHERE estado IS NULL"); //AND estado='Aprobado' OR AND plataformaH='1' estado IS NULL
