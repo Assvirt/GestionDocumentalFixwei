@@ -226,8 +226,8 @@ $(document).ready(function () {
                                        
                                      }else{
                                      ?>
-                                     
-                                    <form action="controlador/revisionDocumental/controller.php" method="POST">
+                                     <!--  -->
+                                    <form action="controlador/revisionDocumental/controller.php" method="POST" onsubmit="enviar();">
                                             
                                         <center>
                                             <br>
@@ -302,10 +302,20 @@ $(document).ready(function () {
                                                 <input type="hidden" name="tipoDoc" value="<?php echo $tipo;?>">
                                                 
                                                 
-                                                <button type="submit" name="revision" class="btn float-right btn-primary btn-sm">Realizar revisión</font></a></button>
+                                                <button type="submit" id="btn" name="revision" class="btn float-right btn-primary btn-sm">Realizar revisión</font></a></button>
+                                                
+                                                
+                                                
                                             </div>
                                         </div>    
                                     </form>
+                                    <script> /// agregamos una funcion de ejecutar en el form, para leer el botón de submit y bloquearlo una vez sea enviado los datos
+                                          function enviar(){
+                                            var btn = document.getElementById('btn');
+                                            btn.setAttribute('disabled','');
+                                            alert('botón disabled');
+                                          }
+                                    </script>
                                     <?php
                                      }
                                     ?>
