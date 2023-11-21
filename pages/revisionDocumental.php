@@ -341,6 +341,7 @@ error_reporting(E_ERROR);
                       <th>Proceso</th>
                       <th>Implementación</th>
                       <th>Próxima fecha revisión</th>
+                      <th>Estado</th>
                       <th>Trazabilidad</th>
                       <th></th>
                     </tr>
@@ -455,6 +456,17 @@ error_reporting(E_ERROR);
                              '<br>Fecha validar: '.$fechaRestar = date("Y-m-d",strtotime($fechainicial."+ ".$tiempoRespuesta." days")); 
                             
                          echo"<td style='text-align: justify;' >".$fechaRestar."</td>"; // $fechaRevisar --$mesesRevision    
+                         
+                        $idDocumento=$row['id'];
+                        $validarActualizacion=$mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE tipoSolicitud=2 AND proceso='$idProceso2' AND tipoDocumento='$tipo' AND nombreDocumento='$idDocumento' AND estado IS NULL");
+                        $extraer_validarActualizacion=$validarActualizacion->fetch_array(MYSQLI_ASSOC);
+                        
+                        if($extraer_validarActualizacion['id'] != NULL){
+                            echo"<td style='text-align: justify;' >En revisión</td>";
+                        }else{
+                            echo"<td style='text-align: justify;' ></td>";
+                        }
+                         
                          
                          echo"<td>";
                                 echo"<form action='revisarDocumento' method='POST'>";
