@@ -220,7 +220,21 @@ if(!isset($_SESSION["session_username"])){
                   ?>
                   <div class="form-group">
                     <h6 class="description-header"><b>Estado:</b></h6>
-                    <span class=""><?php if($devuelto == '1'){ echo 'Regresado'; }else{ echo $estado; } ?></span>
+                    <span class="">
+                        <?php 
+                        if($_POST['revisionDocumental'] == '1'){
+                            
+                        }else{
+                            if($devuelto == '1'){
+                                echo 'Regresado'; 
+                                
+                            }else{ 
+                                echo $estado; 
+                            } 
+                        }
+                        ?>
+                        
+                    </span>
                   </div>
                   
                   <?php
@@ -310,7 +324,11 @@ if(!isset($_SESSION["session_username"])){
                          
                          <?php
                         }else{
-                            echo '<br><font color="red"><b>El documento se encuentra Rechazado</b></font>';
+                            if($_POST['revisionDocumental'] == '1'){
+                                
+                            }else{
+                                echo '<br><font color="red"><b>El documento se encuentra Rechazado</b></font>';
+                            }
                         }
                        //// se actualiza el campo para quitar la notificación de rechazo en las notificaciones
                             if(isset($_POST['rechazoAplicar'])){ 
