@@ -1978,7 +1978,7 @@ if($permisoCorreo == FALSE){
                                             <font color="white">espacio</font>
                                         </td>
                                         <td>
-                                            <button type="submit" style="color:white;" class="btn btn-warning float-left" name="actualizarMeta">Guardar</button>
+                                            <button type="submit" style="color:white;" class="btn btn-info float-left" name="actualizarMeta">Actualizar</button>
                                         </td>
                                     </tr>
                                  </table>
