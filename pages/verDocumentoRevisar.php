@@ -95,7 +95,7 @@ $(document).ready(function () {
                             <form action="revisarDocumento" method="post">
                                 <input name="idDocumento" value="<?php echo $_POST['idDocumento'];?>" type="hidden">
                                 <input name="idSolicitud" value="<?php echo $_POST['idSolicitud'];?>" type="hidden"><!-- revisionDocumental -->
-                            <button type="submit" class="btn btn-block btn-info btn-sm"><a href=""><font color="white"><i class="fas fa-chevron-left"></i> Revisión Documental</font></a></button>
+                            <button type="submit" class="btn btn-block btn-info btn-sm"><font color="white"><i class="fas fa-chevron-left"></i> Revisión Documental</font></button>
                             </form>
                         </div>
                         <div class="col-sm">
