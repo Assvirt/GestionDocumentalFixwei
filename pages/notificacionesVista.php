@@ -966,8 +966,10 @@
                                                                         $extraerUsuariosNotificaciones = $mysqli->query("SELECT * FROM usuario WHERE cargo ='".$nombresNotificacioness['id_cargos']."'  ")or die(mysqli_error());
                                                                         while($usuariosCargoNotificaciones = $extraerUsuariosNotificaciones->fetch_array()){
                                                                         $nombredelUsuario=utf8_encode($usuariosCargoNotificaciones['nombres'].' '.$usuariosCargoNotificaciones['apellidos']);
-                                                                        $confirmandoIdDocumentoSoloMostrarNotificacionNotificaciones=1;
-                                                                         'Contador: '.$contadorRevisionDOcumentalB++;
+                                                                            if($usuariosCargoNotificaciones['cargo'] == $cargo){
+                                                                                $confirmandoIdDocumentoSoloMostrarNotificacionNotificaciones=1;
+                                                                                $contadorRevisionDOcumentalB++;
+                                                                            }
                                                                         }
                                                                      }
                                     		                    }
