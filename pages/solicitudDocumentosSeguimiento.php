@@ -380,7 +380,11 @@ if(!isset($_SESSION["session_username"])){
                             }
                          
                         }else{
+                            if($_POST['revisionDocumental'] == '1'){
+                                
+                            }else{
                             echo '<br><font color="orange"><b>No tiene permisos para cambiar el estado de la solicitud</b></font>';
+                            }
                         }
                     }
                   ?>
