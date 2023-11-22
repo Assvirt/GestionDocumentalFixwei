@@ -313,7 +313,7 @@ $(document).ready(function () {
                                           function enviar(){
                                             var btn = document.getElementById('btn');
                                             btn.setAttribute('disabled','');
-                                            alert('botón disabled');
+                                            //alert('botón disabled');
                                           }
                                     </script>
                                     <?php

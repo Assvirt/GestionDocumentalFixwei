@@ -255,9 +255,13 @@ if(!isset($_SESSION["session_username"])){
                     <?php
                     while($columnas = $datos->fetch_assoc()){
                         $comentarios = $columnas['comentario'];
+                        if($_POST['revisionDocumental'] == '1'){ }else{
                     ?>
                     <table><tr><td><span class=""><?php echo $comentarios;?></span></td></tr></table>
-                    <?php }?>
+                    <?php 
+                        }
+                    }
+                    ?>
                   </div>
                 
                   <div class="card-header">
@@ -291,11 +295,15 @@ if(!isset($_SESSION["session_username"])){
                   <?php
                   
                           if($estado == 'Ejecutado'){
-                            echo '<br><font color="gray"><b>El documento se encuentra Ejecutado</b></font>';   
+                              if($_POST['revisionDocumental'] == '1'){ }else{
+                                echo '<br><font color="gray"><b>El documento se encuentra Ejecutado</b></font>';  
+                              }
                           }
                           
                           if($estado == 'Aprobado'){
+                              if($_POST['revisionDocumental'] == '1'){ }else{
                               echo '<br><font color="green"><b>El documento se encuentra Aprobado</b></font>';
+                              }
                               ?>
                               
                               <?php
@@ -395,6 +403,9 @@ if(!isset($_SESSION["session_username"])){
                                     <br>
                                     <!--<p><h4>Control de cambios</h4></p>-->
                                 </center>
+                                <?php
+                                if($_POST['revisionDocumental'] == '1'){ }else{
+                                ?>
                                     <div style="padding: 20px;" class="tab-pane" id="timeline">
                                         <!-- The timeline -->
                                         <div class="timeline timeline-inverse">
@@ -430,7 +441,10 @@ if(!isset($_SESSION["session_username"])){
                                           </div>
                                         <?php }?>
                                         </div>
-                                     </div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                  
