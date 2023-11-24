@@ -88,7 +88,7 @@ if(isset($_POST['revision'])){
                                               <br><br>
                                               Se recomienda ingresar y verificar su solicitud.
                                               <br><br>
-                                              Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                              Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                               </p>
                                               </body>
                                               </html>
@@ -162,7 +162,7 @@ if(isset($_POST['revision'])){
                                               <br><br>
                                               Se recomienda ingresar y verificar su solicitud.
                                               <br><br>
-                                              Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                              Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                               </p>
                                               </body>
                                               </html>
@@ -256,7 +256,7 @@ if(isset($_POST['revision'])){
                                           <br><br>
                                           Se recomienda ingresar y verificar su solicitud.
                                           <br><br>
-                                          Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                          Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                           </p>
                                           </body>
                                           </html>
@@ -342,7 +342,7 @@ if(isset($_POST['revision'])){
                                           <br><br>
                                           Se recomienda ingresar y verificar su solicitud.
                                           <br><br>
-                                          Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                          Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                           </p>
                                           </body>
                                           </html>
@@ -437,7 +437,7 @@ if(isset($_POST['revision'])){
                                           <br><br>
                                           Se recomienda ingresar y verificar su solicitud.
                                           <br><br>
-                                          Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                          Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                           </p>
                                           </body>
                                           </html>

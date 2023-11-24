@@ -194,7 +194,7 @@ if(isset($_POST['notificar'])){
                                             <br>
                                              Visualiza su orden de compra <a href="https://fixwei.com/plataforma/pages/proveedorPDF?pdf='.$idOrdenCompra.'">Link</a>
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -243,7 +243,7 @@ if(isset($_POST['notificar'])){
                                                             Visualiza su orden de compra <a href="https://fixwei.com/plataforma/pages/proveedorPDF?pdf='.$idOrdenCompra.'">Link</a>
                                                             
                                                             <br><br>
-                                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                             </p>
                                                             </body>
                                                             </html>
@@ -375,7 +375,7 @@ if(isset($_POST['ultimo'])){
                                                             <em>Mi perfil --> mis pendientes --> Compras --> Verificar Orden de compra +</em>.
                                                             <br>
                                                             <br><br>
-                                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                             </p>
                                                             </body>
                                                             </html>

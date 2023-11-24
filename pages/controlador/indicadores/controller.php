@@ -74,7 +74,7 @@ if(isset($_POST['Agregar'])){
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -132,7 +132,7 @@ if(isset($_POST['Agregar'])){
                             <br>
                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                             <br><br>
-                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                             </p>
                             </body>
                             </html>
@@ -234,7 +234,7 @@ if(isset($_POST['Agregar'])){
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -292,7 +292,7 @@ if(isset($_POST['Agregar'])){
                             <br>
                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                             <br><br>
-                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                             </p>
                             </body>
                             </html>
@@ -1084,7 +1084,7 @@ $mysqli->query("DELETE FROM indicadoresMetas WHERE id = '$idIndicador'  ")or die
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -1142,7 +1142,7 @@ $mysqli->query("DELETE FROM indicadoresMetas WHERE id = '$idIndicador'  ")or die
                             <br>
                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                             <br><br>
-                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                             </p>
                             </body>
                             </html>
@@ -1211,7 +1211,7 @@ $mysqli->query("DELETE FROM indicadoresMetas WHERE id = '$idIndicador'  ")or die
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -1269,7 +1269,7 @@ $mysqli->query("DELETE FROM indicadoresMetas WHERE id = '$idIndicador'  ")or die
                             <br>
                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                             <br><br>
-                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                             </p>
                             </body>
                             </html>
@@ -1380,7 +1380,7 @@ $mysqli->query("DELETE FROM indicadoresMetas WHERE id = '$idIndicador'  ")or die
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -1438,7 +1438,7 @@ $mysqli->query("DELETE FROM indicadoresMetas WHERE id = '$idIndicador'  ")or die
                             <br>
                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                             <br><br>
-                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                             </p>
                             </body>
                             </html>
@@ -1507,7 +1507,7 @@ $mysqli->query("DELETE FROM indicadoresMetas WHERE id = '$idIndicador'  ")or die
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -1565,7 +1565,7 @@ $mysqli->query("DELETE FROM indicadoresMetas WHERE id = '$idIndicador'  ")or die
                             <br>
                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                             <br><br>
-                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                             </p>
                             </body>
                             </html>

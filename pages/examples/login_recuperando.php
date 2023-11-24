@@ -10,7 +10,7 @@ $cc = $_POST['cc'];
 $_SESSION['correo'];
 $email = $_SESSION['correo']; 
 //llamamos a la accion del boton y consigo traemos el valor de la nueva contraseña
-$consulta = "SELECT cedula FROM usuario where cedula = '$cc'";
+$consulta = "SELECT cedula,nombres,apellidos FROM usuario where cedula = '$cc'";
 $query = mysqli_query($con, $consulta);
 $numrows=mysqli_num_rows($query);
         
@@ -20,6 +20,7 @@ $numrows=mysqli_num_rows($query);
         while($row=mysqli_fetch_assoc($query))
         {
             $cedula=$row['cedula'];
+            $nombreUsuario=utf8_encode($row['nombres'].' '.$row['apellidos']);
 
 
         }
@@ -46,13 +47,7 @@ if(isset($_POST["reenviar"])){
     $mail->IsSMTP();
      
     //Configuracion servidor mail
-    $mail->From = "soporte@fixwei.com"; //remitente
-    $mail->SMTPAuth = true;
-    $mail->SMTPSecure = 'tls'; //seguridad
-    $mail->Host = "smtp.zoho.com"; // servidor smtp
-    $mail->Port = 587; //puerto 587
-    $mail->Username ='soporte@fixwei.com'; //nombre usuario
-    $mail->Password = 'Asd2021%%'; //contraseña
+    require '../correoEnviar/contenido.php';
     
     //Agregar destinatario
     $mail->isHTML(true);
@@ -68,7 +63,7 @@ if(isset($_POST["reenviar"])){
     <body>
     <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
     
-    <p>Estimado (a).
+    <p>Estimado (a). '.$nombreUsuario.'
     <br>
     <p><b>Ha realizado la solicitud de recuperación de contraseña.</b></p>
      A continuación, conozca las credenciales para acceder al sistema e iniciar su experiencia en FIXWEI.
@@ -79,7 +74,7 @@ if(isset($_POST["reenviar"])){
     <br><br>
     Se recomienda ingresar y realizar el cambio de contraseña.
     <br><br>
-    Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+    Este correo es informativo por tanto, le pedimos no responda este mensaje.
     </p>
     </body>
     </html>
@@ -87,16 +82,42 @@ if(isset($_POST["reenviar"])){
     
     //Avisar si fue enviado o no y dirigir al index
    
-    if ($mail->Send()) {
+    if ($mail->Send()) { 
+        ?>
+            <script> 
+                 window.onload=function(){
+               
+                     document.forms["miformularioEnviado"].submit();
+                 }
+            </script>
+             
+            <form name="miformularioEnviado" action="login" method="POST" onsubmit="procesar(this.action);" >
+                <input type="hidden" name="correoEnviado" value="1">
+            </form> 
+        <?php 
+        
         //echo'<script type="text/javascript">
         //       alert("Enviado Correctamente");
         //    </script>';
         //header("Location: datos");
-        echo '<script language="javascript">confirm(" Verifique su clave temporal que fue enviada a su correo");
-        window.location.href="login"</script>';
-    } else {
-        echo '<script language="javascript">confirm(" NO ENVIADO, intentar de nuevo");
-        window.location.href="login"</script>';
+        //echo '<script language="javascript">confirm(" Verifique su clave temporal que fue enviada a su correo");
+        //window.location.href="login"</script>';
+    } else { 
+        
+        ?>
+            <script> 
+                 window.onload=function(){
+               
+                     document.forms["miformularioNoEnviado"].submit();
+                 }
+            </script>
+             
+            <form name="miformularioNoEnviado" action="login" method="POST" onsubmit="procesar(this.action);" >
+                <input type="hidden" name="correoNoEnviado" value="1">
+            </form> 
+        <?php 
+        //echo '<script language="javascript">confirm(" NO ENVIADO, intentar de nuevo");
+        //window.location.href="login"</script>';
     }
     /*  
  //enviamos el dato al correo

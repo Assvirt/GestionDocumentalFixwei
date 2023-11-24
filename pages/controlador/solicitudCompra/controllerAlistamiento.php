@@ -106,7 +106,7 @@ if(isset($_POST['agregarComentario'])){
                                                             <br>
                                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                                             <br><br>
-                                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                             </p>
                                                             </body>
                                                             </html>
@@ -180,7 +180,7 @@ if(isset($_POST['agregarComentario'])){
                                                             <br>
                                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                                             <br><br>
-                                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                             </p>
                                                             </body>
                                                             </html>
@@ -259,7 +259,7 @@ if(isset($_POST['agregarComentario'])){
                                                             <br>
                                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                                             <br><br>
-                                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                             </p>
                                                             </body>
                                                             </html>
@@ -318,7 +318,7 @@ if(isset($_POST['agregarComentario'])){
                                                             <br>
                                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                                             <br><br>
-                                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                             </p>
                                                             </body>
                                                             </html>
@@ -456,7 +456,7 @@ if(isset($_POST['alistamiento'])){
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -551,7 +551,7 @@ if(isset($_POST['notificar'])){
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -689,7 +689,7 @@ if(isset($_POST['notificarComprador'])){
                                                             <br>
                                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                                             <br><br>
-                                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                             </p>
                                                             </body>
                                                             </html>
@@ -756,7 +756,7 @@ if(isset($_POST['notificarComprador'])){
                                                             <p>La solicitud # <b>'.$idOrdenCompra.'</b> fue '.$resultado.'.</p>
                                                             '.$mensaje.'
                                                             <br><br>
-                                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                             </p>
                                                             </body>
                                                             </html>
@@ -880,7 +880,7 @@ if(isset($_POST['alistamientoIngreso'])){
                                             <br>
                                             <br><br><a target="_black" href="http://fixwei.com/plataforma/pages/examples/login">Acceder</a>.
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>

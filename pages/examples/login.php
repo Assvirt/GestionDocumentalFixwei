@@ -35,132 +35,141 @@ if(isset($_POST["login"])){
             }
             
         }else{
+            ///// primero consultamos la existencia del usuario antes de validar los datos de usuario y contraseña
             
-            $consulta = "SELECT * FROM usuario WHERE cedula='".$username."' AND clave='".$password."'";
-            $query = mysqli_query($con, $consulta);
-            $numrows=mysqli_num_rows($query);
-            if($numrows!=0){
+            
+            
+            $preguntado_existencia_usuario=$con->query("SELECT cedula,id FROM usuario WHERE cedula='$username' ");
+            $extraer_regunta_existencia=$preguntado_existencia_usuario->fetch_array(MYSQLI_ASSOC);
+            if($extraer_regunta_existencia['id'] != NULL){
                 
-                while($row=mysqli_fetch_assoc($query)){
-                    $idUsuario = $row['id'];
-                    $cedula = $row['cedula'];
-                    $clave = $row['clave'];
-                    $cargo = $row['cargo'];
-                    $estadoEliminado = $row['estadoEliminado'];
-                    $estadoAnulado = $row['estadoAnulado'];
-                }
+                $consulta = "SELECT * FROM usuario WHERE cedula='".$username."' AND clave='".$password."'";
+                $query = mysqli_query($con, $consulta);
+                $numrows=mysqli_num_rows($query);
                 
-                //esta es la cedula 
-                if($estadoEliminado == TRUE || $estadoAnulado == TRUE ){
-                    //echo "<script language='javascript'>confirm('El usuario no se encuentra activo, contacte con el administrador.');
-                    //    window.location.href='login'</script>';";
-                    $alertaSesionC='1';
-                }else{
-                    $_SESSION['session_username']= $cedula;
-                    $_SESSION['session_cargo']= $cargo;
-                    $_SESSION['session_idUsuario']= $idUsuario;
-                
-                           /*
-                             $nombreUsuario = $con->query("SELECT * FROM ConectadoUsuario WHERE idUsuario ='$cedula'")or die(mysqli_error());
-                             $col = $nombreUsuario->fetch_array(MYSQLI_ASSOC);
-                             $validacionU = $col['idUsuario'];
-                             */
-                             $nombreUsuario = $con->query("SELECT * FROM usuario WHERE cedula ='$cedula'")or die(mysqli_error());
-                             $col = $nombreUsuario->fetch_array(MYSQLI_ASSOC);
-                             $validacionU = $col['cedula'];
-                             $contadorsesion=$col['contadorSesion'];
-                             $contandoUsuario=$col['contadorSesion'];
-                              'sese U: '.$ipSesionValidar=$col['sesionIP'];
-                             
-                             // validamos que está activado el ip sesion para navegar sobre la ip de la empresa
-                                $consultaClienteSescion=$con->query("SELECT * FROM cliente ");
-                                $extraerClienteSesion=$consultaClienteSescion->fetch_array(MYSQLI_ASSOC);
-                                
-                                if($extraerClienteSesion['sesion'] == 'Si'){ 
-                                     '<br>secion e: '.$direccionIPEmpresa=$extraerClienteSesion['registroIP'];//$_SERVER['REMOTE_ADDR'];
+                if($numrows!=0){
+                    
+                    while($row=mysqli_fetch_assoc($query)){
+                        $idUsuario = $row['id'];
+                        $cedula = $row['cedula'];
+                        $clave = $row['clave'];
+                        $cargo = $row['cargo'];
+                        $estadoEliminado = $row['estadoEliminado'];
+                        $estadoAnulado = $row['estadoAnulado'];
+                    }
+                    
+                    //esta es la cedula 
+                    if($estadoEliminado == TRUE || $estadoAnulado == TRUE ){
+                        //echo "<script language='javascript'>confirm('El usuario no se encuentra activo, contacte con el administrador.');
+                        //    window.location.href='login'</script>';";
+                        $alertaSesionC='1';
+                    }else{
+                        $_SESSION['session_username']= $cedula;
+                        $_SESSION['session_cargo']= $cargo;
+                        $_SESSION['session_idUsuario']= $idUsuario;
+                    
+                               /*
+                                 $nombreUsuario = $con->query("SELECT * FROM ConectadoUsuario WHERE idUsuario ='$cedula'")or die(mysqli_error());
+                                 $col = $nombreUsuario->fetch_array(MYSQLI_ASSOC);
+                                 $validacionU = $col['idUsuario'];
+                                 */
+                                 $nombreUsuario = $con->query("SELECT * FROM usuario WHERE cedula ='$cedula'")or die(mysqli_error());
+                                 $col = $nombreUsuario->fetch_array(MYSQLI_ASSOC);
+                                 $validacionU = $col['cedula'];
+                                 $contadorsesion=$col['contadorSesion'];
+                                 $contandoUsuario=$col['contadorSesion'];
+                                  'sese U: '.$ipSesionValidar=$col['sesionIP'];
+                                 
+                                 // validamos que está activado el ip sesion para navegar sobre la ip de la empresa
+                                    $consultaClienteSescion=$con->query("SELECT * FROM cliente ");
+                                    $extraerClienteSesion=$consultaClienteSescion->fetch_array(MYSQLI_ASSOC);
                                     
-                                    //// en caso al usuario le han dado permiso para navegar por cualquier IP dejar ingresar al sistema
-                                    if($ipSesionValidar == 'NULL'){  
-                                        $alertaSesionIP='1';  
-                                        $saleUsuarioCerrar=$validacionU;
-                                        /*
-                                        if($validacionU == $cedula && $contadorsesion == '0' ){
-                                     
-                                           $contandoUsuario=$contandoUsuario+1;
-                                           $consulta = "UPDATE usuario SET estadoUsuario='Conectado', contadorSesion='$contandoUsuario' WHERE cedula='$validacionU' ";
-                                           $query = mysqli_query($con, $consulta);
-                                           header("Location: ../home");
-                                           
-                                        }else{
-                                       
-                                            $alertaSesion=1;
+                                    if($extraerClienteSesion['sesion'] == 'Si'){ 
+                                         '<br>secion e: '.$direccionIPEmpresa=$extraerClienteSesion['registroIP'];//$_SERVER['REMOTE_ADDR'];
+                                        
+                                        //// en caso al usuario le han dado permiso para navegar por cualquier IP dejar ingresar al sistema
+                                        if($ipSesionValidar == 'NULL'){  
+                                            $alertaSesionIP='1';  
                                             $saleUsuarioCerrar=$validacionU;
-                                            //echo "<script language='javascript'>confirm('Aplicando 1 sola sesión.');
-                                            //window.location.href='login'</script>';";
-                                        }*/
-                                    }else{ 
-                                        if($validacionU == $cedula && $contadorsesion == '0' && $direccionIPEmpresa == $ipSesionValidar){ 
-                                     
+                                            /*
+                                            if($validacionU == $cedula && $contadorsesion == '0' ){
+                                         
+                                               $contandoUsuario=$contandoUsuario+1;
+                                               $consulta = "UPDATE usuario SET estadoUsuario='Conectado', contadorSesion='$contandoUsuario' WHERE cedula='$validacionU' ";
+                                               $query = mysqli_query($con, $consulta);
+                                               header("Location: ../home");
+                                               
+                                            }else{
+                                           
+                                                $alertaSesion=1;
+                                                $saleUsuarioCerrar=$validacionU;
+                                                //echo "<script language='javascript'>confirm('Aplicando 1 sola sesión.');
+                                                //window.location.href='login'</script>';";
+                                            }*/
+                                        }else{ 
+                                            if($validacionU == $cedula && $contadorsesion == '0' && $direccionIPEmpresa == $ipSesionValidar){ 
+                                         
+                                               $contandoUsuario=$contandoUsuario+1;
+                                               $consulta = "UPDATE usuario SET estadoUsuario='Conectado', contadorSesion='$contandoUsuario' WHERE cedula='$validacionU' ";
+                                               $mensajeria=$con->query("UPDATE users SET  status='Disponible' WHERE email='$validacionU' ")or die(mysqli_error());
+                                               $query = mysqli_query($con, $consulta);
+                                               header("Location: ../home");
+                                               echo "<script language='javascript'>
+                                                window.location.href='../home'</script>';";
+                                               
+                                            }else{ 
+                                                
+                                                if($contadorsesion == 1){
+                                                    $alertaSesion='1';
+                                                }else{
+                                                    $alertaSesionIP='1';    
+                                                }
+                                                
+                                                $saleUsuarioCerrar=$validacionU;
+                                                //echo "<script language='javascript'>confirm('Aplicando 1 sola sesión.');
+                                                //window.location.href='login'</script>';";
+                                            }
+                                        }
+                                        
+                                        // END
+                                        
+                                    }
+                                    if($extraerClienteSesion['sesion'] == 'No'){
+                                        if($validacionU == $cedula && $contadorsesion == '0'){
+                                         
                                            $contandoUsuario=$contandoUsuario+1;
                                            $consulta = "UPDATE usuario SET estadoUsuario='Conectado', contadorSesion='$contandoUsuario' WHERE cedula='$validacionU' ";
                                            $mensajeria=$con->query("UPDATE users SET  status='Disponible' WHERE email='$validacionU' ")or die(mysqli_error());
                                            $query = mysqli_query($con, $consulta);
                                            header("Location: ../home");
-                                           echo "<script language='javascript'>
-                                            window.location.href='../home'</script>';";
                                            
-                                        }else{ 
-                                            
-                                            if($contadorsesion == 1){
-                                                $alertaSesion='1';
-                                            }else{
-                                                $alertaSesionIP='1';    
-                                            }
-                                            
+                                        }else{
+                                       
+                                            $alertaSesion='1';
                                             $saleUsuarioCerrar=$validacionU;
                                             //echo "<script language='javascript'>confirm('Aplicando 1 sola sesión.');
                                             //window.location.href='login'</script>';";
                                         }
                                     }
-                                    
-                                    // END
-                                    
-                                }
-                                if($extraerClienteSesion['sesion'] == 'No'){
-                                    if($validacionU == $cedula && $contadorsesion == '0'){
-                                     
-                                       $contandoUsuario=$contandoUsuario+1;
-                                       $consulta = "UPDATE usuario SET estadoUsuario='Conectado', contadorSesion='$contandoUsuario' WHERE cedula='$validacionU' ";
-                                       $mensajeria=$con->query("UPDATE users SET  status='Disponible' WHERE email='$validacionU' ")or die(mysqli_error());
-                                       $query = mysqli_query($con, $consulta);
-                                       header("Location: ../home");
-                                       
-                                    }else{
+                                //
+                                
+                                 
+                                        
                                    
-                                        $alertaSesion='1';
-                                        $saleUsuarioCerrar=$validacionU;
-                                        //echo "<script language='javascript'>confirm('Aplicando 1 sola sesión.');
-                                        //window.location.href='login'</script>';";
-                                    }
-                                }
-                            //
-                            
-                             
                                     
                                
-                                
-                           
-                    ///// fin del proceso
-                    
-                   
-                    
-                    
-                    
+                        ///// fin del proceso
+                        
+                       
+                        
+                        
+                        
+                    }
+                }else{
+                     $alertaSesionB='1';
                 }
             }else{
-                 $alertaSesionB='1';
-                //echo "<script language='javascript'>confirm('Usuario o contraseña incorrectos.');
-                //        window.location.href='login'</script>';";
+                $alertaSesionB_existencia='1';
             }
         }
         
@@ -240,7 +249,7 @@ if(isset($_POST["login"])){
                                             <br>
                                             Cualquier inquietud, contactarse a la empresa prestadora de servicio <a target='_black' href='http://fixwei.com'>Fixwei</a>
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>";
@@ -517,6 +526,34 @@ if(isset($_POST["login"])){
     <?php
     }
     
+    if($alertaSesionB_existencia == 1){
+    ?>
+                    <div style="position: fixed;width:300px;" id="cerrarA">
+                        <div class="modal-dialog">
+                          <div class="modal-content bg-danger">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Alerta</h4>
+                              <button type="button" id="closeA" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <center>
+                                <p>El usuario no existe.</p>
+                              </center>
+                            </div>
+                             <!-- formulario para eliminar por el id -->
+                            
+                            <div class="modal-footer justify-content-between">
+                             </div>
+                             
+                             <!-- END formulario para eliminar por el id -->
+                          </div>
+                        </div>
+                    </div>
+    <?php
+    }
+    
     if($alertaSesionC == 1){
     ?>
                     <div style="position: fixed;" id="cerrarA">
@@ -568,6 +605,88 @@ if(isset($_POST["login"])){
       </div>
 <?php
 } 
+
+
+
+if($_POST['correoEnviado'] == '1'){
+?>
+<div style="position: fixed;" id="cerrarA">
+          <div class="modal-dialog">
+            <div class="modal-content bg-danger">
+              <div class="modal-header">
+                <h4 class="modal-title">Contraseña restablecida</h4>
+                <button type="button" id="closeA" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Verifique su clave temporal que fue enviada a su correo.</p>
+              </div>
+               <!-- formulario para eliminar por el id -->
+              
+              <div class="modal-footer justify-content-between">
+               </div>
+               
+               <!-- END formulario para eliminar por el id -->
+            </div>
+          </div>
+      </div>
+<?php
+}
+
+if($_POST['correoNoEnviado'] == '1'){
+?>
+<div style="position: fixed;" id="cerrarA">
+          <div class="modal-dialog">
+            <div class="modal-content bg-danger">
+              <div class="modal-header">
+                <h4 class="modal-title">Alerta</h4>
+                <button type="button" id="closeA" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>No se pudo reestablecer la contraseña, contacte al administrador.</p>
+              </div>
+               <!-- formulario para eliminar por el id -->
+              
+              <div class="modal-footer justify-content-between">
+               </div>
+               
+               <!-- END formulario para eliminar por el id -->
+            </div>
+          </div>
+      </div>
+<?php
+}
+
+if($_POST['correoNoEncontrado'] == '1'){
+    ?>
+                    <div style="position: fixed;width:300px;" id="cerrarA">
+                        <div class="modal-dialog">
+                          <div class="modal-content bg-danger">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Alerta</h4>
+                              <button type="button" id="closeA" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <center>
+                                <p>El usuario no existe.</p>
+                              </center>
+                            </div>
+                             <!-- formulario para eliminar por el id -->
+                            
+                            <div class="modal-footer justify-content-between">
+                             </div>
+                             
+                             <!-- END formulario para eliminar por el id -->
+                          </div>
+                        </div>
+                    </div>
+    <?php
+    }
     
     ?>
     <script>
@@ -581,7 +700,7 @@ if(isset($_POST["login"])){
             
         });
     </script>
-    <script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function () {
    
     $('body').bind('cut copy paste', function (e) {

@@ -213,7 +213,7 @@ if(isset($_POST['AgregarUsuario'])){
                                             <b>El caracter que encuentra al final del usuario corresponde al tipo de documento de identidad que tiene asignado,
                                             por lo cual no debe ser digitado y corresponde a la selección de documento segun corresponda.</b>
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -623,7 +623,7 @@ if(isset($_POST['EditarClienteAdmin'])){
                                             <b>El caracter que encuentra al final del usuario corresponde al tipo de documento de identidad que tiene asignado,
                                             por lo cual no debe ser digitado y corresponde a la selección de documento segun corresponda.</b>
                                             <br><br>
-                                            Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                                            Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                             </p>
                                             </body>
                                             </html>
@@ -661,7 +661,7 @@ if(isset($_POST['EditarClienteAdmin'])){
                     <br><br>
                     Se recomienda ingresar y realizar el cambio de contraseña.
                     <br><br>
-                    Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                    Este correo es informativo por tanto, le pedimos no responda este mensaje.
                     </p>
                     </body>
                     </html>";

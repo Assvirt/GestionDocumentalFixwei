@@ -227,7 +227,7 @@ session_start();
                         - Documentos comprimidos del listado maestro '.$divulgarDocumentoC.'.<br>
                         - Documentos comprimidos de obsoletos '.$divulgarDocumentoD.'.
                         <br><br>
-                        Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+                        Este correo es informativo por tanto, le pedimos no responda este mensaje.
                         </p>
                         </body>
                         </html>

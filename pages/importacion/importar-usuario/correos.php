@@ -48,7 +48,7 @@ include '../../conexion/bd.php';
     <br><br>
     Se recomienda ingresar y realizar el cambio de contraseña.
     <br><br>
-    Este correo es informativo y por tanto, le pedimos no responda este mensaje.
+    Este correo es informativo por tanto, le pedimos no responda este mensaje.
     </p>
     </body>
     </html>
