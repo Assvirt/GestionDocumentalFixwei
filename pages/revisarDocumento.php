@@ -244,7 +244,7 @@ if(!isset($_SESSION["session_username"])){
                                 
                                 <div class="card-body">
                                     <div class="col-sm-12">
-                                        <div class="card">
+                                        <div class=""> <!-- card -->
                                             
                                             
                                                 <div class="row" style="padding-left: 50px;" >
@@ -334,18 +334,24 @@ if(!isset($_SESSION["session_username"])){
                                                     ?>
                                                     
                                                     
+                                                    
+                                                    
+                                                </div>
+                                                
+                                                <div class="row" style="padding-left: 50px;">
                                                     <div class="col-sm-3">
                                                       <div class="form-group">
-                                                        <label>Descargar documento:</label><br>
+                                                        <label>Documento PDF:</label><br>
                                                         <button type="submit" name="addPermisosConfig" class="btn btn-sm btn-warning float-left  <?php echo $disabledPDF;?>">
                                                             <i class="fas fa-download" ></i><a style='color:black' href='<?php echo $rutaPDF;?>' target="_blank" >Descargar documento</a>
                                                         </button>
                                                       </div>
                                                     </div>
-                                                    
-                                                </div>
-                                                
-                                                <div class="row" style="padding-left: 50px;">
+                                                    <div class="col-sm-3">
+                                                      <div class="form-group">
+                                                        
+                                                      </div>
+                                                    </div>
                                                     <div class="col-sm-3">
                                                       <div class="form-group">
                                                         <label>Documento editable:</label><br>

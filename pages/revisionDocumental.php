@@ -341,6 +341,7 @@ error_reporting(E_ERROR);
                       <th>Proceso</th>
                       <th>Implementación</th>
                       <th>Próxima fecha revisión</th>
+                      <th>Meses</th>
                       <th>Estado</th>
                       <th>Trazabilidad</th>
                       <th></th>
@@ -451,9 +452,9 @@ error_reporting(E_ERROR);
                                  $tiempoRespuesta =30*$row['mesesRevision'];//$row['tiempoRespuesta'];
                             }
                            
-                            '<br>Cantidad días: '.$tiempoRespuesta;
+                             '<br>Cantidad días: '.$tiempoRespuesta;
                             
-                             '<br>Fecha validar: '.$fechaRestar = date("Y-m-d",strtotime($fechainicial."+ ".$tiempoRespuesta." days")); 
+                              '<br>Fecha validar: '.$fechaRestar = date("Y-m-d",strtotime($fechainicial."+ ".$tiempoRespuesta." days")); 
                             
                          echo"<td style='text-align: justify;' >".$fechaRestar."</td>"; // $fechaRevisar --$mesesRevision    
                          
@@ -461,10 +462,26 @@ error_reporting(E_ERROR);
                         $validarActualizacion=$mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE tipoSolicitud=2 AND proceso='$idProceso2' AND tipoDocumento='$tipo' AND nombreDocumento='$idDocumento' AND estado IS NULL");
                         $extraer_validarActualizacion=$validarActualizacion->fetch_array(MYSQLI_ASSOC);
                         
+                        echo "<td style='text-align: justify;' >";
+                        
+                            echo $preguntandoMeses; //.'<br>Cantidad de días '.$tiempoRespuesta;
+                        
+                        echo "</td>";
+                        
                         if($extraer_validarActualizacion['id'] != NULL){
                             echo"<td style='text-align: justify;' >En revisión</td>";
                         }else{
-                            echo"<td style='text-align: justify;' ></td>";
+                            
+                            $preguntaDocumento=$mysqli->query("SELECT id,vigente,revisado FROM documento WHERE id='$idDocumento' ");
+                            $respuestaDocumento=$preguntaDocumento->fetch_array(MYSQLI_ASSOC);
+                            '<br>vigente: '.$respuestaDocumento['vigente'];
+                            '<br>revisado: '.$respuestaDocumento['revisado'];
+                            if($respuestaDocumento['vigente'] == '1' && $respuestaDocumento['revisado'] == '1'){
+                                echo"<td style='text-align: justify;' >En revisión</td>";
+                            }else{
+                                echo"<td style='text-align: justify;' ></td>";
+                            }
+                            
                         }
                          
                          
@@ -508,7 +525,7 @@ error_reporting(E_ERROR);
                             if($contadorDíasNotificacion > '30' ){
                                  '<br>Sin avisar<br>';
                                 //echo $contador->format($differenceFormat);
-                            }else{  '<br>Avisar';
+                            }else{   '<br>Avisar';
                                  $row['id'];
                                 
                                 //// preguntamos si debe enviar correo o no
@@ -583,7 +600,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Dueño de proceso - revisión documental - autorizado para visualizar');
+                                                                      $mail->Subject=utf8_decode('Dueño de proceso - revisión documental'); // - autorizado para visualizar
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -674,7 +691,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Dueño de proceso - revisión documental - autorizado para visualizar');
+                                                                      $mail->Subject=utf8_decode('Dueño de proceso - revisión documental '); //- autorizado para visualizar
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">

@@ -178,7 +178,7 @@ if(!isset($_SESSION["session_username"])){
                   </div>
                   <!-- si el sistema detecta un registro de persona autorizada para visualizar el documento, se activa esta vista-->
                   <?php
-                  $consulta_revision=$mysqli->query("SELECT * FROM `comnetariosRevision` WHERE idDocumento='".$col2['id']."' ");
+                  $consulta_revision=$mysqli->query("SELECT * FROM `comnetariosRevision` WHERE idDocumento='".$col2['id']."' AND notificar is NOT null ");
                   $extraer_consulta=$consulta_revision->fetch_array(MYSQLI_ASSOC);
                   if($extraer_consulta['id'] != NULL){
                   ?>
@@ -217,27 +217,28 @@ if(!isset($_SESSION["session_username"])){
                   </div>
                   <?php
                   }
+                  
+                  if($_POST['revisionDocumental'] == '1'){ }else{
                   ?>
                   <div class="form-group">
                     <h6 class="description-header"><b>Estado:</b></h6>
                     <span class="">
                         <?php 
-                        if($_POST['revisionDocumental'] == '1'){
-                            
-                        }else{
+                        
                             if($devuelto == '1'){
                                 echo 'Regresado'; 
                                 
                             }else{ 
                                 echo $estado; 
                             } 
-                        }
+                        
                         ?>
                         
                     </span>
                   </div>
                   
                   <?php
+                   }
                         $datos = $mysqli->query("SELECT * FROM comentarioSolicitud WHERE idSolicitud = '$id'");
                         $rows =  mysqli_num_rows($datos);
     
@@ -248,22 +249,23 @@ if(!isset($_SESSION["session_username"])){
                         }
                         
                          
-                  
+                  if($_POST['revisionDocumental'] == '1'){ }else{
                   ?>
                   <div class="form-group" style="display:<?php $display;?>;">
                     <h6 class="description-header"><b>Comentarios Anteriores:</b></h6>
                     <?php
                     while($columnas = $datos->fetch_assoc()){
                         $comentarios = $columnas['comentario'];
-                        if($_POST['revisionDocumental'] == '1'){ }else{
                     ?>
                     <table><tr><td><span class=""><?php echo $comentarios;?></span></td></tr></table>
                     <?php 
-                        }
+                        
                     }
                     ?>
                   </div>
-                
+                 <?php
+                  }
+                 ?>
                   <div class="card-header">
                   <div class="card-title">
                     <?php
@@ -271,12 +273,13 @@ if(!isset($_SESSION["session_username"])){
                     
                     
                     if($ruta == 'sin datos' || $ruta == NULL ){
+                        /*
                     ?>  
                     <button type="button" disabled class="btn btn-block btn-warning btn-sm">
                         <i class="fas fa-download"></i>
                         Descargar 
                     </button>
-                    <?php
+                    <?php*/
                     }else{
                     ?>
                     <button type="button"  class="btn btn-block btn-warning btn-sm">
