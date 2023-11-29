@@ -240,7 +240,7 @@ if(isset($_POST['revision'])){
                                               $tipoSolicitudNombre='eliminación';
                                           }
                               
-                                          $mail->Subject=utf8_decode('Dueño de proceso - revisión documental - autorizado para visualizar');
+                                          $mail->Subject=utf8_decode('Dueño de proceso - revisión documental '); //- autorizado para visualizar
                                           $mail->Body = utf8_decode('
                                           <html>
                                           <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -326,7 +326,7 @@ if(isset($_POST['revision'])){
                                               $tipoSolicitudNombre='eliminación';
                                           }
                               
-                                          $mail->Subject=utf8_decode('Dueño de proceso - revisión documental - autorizado para visualizar');
+                                          $mail->Subject=utf8_decode('Dueño de proceso - revisión documental '); //- autorizado para visualizar
                                           $mail->Body = utf8_decode('
                                           <html>
                                           <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">

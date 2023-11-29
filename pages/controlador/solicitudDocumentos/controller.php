@@ -1068,8 +1068,7 @@ if(isset($_POST['seguimiento'])){
         echo '<script language="javascript">window.location.href="../../solicitudDocumentos"</script>';
     }
     
-    /// eliminamos le registro de la peticon de actualizacion desde la revisión documental
-    $mysqli->query("DELETE FROM `comnetariosRevision` WHERE idDocumento='$idDocumento' ");
+    
     
     /// preguntamos si el documento ya fue aprobado, de ser así, debe retornar a la otra persona que ya ha sido aprobada o rechazada
     $pregunta_solicitud_aprobado_rechazado=$mysqli->query("SELECT estado,id FROM solicitudDocumentos WHERE id='$id' ");
@@ -1152,6 +1151,8 @@ if(isset($_POST['seguimiento'])){
     
         
         if($accion == 'Rechazado' && $tipoSolicitud == 2){
+            /// eliminamos le registro de la peticon de actualizacion desde la revisión documental
+            $mysqli->query("DELETE FROM `comnetariosRevision` WHERE idDocumento='$idDocumento' ");
             
             $fecha = date("Y:m:j");
             $mysqli->query("UPDATE documento SET ultimaFechaRevision = '$fecha', usuarioRevisa = NULL, revisado = 0 WHERE id='$idDocumento'");
@@ -1172,7 +1173,8 @@ if(isset($_POST['seguimiento'])){
         
         if($accion == 'Aprobado' && $tipoSolicitud == 2){//Actualizacion
             
-                        
+            /// eliminamos le registro de la peticon de actualizacion desde la revisión documental
+            $mysqli->query("UPDATE `comnetariosRevision` SET notificar=NULL, notificarQuien=NULL, lider=NULL WHERE idDocumento='$idDocumento' ");
             $datosQueryIdAnt = $mysqli->query("SELECT idAnterior FROM documento WHERE idAnterior = '$idDocumento'");
               
             if(mysqli_num_rows($datosQueryIdAnt)<=0){
