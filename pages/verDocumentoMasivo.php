@@ -121,7 +121,7 @@ $verObsoletos = $_POST['obsoletooss'];//$_POST['verObsoletos'];
                                 ?>    
                             
                         
-                        ?>
+                        
                         
                         <div class="col-sm">
                             <button type="button" class="btn btn-block btn-info btn-sm"><a href="crearDocumentoMasivoObsoleto"><font color="white"><i class="fas fa-list"></i> Documento obsoleto</font></a></button>

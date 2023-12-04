@@ -3944,7 +3944,7 @@ if(isset($_POST['ejecutadorIndividual'])){
                             <input name="editarDocumentoMasivo" value="1" type="hidden">
                             <input name="enviarIdDocumento" value="<?php echo $extraer_consulta_documento['id'];?>" type="hidden">
                             <input name="enviarIdDocumentoControl" value="<?php echo $extraer_consulta_documento['id_solicitud'];?>" type="hidden">
-                             <input type="submit" value="enviar alerta"> 
+                             <!--<input type="submit" value="enviar alerta">--> 
                         </form> 
                     <?php 
     }else{  'registro';
