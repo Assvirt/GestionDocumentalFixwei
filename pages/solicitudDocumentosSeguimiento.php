@@ -390,10 +390,10 @@ if(!isset($_SESSION["session_username"])){
                     /// END
                             }
                          
-                        }else{
+                        }else{ //echo 'dato entrante revision documental: '.$_POST['revisionDocumental'];
                             if($_POST['revisionDocumental'] == '1'){
                                 
-                            }else{
+                            }else{ echo 'dato entrante revision documental: '.$_POST['revisionDocumental'];
                             echo '<br><font color="orange"><b>No tiene permisos para cambiar el estado de la solicitud</b></font>';
                             }
                         }
@@ -401,7 +401,7 @@ if(!isset($_SESSION["session_username"])){
                   ?>
                  
                  <div class="col-sm-12">
-                            <div class="card">
+                            <div class=""> <!-- card -->
                                 <center>
                                     <br>
                                     <!--<p><h4>Control de cambios</h4></p>-->

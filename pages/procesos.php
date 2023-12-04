@@ -214,8 +214,31 @@ require_once 'permisosPlataforma.php';
                             $queryNombres = $mysqli->query("SELECT * FROM cargos WHERE id_cargos = '$array[$i]'");
                             $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
                             
-                        	echo "*".$nombres['nombreCargos']."<br>";
+                        	echo "* ".$nombres['nombreCargos']."<br>";
+                        	$sacarDatos.=$array[$i];
                         }
+                        //echo 'datos recole: '.$sacarDatos;
+                        
+                        
+                        
+                        // leemos el array para verificar repetidos dentro de la celda
+                          /*  $arreglo =  $array[$i]; 
+                            if(count($arreglo) > count(array_unique($arreglo))){
+                              echo "¡Hay repetidos!";
+                              $repiteDuenoProceso=FALSE;
+                              for($i=0; $i<count($arreglo); $i++){
+                                  $sacandoVariableArregloCA=$arreglo[$i].',';
+                              }
+                                //echo $duenossEnviarMensaje.='- En la celda '.($contandoCeldaCargosAsociados+1).' está '.$sacandoVariableArregloCA.'<br>'; /// sacamos en que celda y cuál es el nombre repetido
+                            
+                            }else{
+                              //echo "No hay repetidos";
+                            }*/
+                        /// end
+                        
+                        
+                        
+                        
                     echo "</td>";
                     }
                     echo" <td>".$row['prefijo']."</td>";

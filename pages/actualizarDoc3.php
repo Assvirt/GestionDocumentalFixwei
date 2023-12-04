@@ -946,8 +946,10 @@ require_once 'conexion/bd.php';
                 $activador_usuario='Si';
             }else{ /// verificamos que los roles estén ingresando, tmabién verificamos que el encargado que es el aprobador, sea quien tenga el documento abierto
                 if($activador_usuario != NULL){ //echo 'a 1';
+                    $VariableNoSalir=1;
                     $títulRol='Asignar documento';
                 }elseif($nombres_busqueda_cargo_solicitud['QuienAprueba'] == $celdulaUser && $datosDoc['estadoActualiza'] == null || $nombres_busqueda_cargo_solicitud['QuienAprueba'] == $celdulaUser && $datosDoc['estadoActualiza'] == 'Pendiente'){ //echo 'a 2';
+                    $VariableNoSalir=1;
                     $títulRol='Asignar documento';
                 }else{
                     $títulRol==NULL;
@@ -1011,7 +1013,9 @@ require_once 'conexion/bd.php';
         </div>-->
       </div><!-- /.container-fluid -->
     </section>
-
+<?php
+$_POST['idDocumento'];
+?>
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">

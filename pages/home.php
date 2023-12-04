@@ -448,6 +448,650 @@ s0.parentNode.insertBefore(s1,s0);
 <!--End of Tawk.to Script-->
 </body>
 </html>
+
+
+
+<!-- Validación para envio de notificacion de correos-->
+<?php
+                    require 'controlador/usuarios/libreria/PHPMailerAutoload.php';
+                    $acentos = $mysqli->query("SET NAMES 'utf8'");
+                    $data = $mysqli->query("SELECT * FROM documento WHERE vigente = 1 AND pre IS NULL ORDER BY codificacion ASC")or die(mysqli_error());
+                    //SELECT * FROM documento WHERE vigente = 1 AND revisado = 0 AND pre IS NULL ORDER BY codificacion ASC
+                    while($row = $data->fetch_assoc()){
+                        
+                        /// parametro de prueba de correo
+                        //if($row['id'] == '157'){
+                            
+                        //}else{
+                        //    continue;
+                        //}
+                        
+                         
+                        $idProceso2 = $row['proceso'];
+                        
+                        
+                        $dataSol = $mysqli->query("SELECT * FROM procesos WHERE id = '$idProceso2'")or die(mysqli_error());
+                        $datosSol = $dataSol->fetch_assoc();
+                        $encargadoSolicitud = json_decode($datosSol['duenoProceso']);
+                        $longitud = count($encargadoSolicitud);
+                        
+                         if($datosSol['importacion'] == 1){
+                            for($i=0; $i<$longitud; $i++){ 
+                                //saco el valor de cada elemento
+                                $queryNombres = $mysqli->query("SELECT * FROM cargos WHERE nombreCargos LIKE '%$encargadoSolicitud[$i]%' ");
+                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                
+                                $encargadoSolicitud=$nombres['id_cargos'];
+                                // echo '<td>S'.$encargadoSolicitud.'</td>';
+                            
+                            }
+                         }else{
+                            for($i=0; $i<$longitud; $i++){ 
+                                //saco el valor de cada elemento
+                                $queryNombres = $mysqli->query("SELECT * FROM cargos WHERE id_cargos LIKE '%$encargadoSolicitud[$i]%' ");
+                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                
+                                $encargadoSolicitud=$nombres['id_cargos'];
+                                // echo '<td>N'.$encargadoSolicitud.'</td>';
+                            
+                            } 
+                         }
+                        //print_r($encargadoSolicitud);
+                        
+                        
+                        
+                        if($cargo == $encargadoSolicitud){ 
+                           
+                        }else{
+                            //continue;
+                        }
+                       
+                        
+                        $mesesRevision = $row['mesesRevision'];
+                        
+                        if($row['ultimaFechaRevision'] == NULL){
+                            
+                            $fechaAprobado = date("d-m-Y", strtotime($row['fechaAprobado']));
+                            /*Calculo fecha de revision*/
+                            $fechaRevisar = date("d-m-Y",strtotime($fechaAprobado."+ $mesesRevision month"));
+                            
+                        }else{
+                            $fechaUltimaRevision = $row['ultimaFechaRevision'];
+                            
+                            $fechaRevisar = date("d-m-Y",strtotime($fechaUltimaRevision."+ $mesesRevision month"));
+                        }
+                        
+                       
+                        
+                         "<tr>";    
+                       
+                         " <td style='text-align: justify;'>".$row['version']."</td>";
+                         " <td style='text-align: justify;'>".$row['codificacion']."</td>";
+                         " <td style='text-align: justify;'>".$row['nombres']."</td>";
+                         
+                         $tipo = $row['tipo_documento'];
+                         $acentos = $mysqli->query("SET NAMES 'utf8'");
+                         $nombreTipoDocumento = $mysqli->query("SELECT * FROM tipoDocumento WHERE id ='$tipo'")or die(mysqli_error());
+                         $colu = $nombreTipoDocumento->fetch_array(MYSQLI_ASSOC);
+                         $nombreT = $colu['nombre'];
+                         
+                         " <td style='text-align: justify;'>".$nombreT."</td>";
+                         
+                         $proceso =  $row['proceso'];
+                         $acentos = $mysqli->query("SET NAMES 'utf8'");
+                         $nombreProceso = $mysqli->query("SELECT * FROM procesos WHERE id ='$proceso'")or die(mysqli_error());
+                         $col3 = $nombreProceso->fetch_array(MYSQLI_ASSOC);
+                         $nombreP = $col3['nombre'];
+                         
+                         " <td style='text-align: justify;'>".$nombreP."</td>";
+                         
+                         " <td style='text-align: justify;'>".substr($row['fechaAprobado'],0,-8)."</td>"; //$row['fechaAprobado']
+                          
+                          date_default_timezone_set("America/Bogota");
+                             'Fecha inicial: '.$fechainicial = substr($row['fechaAprobado'],0,-8);
+                             '<br>Fecha actual: '.$fechaactual = date("Y-m-d");
+                            
+                                           
+                                          
+                             '<br>Meses: '.$preguntandoMeses=$row['mesesRevision'];
+                            if($preguntandoMeses == 1){
+                                 $tiempoRespuesta ='30';//$row['tiempoRespuesta'];
+                            }else{
+                                 $tiempoRespuesta =30*$row['mesesRevision'];//$row['tiempoRespuesta'];
+                            }
+                           
+                             '<br>Cantidad días: '.$tiempoRespuesta;
+                            
+                              '<br>Fecha validar: '.$fechaRestar = date("Y-m-d",strtotime($fechainicial."+ ".$tiempoRespuesta." days")); 
+                            
+                         "<td style='text-align: justify;' >".$fechaRestar."</td>"; // $fechaRevisar --$mesesRevision    
+                         
+                        $idDocumento=$row['id'];
+                        $validarActualizacion=$mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE tipoSolicitud=2 AND proceso='$idProceso2' AND tipoDocumento='$tipo' AND nombreDocumento='$idDocumento' AND estado IS NULL");
+                        $extraer_validarActualizacion=$validarActualizacion->fetch_array(MYSQLI_ASSOC);
+                        
+                         "<td style='text-align: justify;' >";
+                        
+                             $preguntandoMeses; //.'<br>Cantidad de días '.$tiempoRespuesta;
+                        
+                         "</td>";
+                        
+                        if($extraer_validarActualizacion['id'] != NULL){
+                            "<td style='text-align: justify;' >En revisión</td>";
+                        }else{
+                            
+                            $preguntaDocumento=$mysqli->query("SELECT id,vigente,revisado FROM documento WHERE id='$idDocumento' ");
+                            $respuestaDocumento=$preguntaDocumento->fetch_array(MYSQLI_ASSOC);
+                            '<br>vigente: '.$respuestaDocumento['vigente'];
+                            '<br>revisado: '.$respuestaDocumento['revisado'];
+                            if($respuestaDocumento['vigente'] == '1' && $respuestaDocumento['revisado'] == '1'){
+                                "<td style='text-align: justify;' >En revisión</td>";
+                            }else{
+                                "<td style='text-align: justify;' ></td>";
+                            }
+                            
+                        }
+                         
+                         
+                         "<td>";
+                                "<form action='revisarDocumento' method='POST'>";
+                                        "<input type='hidden' name='idDocumento' value='".$row['id']."'>";
+                                        "<input type='hidden' name='idSolicitud' value='".$row['id_solicitud']."'>";
+                                        "<button type='submit' class='btn btn-block btn-warning btn-sm'><i class='fas fa-eye'></i> Trazabilidad</button>";
+                                    
+                                "</form>";
+                         "</td>";  
+                          
+                          
+                          
+                          '<td>';
+                           
+                            // se traslada la validación un poco más arriba para llevar la fecha correcta
+                            
+                                        /// atrapamos el filtro de la fecha, desde hasta
+                                           $datetime1 = new DateTime($fechainicial);
+                                           $datetime2 = new DateTime($fechaRestar); //$indicadorHasta
+                                           // END
+                                           
+                                           // sacamos el intervalo para la diferencia entre meses
+                                           $interval = date_diff($datetime1, $datetime2);
+                                            '<br>Diferencia entre meses: '.$enviarIntervalo=$interval->format('%m months');
+                                           
+                                          
+                            
+                            
+                            $datetime1 = date_create($fechaRestar);
+                            $datetime2 = date_create($fechaactual);
+                            $contador = date_diff($datetime1, $datetime2);
+                            $differenceFormat = '%a';
+                            
+                            
+                             '<br>Contador: '.$contadorDíasNotificacion=$contador->format($differenceFormat);
+                            $contadorDíasNotificacion=ABS($contadorDíasNotificacion-1);
+                            //if($fechaRestar > $fechaactual){
+                            
+                            if($contadorDíasNotificacion > '30' ){
+                                 '<br>Sin avisar<br>';
+                                //echo $contador->format($differenceFormat);
+                            }else{   '<br>Avisar';
+                                 $row['id'];
+                                
+                                //// preguntamos si debe enviar correo o no
+                                $preguntandoCorreo=$mysqli->query("SELECT * FROM documento WHERE id='".$row['id']."' ");
+                                $traerPreguntaCorreo=$preguntandoCorreo->fetch_array(MYSQLI_ASSOC);
+                                
+                                if($traerPreguntaCorreo['revisionDocumentalCorreo'] == 1){
+                                    
+                                }else{
+                                    ///// bloqueamos el envio de correo despues del primer aviso
+                                    $mysqli->query("UPDATE documento SET revisionDocumentalCorreo='1' WHERE id ='".$row['id']."' ");
+                                    //// end
+                                         '<br>Debe avisar<br>';
+                                    $consultamosSolicitud=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE id='".$row['id_solicitud']."' ");
+                                    $extraerSolicitudConsultaConsultamosSolicitud=$consultamosSolicitud->fetch_array(MYSQLI_ASSOC);
+                                    $tipoSolicitud=$extraerSolicitudConsultaConsultamosSolicitud['tipoSolicitud'];
+                                      
+                                    /// consultamos el proceso para sacar los lideres de procesos y notificarlos
+                                        $acentos = $mysqli->query("SET NAMES 'utf8'");
+                                        $consultamosProceso=$mysqli->query("SELECT * FROM procesos WHERE id='$proceso' ");
+                                        $extraerConsultaProceso=$consultamosProceso->fetch_array(MYSQLI_ASSOC);
+                                            //// vamos a imprimir el dueño de proceso
+                                            $array = json_decode(($extraerConsultaProceso['duenoProceso']));
+                                            //var_dump($array);
+                                            $longitud = count($array);
+                                           
+                                            if($extraerConsultaProceso['importacion'] == 1 ){ 
+                                                 'entra al A';
+                                                for($i=0; $i<$longitud; $i++){
+                                                        //saco el valor de cada elemento
+                                                         'Dato: '.$array[$i];  '<br>';
+                                                           
+                                                        $queryNombresCargos = $mysqli->query("SELECT * FROM cargos WHERE nombreCargos = '$array[$i]' ");
+                                                        $nombresCargos = $queryNombresCargos->fetch_array(MYSQLI_ASSOC); 
+                                                            
+                                                        "*".$nombresCargos['id_cargos']."<br><br>";
+                                                        	
+                                                        if($nombresCargos['id_cargos'] != NULL){
+                                                        	   '<br>Debe avisar A';
+                                                        	
+                                                        	$extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cargo ='".$nombresCargos['id_cargos']."' ")or die(mysqli_error());
+                                                            while($usuariosCargo = $extraerUsuarios->fetch_array()){
+                                                            '<br>EL USUARIO: <b>'.$nombredelUsuario=($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
+                                                            '<br> tiene el id cargo: '.$usuariosCargo['cargo'].'</b>';
+                                                            $consultaCedula=$usuariosCargo['cedula'];
+                                                             '<br>A:'.$correoNotificar=$usuariosCargo['correo'];
+                                                            
+                                                
+    
+                                                                      $mail = new PHPMailer();
+                                                                      $mail->IsSMTP();
+                                                                      
+                                                                     
+                                                                      require 'correoEnviar/contenido.php';
+                                                                     
+                                                                      //Agregar destinatario
+                                                                      $mail->isHTML(true);
+                                                                      $mail->AddAddress($correoNotificar);
+                                                                       '-Enviar: '.$correoNotificar;
+                                                                      /// end
+                                                                  
+                                                                      $nombreDocumentoEnviarCorreo=$row['nombres'];//$_POST['nombreDocumento'];
+                                                                      
+                                                          
+                                                                      if($tipoSolicitud == '1'){
+                                                                          $tipoSolicitudNombre='creación';
+                                                                      }
+                                                                      if($tipoSolicitud == '2'){
+                                                                          $tipoSolicitudNombre='actualización';
+                                                                      }
+                                                                      if($tipoSolicitud == '3'){
+                                                                          $tipoSolicitudNombre='eliminación';
+                                                                      }
+                                                          
+                                                                      $mail->Subject=utf8_decode('Revisión documental - dueño de proceso'); // - autorizado para visualizar
+                                                                      $mail->Body = utf8_decode('
+                                                                      <html>
+                                                                      <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                                                                      <title>HTML</title>
+                                                                      </head>
+                                                                      <body>
+                                                                      <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
+                                                                      
+                                                                      <p>Estimado (a). <b><em>'.$nombredelUsuario.'</em></b>.
+                                                                      <br>
+                                                                      <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
+                                                                      
+                                                                     
+                                                                      <br><br>
+                                                                      Este correo es informativo por tanto, le pedimos no responda este mensaje.
+                                                                      </p>
+                                                                      </body>
+                                                                      </html>
+                                                                      ');
+                                                                 
+                                                                      if ($mail->Send()) {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("Enviado Correctamente");
+                                                                          //    </script>';
+                                                                          
+                                                                      } else {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("NO ENVIADO, intentar de nuevo");
+                                                                          //    </script>';
+                                                                      }
+                                                                      $mail->ClearAddresses();  
+                                                                      
+                                                                      //// end        
+                                                            }
+                                                        }
+                                                                    
+                                                                     
+                                                                    
+                                                            
+                                                }
+                                            }else{
+                                                 
+                                                 'entra al A';
+                                                for($i=0; $i<$longitud; $i++){
+                                                        //saco el valor de cada elemento
+                                                         'Dato: '.$array[$i];  '<br>';
+                                                           
+                                                        $queryNombresCargos = $mysqli->query("SELECT * FROM cargos WHERE id_cargos = '$array[$i]' ");
+                                                        $nombresCargos = $queryNombresCargos->fetch_array(MYSQLI_ASSOC); 
+                                                            
+                                                        "*".$nombresCargos['id_cargos']."<br><br>";
+                                                        	
+                                                        if($nombresCargos['id_cargos'] != NULL){
+                                                        	   '<br>Debe avisar B';
+                                                        	
+                                                        	$extraerUsuariosSinImportacion = $mysqli->query("SELECT * FROM usuario WHERE cargo ='".$nombresCargos['id_cargos']."' ")or die(mysqli_error());
+                                                            while($usuariosCargoSinImporacion = $extraerUsuariosSinImportacion->fetch_array()){
+                                                            '<br>EL USUARIO: <b>'.$nombredelUsuarioSinImportacion=($usuariosCargoSinImporacion['nombres'].' '.$usuariosCargoSinImporacion['apellidos']);
+                                                            '<br> tiene el id cargo: '.$usuariosCargoSinImporacion['cargo'].'</b>';
+                                                            $consultaCedula=$usuariosCargoSinImporacion['cedula'];
+                                                             '<br>B: '.$correoNotificarSinImportacion=$usuariosCargoSinImporacion['correo'];
+                                                            
+                                                
+    
+                                                                      $mail = new PHPMailer();
+                                                                      $mail->IsSMTP();
+                                                                      
+                                                                     
+                                                                      require 'correoEnviar/contenido.php';
+                                                                     
+                                                                      //Agregar destinatario
+                                                                      $mail->isHTML(true);
+                                                                      $mail->AddAddress($correoNotificarSinImportacion);
+                                                                       '-Enviar: '.$correoNotificar;
+                                                                      /// end
+                                                                  
+                                                                      $nombreDocumentoEnviarCorreo=$row['nombres'];//$_POST['nombreDocumento'];
+                                                                      
+                                                          
+                                                                      if($tipoSolicitud == '1'){
+                                                                          $tipoSolicitudNombre='creación';
+                                                                      }
+                                                                      if($tipoSolicitud == '2'){
+                                                                          $tipoSolicitudNombre='actualización';
+                                                                      }
+                                                                      if($tipoSolicitud == '3'){
+                                                                          $tipoSolicitudNombre='eliminación';
+                                                                      }
+                                                          
+                                                                      $mail->Subject=utf8_decode('Revisión documental - dueño de proceso '); //- autorizado para visualizar
+                                                                      $mail->Body = utf8_decode('
+                                                                      <html>
+                                                                      <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                                                                      <title>HTML</title>
+                                                                      </head>
+                                                                      <body>
+                                                                      <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
+                                                                      
+                                                                      <p>Estimado (a). <b><em>'.$nombredelUsuarioSinImportacion.'</em></b>.
+                                                                      <br>
+                                                                      <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
+                                                                      
+                                                                      
+                                                                      <br><br>
+                                                                      Este correo es informativo por tanto, le pedimos no responda este mensaje.
+                                                                      </p>
+                                                                      </body>
+                                                                      </html>
+                                                                      ');
+                                                                 
+                                                                      if ($mail->Send()) {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("Enviado Correctamente");
+                                                                          //    </script>';
+                                                                          
+                                                                      } else {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("NO ENVIADO, intentar de nuevo");
+                                                                          //    </script>';
+                                                                      }
+                                                                      $mail->ClearAddresses();  
+                                                                      
+                                                                      //// end     
+                                                            }
+                                                  
+                                                        }
+                                                                    
+                                                                     
+                                                                    
+                                                            
+                                                }
+                                            
+                                            }
+                                            
+                                            
+                                        /*
+                                        /// luego del envio de correo para los lideres de procesos, ahora vamos a enviar correo a un segundo resposable
+                                        $preguntandoParametroCorreo=$mysqli->query("SELECT * FROM documentoRevision ");
+                                        $extrerPreguntaParametroCorreo=$preguntandoParametroCorreo->fetch_array(MYSQLI_ASSOC);
+                                        
+                                        $arrayResponsable = json_decode(($extrerPreguntaParametroCorreo['responsable']));
+                                        $longitudResponsable = count($arrayResponsable);
+                                        
+                                        if($extrerPreguntaParametroCorreo['quien'] == 'usuario'){
+                                            for($i=0; $i<$longitudResponsable; $i++){
+                                                            '<br>Entra usuario';    
+                                                            $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE id ='$arrayResponsable[$i]' ")or die(mysqli_error());
+                                                            $usuariosCargo = $extraerUsuarios->fetch_array(MYSQLI_ASSOC);
+                                                            '<br>EL USUARIO: <b>'.$nombredelUsuario=($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
+                                                            '<br> tiene el id cargo: '.$usuariosCargo['cargo'].'</b>';
+                                                            $consultaCedula=$usuariosCargo['cedula'];
+                                                             '<br>'.$correoNotificar=$usuariosCargo['correo'];
+                                                            
+                                                
+    
+                                                                      $mail = new PHPMailer();
+                                                                      $mail->IsSMTP();
+                                                                      
+                                                                     
+                                                                      require 'correoEnviar/contenido.php';
+                                                                     
+                                                                      //Agregar destinatario
+                                                                      $mail->isHTML(true);
+                                                                      $mail->AddAddress($correoNotificar);
+                                                                       '-Enviar: '.$correoNotificar;
+                                                                      /// end
+                                                                  
+                                                                      $nombreDocumentoEnviarCorreo=$row['nombres'];//$_POST['nombreDocumento'];
+                                                                      
+                                                          
+                                                                      if($tipoSolicitud == '1'){
+                                                                          $tipoSolicitudNombre='creación';
+                                                                      }
+                                                                      if($tipoSolicitud == '2'){
+                                                                          $tipoSolicitudNombre='actualización';
+                                                                      }
+                                                                      if($tipoSolicitud == '3'){
+                                                                          $tipoSolicitudNombre='eliminación';
+                                                                      }
+                                                          
+                                                                      $mail->Subject=utf8_decode('Revisión documental');
+                                                                      $mail->Body = utf8_decode('
+                                                                      <html>
+                                                                      <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                                                                      <title>HTML</title>
+                                                                      </head>
+                                                                      <body>
+                                                                      <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
+                                                                      
+                                                                      <p>Estimado (a). <b><em>'.$nombredelUsuario.'</em></b>.
+                                                                      <br>
+                                                                      <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
+                                                                      
+                                                                      <br><br>
+                                                                      Se recomienda ingresar y verificar su solicitud.
+                                                                      <br><br>
+                                                                      Este correo es informativo por tanto, le pedimos no responda este mensaje.
+                                                                      </p>
+                                                                      </body>
+                                                                      </html>
+                                                                      ');
+                                                                 
+                                                                      if ($mail->Send()) {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("Enviado Correctamente");
+                                                                          //    </script>';
+                                                                          
+                                                                      } else {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("NO ENVIADO, intentar de nuevo");
+                                                                          //    </script>';
+                                                                      }
+                                                                      $mail->ClearAddresses();  
+                                                                      
+                                            }  
+                                        }elseif($extrerPreguntaParametroCorreo['quien'] == 'cargo'){
+                                             '<br>Entra al cargo'; 
+                                            for($i=0; $i<$longitudResponsable; $i++){
+                                                            '<br>Entra usuario';    
+                                                            $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cargo ='$arrayResponsable[$i]' ")or die(mysqli_error());
+                                                            $usuariosCargo = $extraerUsuarios->fetch_array(MYSQLI_ASSOC);
+                                                            '<br>EL USUARIO: <b>'.$nombredelUsuario=($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
+                                                            '<br> tiene el id cargo: '.$usuariosCargo['cargo'].'</b>';
+                                                            $consultaCedula=$usuariosCargo['cedula'];
+                                                             '<br>'.$correoNotificar=$usuariosCargo['correo'];
+                                                            
+                                                
+    
+                                                                      $mail = new PHPMailer();
+                                                                      $mail->IsSMTP();
+                                                                      
+                                                                     
+                                                                      require 'correoEnviar/contenido.php';
+                                                                     
+                                                                      //Agregar destinatario
+                                                                      $mail->isHTML(true);
+                                                                      $mail->AddAddress($correoNotificar);
+                                                                       '-Enviar: '.$correoNotificar;
+                                                                      /// end
+                                                                  
+                                                                      $nombreDocumentoEnviarCorreo=$row['nombres'];//$_POST['nombreDocumento'];
+                                                                      
+                                                          
+                                                                      if($tipoSolicitud == '1'){
+                                                                          $tipoSolicitudNombre='creación';
+                                                                      }
+                                                                      if($tipoSolicitud == '2'){
+                                                                          $tipoSolicitudNombre='actualización';
+                                                                      }
+                                                                      if($tipoSolicitud == '3'){
+                                                                          $tipoSolicitudNombre='eliminación';
+                                                                      }
+                                                          
+                                                                      $mail->Subject=utf8_decode('Revisión documental');
+                                                                      $mail->Body = utf8_decode('
+                                                                      <html>
+                                                                      <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                                                                      <title>HTML</title>
+                                                                      </head>
+                                                                      <body>
+                                                                      <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
+                                                                      
+                                                                      <p>Estimado (a). <b><em>'.$nombredelUsuario.'</em></b>.
+                                                                      <br>
+                                                                      <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
+                                                                      
+                                                                      <br><br>
+                                                                      Se recomienda ingresar y verificar su solicitud.
+                                                                      <br><br>
+                                                                      Este correo es informativo por tanto, le pedimos no responda este mensaje.
+                                                                      </p>
+                                                                      </body>
+                                                                      </html>
+                                                                      ');
+                                                                 
+                                                                      if ($mail->Send()) {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("Enviado Correctamente");
+                                                                          //    </script>';
+                                                                          
+                                                                      } else {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("NO ENVIADO, intentar de nuevo");
+                                                                          //    </script>';
+                                                                      }
+                                                                      $mail->ClearAddresses();  
+                                                                      
+                                            }
+                                        }elseif($extrerPreguntaParametroCorreo['quien'] == 'grupo'){
+                                             '<br>Entra grupo'; 
+                                             for($i=0; $i<$longitudResponsable; $i++){
+                                                        $centrosT = $mysqli->query("SELECT * FROM grupoUusuario WHERE idGrupo = '$arrayResponsable[$i]' ");
+                                                        while($rows = $centrosT->fetch_assoc()){
+                                                            
+                                                            $idUsuario = $rows['idUsuario'];
+                                                            $extraerUsuarios = $mysqli->query("SELECT * FROM usuario WHERE cedula ='$idUsuario' ")or die(mysqli_error());
+                                                            $usuariosCargo = $extraerUsuarios->fetch_array(MYSQLI_ASSOC);
+                                                            '<br>EL USUARIO: <b>'.$nombredelUsuario=($usuariosCargo['nombres'].' '.$usuariosCargo['apellidos']);
+                                                            '<br> tiene el id cargo: '.$usuariosCargo['cargo'].'</b>';
+                                                            $consultaCedula=$usuariosCargo['cedula'];
+                                                             '<br>'.$correoNotificar=$usuariosCargo['correo'];
+                                                            
+                                                
+                                                                      
+                                                                      $mail = new PHPMailer();
+                                                                      $mail->IsSMTP();
+                                                                      
+                                                                     
+                                                                      require 'correoEnviar/contenido.php';
+                                                                     
+                                                                      //Agregar destinatario
+                                                                      $mail->isHTML(true);
+                                                                      $mail->AddAddress($correoNotificar);
+                                                                       '-Enviar: '.$correoNotificar;
+                                                                      /// end
+                                                                  
+                                                                      $nombreDocumentoEnviarCorreo=$row['nombres'];//$_POST['nombreDocumento'];
+                                                                      
+                                                          
+                                                                      if($tipoSolicitud == '1'){
+                                                                          $tipoSolicitudNombre='creación';
+                                                                      }
+                                                                      if($tipoSolicitud == '2'){
+                                                                          $tipoSolicitudNombre='actualización';
+                                                                      }
+                                                                      if($tipoSolicitud == '3'){
+                                                                          $tipoSolicitudNombre='eliminación';
+                                                                      }
+                                                          
+                                                                      $mail->Subject=utf8_decode('Revisión documental');
+                                                                      $mail->Body = utf8_decode('
+                                                                      <html>
+                                                                      <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                                                                      <title>HTML</title>
+                                                                      </head>
+                                                                      <body>
+                                                                      <img src="https://fixwei.com/plataforma/pages/iconos/correo.png" width="200px" height="100px"><br>
+                                                                      
+                                                                      <p>Estimado (a). <b><em>'.$nombredelUsuario.'</em></b>.
+                                                                      <br>
+                                                                      <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
+                                                                      
+                                                                      <br><br>
+                                                                      Se recomienda ingresar y verificar su solicitud.
+                                                                      <br><br>
+                                                                      Este correo es informativo por tanto, le pedimos no responda este mensaje.
+                                                                      </p>
+                                                                      </body>
+                                                                      </html>
+                                                                      ');
+                                                                 
+                                                                      if ($mail->Send()) {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("Enviado Correctamente");
+                                                                          //    </script>';
+                                                                          
+                                                                      } else {
+                                                                          //echo'<script type="text/javascript">
+                                                                          //    alert("NO ENVIADO, intentar de nuevo");
+                                                                          //    </script>';
+                                                                      }
+                                                                      $mail->ClearAddresses();  
+                                                                      
+                                                        } 
+                                            }
+                                        }
+                                        */
+                                            
+                                }  
+                            }
+                            
+                            
+                            
+                         
+                       
+                    }
+?>
+<!-- end -->
+
+
+
+
+
 <?php
 }
 ?>

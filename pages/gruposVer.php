@@ -151,10 +151,11 @@ require_once 'inactividad.php';
                         
                         $idUsuario = $rows['idUsuario'];
                         
-                        $centrosN = $mysqli->query("SELECT * FROM usuario WHERE cedula = '$idUsuario'");
+                        $centrosN = $mysqli->query("SELECT id,nombres,apellidos FROM usuario WHERE cedula = '$idUsuario'");
                         $nombresC = $centrosN->fetch_array(MYSQLI_ASSOC);
-                        echo '<b>*</b>'.$nombresC['nombres'].' '.$nombresC['apellidos'].'<br>';
-                    
+                        if($nombresC['id'] != NULL){
+                            echo '<b>*</b>'.$nombresC['nombres'].' '.$nombresC['apellidos'].'<br>';
+                        }
                         
                     }
                   ?>

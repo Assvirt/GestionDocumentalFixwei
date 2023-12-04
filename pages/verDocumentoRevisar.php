@@ -216,8 +216,12 @@ $(document).ready(function () {
                                      
                                      $validarActualizacion=$mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE tipoSolicitud=2 AND proceso='$proceso' AND tipoDocumento='$tipo' AND nombreDocumento='$idDocumento' AND estado IS NULL");
                                      $extraer_validarActualizacion=$validarActualizacion->fetch_array(MYSQLI_ASSOC);
-                                     
-                                     if($extraer_validarActualizacion['id'] != NULL){
+                                      'id soli: '.$extraer_validarActualizacion['id'];
+                                      'proceso: '.$proceso;
+                                      '<br>tipo de documento: '.$tipo;
+                                      '<br>id do: '.$idDocumento;
+                                      '<br>estado: '.$extraer_validarActualizacion['estado'];
+                                     if($extraer_validarActualizacion['id'] != NULL ){
                                         $nombreCargoAsignado=$mysqli->query("SELECT * FROM cargos WHERE id_cargos='".$extraer_validarActualizacion['encargadoAprobar']."' ");
                                         $extraer_validarEncargadoAsignado=$nombreCargoAsignado->fetch_array(MYSQLI_ASSOC);
                                         
@@ -225,6 +229,18 @@ $(document).ready(function () {
                                         echo '<br>';
                                        
                                      }else{
+                                         /// volvemos a preguntar el estado de la revision del documento
+                                         $preguntaDocumento=$mysqli->query("SELECT id,vigente,revisado FROM documento WHERE id='$idDocumento' ");
+                                         $respuestaDocumento=$preguntaDocumento->fetch_array(MYSQLI_ASSOC);
+                                          '<br>vigente: '.$respuestaDocumento['vigente'];
+                                          '<br>revisado: '.$respuestaDocumento['revisado'];
+                                         
+                                        if($respuestaDocumento['vigente'] == '1' && $respuestaDocumento['revisado'] == '1'){
+                                            echo '<center><font color="blue">El documento ya se encuentra en trámite.</font></center>';
+                                            echo '<br>';
+                                        }else{
+                                            
+                                        
                                      ?>
                                      <!--  -->
                                     <form action="controlador/revisionDocumental/controller.php" method="POST" onsubmit="enviar();">
@@ -239,7 +255,7 @@ $(document).ready(function () {
                                             <div class="form-group col-sm-6">
                                                 
                                                 <label>Comentario: </label>
-                                                <textarea rows="4" class="form-control" name="controlCambios" placeholder="Control de cambios" onkeypress="return ( (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 209 || event.charCode == 241 || event.charCode == 32  || event.charCode == 225 || event.charCode == 233 || event.charCode == 237 || event.charCode == 243 || event.charCode == 250 ||  event.charCode == 193 || event.charCode == 201 || event.charCode == 205 || event.charCode == 211 || event.charCode == 218)" required></textarea>
+                                                <textarea rows="4" class="form-control" name="controlCambios" placeholder="Control de cambios" onkeypress="return (event.charCode == 58 || event.charCode == 59 || event.charCode == 13 || (event.charCode >= 48 && event.charCode <= 57) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || event.charCode == 209 || event.charCode == 241 || event.charCode == 32  || event.charCode == 225 || event.charCode == 233 || event.charCode == 237 || event.charCode == 243 || event.charCode == 250 || event.charCode == 44 || event.charCode == 46 || event.charCode == 193 || event.charCode == 201 || event.charCode == 205 || event.charCode == 211 || event.charCode == 218)" required></textarea>
                                                 <br>
                                             
                                             </div>
@@ -303,12 +319,13 @@ $(document).ready(function () {
                                                 
                                                 
                                                 <button type="submit" id="btn" name="revision" class="btn float-right btn-primary btn-sm">Realizar revisión</font></a></button>
-                                                
+                                                <input name="revision" type="hidden" value="1">
                                                 
                                                 
                                             </div>
                                         </div>    
                                     </form>
+                                    
                                     <script> /// agregamos una funcion de ejecutar en el form, para leer el botón de submit y bloquearlo una vez sea enviado los datos
                                           function enviar(){
                                             var btn = document.getElementById('btn');
@@ -316,7 +333,9 @@ $(document).ready(function () {
                                             //alert('botón disabled');
                                           }
                                     </script>
+                                    
                                     <?php
+                                        }
                                      }
                                     ?>
                             </div>

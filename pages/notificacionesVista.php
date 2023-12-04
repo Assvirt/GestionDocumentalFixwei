@@ -936,7 +936,7 @@
                                 while($row = $sqlNotificaciones->fetch_assoc()){
                                     		                
                                     		                /// reeemplazamos el nnombre
-                                    		                $ConsultaNmbre=$mysqli->query("SELECT documento.*, comnetariosRevision.* FROM documento INNER JOIN comnetariosRevision WHERE comnetariosRevision.idDocumento='".$row['nombreDocumento']."' AND documento.revisado='1' AND documento.vigente='1' ");
+                                    		                $ConsultaNmbre=$mysqli->query("SELECT documento.*, comnetariosRevision.* FROM documento INNER JOIN comnetariosRevision WHERE comnetariosRevision.idDocumento='".$row['nombreDocumento']."' AND  comnetariosRevision.notificar is NOT null AND documento.revisado='1' AND documento.vigente='1' ");
                                     		                $extraerNombreNotidicacion=$ConsultaNmbre->fetch_array(MYSQLI_ASSOC);
                                     		               
                                     		                
@@ -1541,7 +1541,7 @@
                                                         $sql= $mysqli->query("SELECT * FROM documento WHERE revisado='1' AND vigente='1' "); //AND estado='Aprobado' OR AND plataformaH='1' estado IS NULL
                                     		            while($row = $sql->fetch_assoc()){
                                     		                
-                                    		                $ConsultaNmbre=$mysqli->query("SELECT * FROM comnetariosRevision  WHERE idDocumento='".$row['id']."' ");
+                                    		                $ConsultaNmbre=$mysqli->query("SELECT * FROM comnetariosRevision  WHERE idDocumento='".$row['id']."' AND notificar is NOT null ");
                                     		                $extraerNombre=$ConsultaNmbre->fetch_array(MYSQLI_ASSOC);
                                     		                '<br>Notificar a: '.$notificarEnviar=$extraerNombre['notificar'];
                                     		                '<br>Notificar Quien: '.$notificarQuienEnviar=$extraerNombre['notificarQuien'];
@@ -1563,7 +1563,7 @@
                                                                         if($idparaChat == $arrayNotificar[$i]){
                                                                             $enviaridRD=$arrayNotificar[$i];
                                                                             $confirmandoIdDocumentoSoloMostrar=1;
-                                                                            $ConsultaNmbreSolicitudDocumental=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE nombreDocumento='".$row['id']."' "); //estado IS NULL
+                                                                            $ConsultaNmbreSolicitudDocumental=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE nombreDocumento='".$row['id']."' AND estado IS NULL "); //
                                     		                                $extraerNombreSolicitudDocumental=$ConsultaNmbreSolicitudDocumental->fetch_array(MYSQLI_ASSOC);
                                                                             	?>
                                                                                 <li>
@@ -1607,7 +1607,7 @@
                                                                         if($cargo == $arrayNotificar[$i]){
                                                                             $enviaridRD=$arrayNotificar[$i];
                                                                             $confirmandoIdDocumentoSoloMostrar=1;
-                                                                            $ConsultaNmbreSolicitudDocumental=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE nombreDocumento='".$row['id']."' "); //estado IS NULL
+                                                                            $ConsultaNmbreSolicitudDocumental=$mysqli->query("SELECT * FROM solicitudDocumentos WHERE nombreDocumento='".$row['id']."' AND estado IS NULL "); //
                                     		                                $extraerNombreSolicitudDocumental=$ConsultaNmbreSolicitudDocumental->fetch_array(MYSQLI_ASSOC);
                                                                             	?>
                                                                                 <li>

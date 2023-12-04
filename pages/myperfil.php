@@ -634,7 +634,7 @@ if(!isset($_SESSION["session_username"])){
                   <li class="nav-item">
                       <a class="nav-link" href="#actividades" data-toggle="tab">Actividades 
                           <?php //$conteoTotal > 0 || 
-                            if( $totalesAprobacionComprimisos > 0 || $totalesGestionCompromisos > 0 || $totalesAprobacionActas > 0 || $conteoActividades > 0 || $contadorAlumbrarRevision > 0){ 
+                            if( $totalesAprobacionComprimisos > 0 || $totalesGestionCompromisos > 0 || $totalesAprobacionActas > 0 ){ //|| $conteoActividades > 0 || $contadorAlumbrarRevision > 0 
                           ?>
                           <span class="right badge badge-danger">Nuevo!</span>
                           <?php
@@ -1768,7 +1768,7 @@ if(!isset($_SESSION["session_username"])){
                                 <div class="timeline">
                                   <!-- timeline time label
                                   <div class="time-label">
-                                    <span class="bg-red">ACTA: <?php echo $nombreActa;?></span>
+                                    <span class="bg-red">ACTA: <?php  $nombreActa;?></span>
                                   </div>
                                   <!-- /.timeline-label 
                                   <!-- timeline item 
@@ -1779,9 +1779,9 @@ if(!isset($_SESSION["session_username"])){
                                       <h3 class="timeline-header">Compromiso - Fecha de entrega: 10/06/2020 03:30 PM</h3>
                     
                                       <div class="timeline-body">
-                                        <br>Estado general del compromiso: <b> A1<?php echo $row['estado'];?></b>
-                                        <br>Estado del compromiso individual: <b> A2 <?php echo $estadoCompromisoIndividual;  ?></b>
-                                        <br>Estado del Acta: <b> A3<?php echo $estadoActa;?></b> 
+                                        <br>Estado general del compromiso: <b> A1<?php  $row['estado'];?></b>
+                                        <br>Estado del compromiso individual: <b> A2 <?php  $estadoCompromisoIndividual;  ?></b>
+                                        <br>Estado del Acta: <b> A3<?php  $estadoActa;?></b> 
                                         <br>Detalles del compromiso:
                                       </div>
                                       <div class="timeline-footer">
@@ -1978,8 +1978,8 @@ if(!isset($_SESSION["session_username"])){
                     <!--Revision de documentos-->
                     
                     <?php
-                    
-                        include 'notificacionRevision.php';
+                    //// se comenta include que contiene las notificaciones de revision por dueño de proceso
+                        //include 'notificacionRevision.php';
                     ?>
                     
                     <!--Revision de documentos fin-->
@@ -2018,14 +2018,15 @@ if(!isset($_SESSION["session_username"])){
                                         $nombreFormulario= $rowb['nombre'];
                                     ?>
                       <!--Fin proceso -->
-                      <div class="time-label">
+                      <div class="time-label" style="display:none;">
                         <span class="bg-danger">
                           <?php echo $fechaActividadA; ?>
                         </span>
                       </div>
                       <!-- /.timeline-label -->
-                      <!-- timeline item -->
-                      <div>
+                      
+                      <!-- linea de tiempo para mostrar actividades creadas por el módulo de configuración queda en display:none;-->
+                      <div style="display:none;">
                         <i class="fas fa-envelope bg-primary"></i>
                         <div class="timeline-item">
                             <br>
@@ -2041,6 +2042,7 @@ if(!isset($_SESSION["session_username"])){
                         </div>
                       </div>
                       <!-- END timeline item -->
+                      
                       <!--
                       <div>
                         <i class="far fa-clock bg-gray"></i>

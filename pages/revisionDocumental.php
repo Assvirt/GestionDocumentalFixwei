@@ -119,7 +119,7 @@ error_reporting(E_ERROR);
                 if($root == 1){
                 ?> 
                 <div class="col-sm">
-                <button type="button" class="btn btn-block btn-info btn-sm" data-toggle="modal" data-target="#modal-carpeta"><font color="white"><i class="fas fa-plus-square"></i> Notificación</font></button>
+                <button style="display:none;" type="button" class="btn btn-block btn-info btn-sm" data-toggle="modal" data-target="#modal-carpeta"><font color="white"><i class="fas fa-plus-square"></i> Notificación</font></button>
                  <!--Modals-->
                 <div class="modal fade" id="modal-carpeta">
                     <div class="modal-dialog">
@@ -600,7 +600,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Dueño de proceso - revisión documental'); // - autorizado para visualizar
+                                                                      $mail->Subject=utf8_decode('Revisión documental - dueño de proceso'); // - autorizado para visualizarDueño de proceso - revisión documental
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -613,8 +613,7 @@ error_reporting(E_ERROR);
                                                                       <br>
                                                                       <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
                                                                       
-                                                                      <br><br>
-                                                                      Se recomienda ingresar y verificar su solicitud.
+                                                                     
                                                                       <br><br>
                                                                       Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                                       </p>
@@ -691,7 +690,7 @@ error_reporting(E_ERROR);
                                                                           $tipoSolicitudNombre='eliminación';
                                                                       }
                                                           
-                                                                      $mail->Subject=utf8_decode('Dueño de proceso - revisión documental '); //- autorizado para visualizar
+                                                                      $mail->Subject=utf8_decode('Revisión documental - dueño de proceso '); //- autorizado para visualizar
                                                                       $mail->Body = utf8_decode('
                                                                       <html>
                                                                       <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -704,8 +703,7 @@ error_reporting(E_ERROR);
                                                                       <br>
                                                                       <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
                                                                       
-                                                                      <br><br>
-                                                                      Se recomienda ingresar y verificar su solicitud.
+                                                                     
                                                                       <br><br>
                                                                       Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                                                       </p>
@@ -738,7 +736,7 @@ error_reporting(E_ERROR);
                                             }
                                             
                                             
-                                            
+                                        /*    
                                         /// luego del envio de correo para los lideres de procesos, ahora vamos a enviar correo a un segundo resposable
                                         $preguntandoParametroCorreo=$mysqli->query("SELECT * FROM documentoRevision ");
                                         $extrerPreguntaParametroCorreo=$preguntandoParametroCorreo->fetch_array(MYSQLI_ASSOC);
@@ -969,6 +967,7 @@ error_reporting(E_ERROR);
                                                         } 
                                             }
                                         }
+                                        */
                                             
                                 }  
                             }

@@ -138,8 +138,8 @@ $idMacro = $row['macroproceso'];
                       <label>Dueño del proceso: </label>
                       
                       <?php
-                         $arrayDuenos = json_decode($dueno);
-                            //var_dump($arrayDuenos);
+                        $arrayDuenos = json_decode($dueno);
+                        //var_dump($arrayDuenos);
                       ?>
                       
                       
@@ -148,7 +148,7 @@ $idMacro = $row['macroproceso'];
                             
                             while ($columna = mysqli_fetch_array( $resultado )) {
                             
-                            if($importacion == '1'){
+                            /*if($importacion == '1'){
                                 if(in_array($columna['id_cargos'],$arrayDuenos)){
                                     $seleccionarCarg = "selected";        
                                 }else{
@@ -160,8 +160,12 @@ $idMacro = $row['macroproceso'];
                                 }else{
                                     $seleccionarCarg ="";
                                 }
-                            }    
-                                
+                            }*/
+                                if(in_array($columna['id_cargos'],$arrayDuenos)){
+                                    $seleccionarCarg = "selected";        
+                                }else{
+                                    $seleccionarCarg ="";
+                                }  
                                 
                             ?>
                             <option value="<?php echo $columna['id_cargos']; ?>" <?php echo $seleccionarCarg; ?>><?php echo $columna['nombreCargos']; ?> </option>

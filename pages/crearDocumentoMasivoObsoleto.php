@@ -461,17 +461,31 @@ if(isset($_POST['editarDocumentoMasivo'])){ }else{
                                                                                     <p>¿Est&aacute; seguro que desea cancelar el documento?</p>
                                                                                     
                                                                                 </div>
+                                                                                <!--
                                                                                  <form action="controlador/solicitudDocumentos/pruebaAlmacenamientoObsoleto" method="POST">
                                                                                     
-                                                                                    <input name="idDocumento" value="<?php echo $recorridoDocumentos['id']; ?>" type="hidden">
-                                                                                    <input name="idSolicitudDocumento" value="<?php echo $recorridoDocumentos['id_solicitud']; ?>" type="hidden">
+                                                                                    <input name="idDocumento" value="<?php ///echo $recorridoDocumentos['id']; ?>" type="hidden">
+                                                                                    <input name="idSolicitudDocumento" value="<?php ///echo $recorridoDocumentos['id_solicitud']; ?>" type="hidden">
                                                                                     
-                                                                                    <div class="modal-footer justify-content-between">
+                                                                                    
                                                                                       <button type="submit" name="cancelar" class="btn btn-outline-light">Si</button>
-                                                                                      <button type="button" class="btn btn-outline-light" data-dismiss="modal">No</button>
-                                                                                    </div>
+                                                                                      <button type="button" class="btn btn-outline-light" onclick="window.location.href='crearDocumentoMasivoObsoleto'" >No</button> <!-- data-dismiss="modal" -->
+                                                                                    
                                                                                 
-                                                                                </form>
+                                                                                <!--</form>
+                                                                                -->
+                                                                                    <div class="modal-footer justify-content-between">
+                                                                                      <form action="controlador/solicitudDocumentos/pruebaAlmacenamientoObsoleto" method="POST">
+                                                                                      <input name="idDocumento" value="<?php echo $recorridoDocumentos['id']; ?>" type="hidden">
+                                                                                      <input name="idSolicitudDocumento" value="<?php echo $recorridoDocumentos['id_solicitud']; ?>" type="hidden">
+                                                                                      <button type="submit" name="cancelar" class="btn btn-outline-light">Si</button>
+                                                                                      </form>
+                                                                                      <form action="" method="POST">
+                                                                                      <input name="idDocumento" value="<?php echo $recorridoDocumentos['id']; ?>" type="hidden">   
+                                                                                      <input name="cerrandoNo" type="hidden" value="1">
+                                                                                      <button type="submit" class="btn btn-outline-light" >No</button> <!-- data-dismiss="modal" -->
+                                                                                      </form>
+                                                                                    </div> 
                                                                               </div>
                                                                             </div>
                                                                           </div>
@@ -731,6 +745,23 @@ if( $conteo >= 21){
         'ID documento: '.$_POST['enviarIdDocumento'];
         $consultandoDatosDocumento=$mysqli->query("SELECT * FROM documento WHERE id='".$_POST['enviarIdDocumento']."' ");
         $extraerConsultaDatosDocumento=$consultandoDatosDocumento->fetch_array(MYSQLI_ASSOC);
+        
+        
+        if($extraerConsultaDatosDocumento['obsoleto'] == '1' && $extraerConsultaDatosDocumento['pre'] == NULL){
+        ?>
+                        <script> 
+                             window.onload=function(){
+                               document.forms["miformularioAlerta"].submit();
+                             }
+                        </script>
+                                                             
+                        <form name="miformularioAlerta" action="crearDocumentoMasivoObsoleto" method="POST" onsubmit="procesar(this.action);" >
+                            <input name="alertaConsecutivoGestionado" value="1" type="hidden">
+                        </form> 
+                    <?php 
+        }
+        
+        
         
 if($_POST['alertaDocumento'] != NULL){    
 ?><!--  return checkSubmit();-->
@@ -1893,12 +1924,37 @@ if($_POST['alertaConsecutivo'] != NULL){
                     
                 
                 
+               <?php
+              /// preguntamos si el documento ya está en el listado maestro ara que no nos permita editar el documento
+              $consultandoDocumentoPreguntaListadoMaestro=$mysqli->query("SELECT * FROM documento WHERE id='".$_POST['enviarIdDocumento']."' AND obsoleto='1' AND pre IS NULL ");
+              $extraerConsultaDocumentoPreguntaListadoMaestro=$consultandoDocumentoPreguntaListadoMaestro->fetch_array(MYSQLI_ASSOC);
               
+              if($extraerConsultaDocumentoPreguntaListadoMaestro['id'] != NULL){
+              ?>
+                        
+                            <div class="modal-dialog">
+                              <div class="modal-content bg-danger">
+                                <div class="modal-body">
+                                  <center>
+                                    <p>El documento ya fue gestionado.</p>
+                                  </center>
+                                </div>
+                                 <!-- END formulario para eliminar por el id -->
+                              </div>
+                            </div>
+                    <span Onclick="window.location.href='crearDocumentoMasivoObsoleto'" class="btn btn-success float-left" >Cerrar</span>   
+              <?php
+              }else{
+              ?>
                     <span Onclick="window.location.href='crearDocumentoMasivoObsoleto'" class="btn btn-success float-left" >Cerrar</span>
                     <span href="#" id="ocultarValidarFecha" class="btn btn-success float-right" onclick="funcionFormula()" >Validar fecha</span>
                     <div id="botonValidarCarga">
                     <button type="submit" name="actualiza" id="mostrarBotonFinalizar" style="display:none;" class="btn btn-info float-right ">Actualizar >></button>
                     </div>
+                    
+              <?php
+              }
+              ?>
                     <input name="actualiza" value="1" type="hidden">
                     
                     <style>
@@ -3549,7 +3605,34 @@ $validacionEliminar=$_POST['validacionEliminar'];
         })
     <?php
     }
+    
+    if($_POST['alertaConsecutivoGestionado'] == 1){
     ?>
+        Toast.fire({
+            type: 'warning',
+            title: ' El documento ya fue gestionado.'
+        })
+    <?php
+    }
+    
+    
+    if(isset($_POST['cerrandoNo'])){
+        $preguntaVigentePreNull=$mysqli->query("SELECT * FROM documento WHERE id='".$_POST['idDocumento']."' AND obsoleto='1' AND pre IS NULL ");
+        $respuestaPreguntaVigente=$preguntaVigentePreNull->fetch_array(MYSQLI_ASSOC);
+    
+        if($respuestaPreguntaVigente['id'] != NULL){
+            ?>
+                Toast.fire({
+                    type: 'warning',
+                    title: ' El documento ya fue gestionado.'
+                })
+            <?php
+        }
+    }
+    
+    
+    ?>
+    
     
   });
 

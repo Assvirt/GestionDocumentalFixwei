@@ -105,6 +105,20 @@ $verObsoletos = $_POST['obsoletooss'];//$_POST['verObsoletos'];
                         
                             if(isset($verObsoletos)){
                                 
+                                if($datosDoc['obsoleto'] == '1' && $datosDoc['pre'] == NULL){
+                                ?>
+                                                <script> 
+                                                     window.onload=function(){
+                                                       document.forms["miformularioAlerta"].submit();
+                                                     }
+                                                </script>
+                                                                                     
+                                                <form name="miformularioAlerta" action="crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                                                    <input name="alertaConsecutivoGestionado" value="1" type="hidden">
+                                                </form> 
+                                <?php 
+                                }
+                                ?>    
                             
                         
                         ?>
@@ -115,6 +129,19 @@ $verObsoletos = $_POST['obsoletooss'];//$_POST['verObsoletos'];
                         
                         <?php 
                             }else{
+                                if($datosDoc['vigente'] == '1' && $datosDoc['pre'] == NULL){
+                                ?>
+                                                <script> 
+                                                     window.onload=function(){
+                                                       document.forms["miformularioAlerta"].submit();
+                                                     }
+                                                </script>
+                                                                                     
+                                                <form name="miformularioAlerta" action="crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                                                    <input name="alertaConsecutivoGestionado" value="1" type="hidden">
+                                                </form> 
+                                <?php 
+                                }
                                 ?>
                         <div class="col-sm">
                             <button type="button" class="btn btn-block btn-info btn-sm"><a href="crearDocumentoMasivo"><font color="white"><i class="fas fa-list"></i> Documento masivo</font></a></button>
