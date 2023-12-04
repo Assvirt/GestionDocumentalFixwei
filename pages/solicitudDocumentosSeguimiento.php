@@ -219,39 +219,47 @@ if(!isset($_SESSION["session_username"])){
                   }
                   
                   if($_POST['revisionDocumental'] == '1'){ }else{
+                    if($estado != NULL || $devuelto == '1'){
                   ?>
-                  <div class="form-group">
-                    <h6 class="description-header"><b>Estado:</b></h6>
-                    <span class="">
-                        <?php 
-                        
-                            if($devuelto == '1'){
-                                echo 'Regresado'; 
-                                
-                            }else{ 
-                                echo $estado; 
-                            } 
-                        
-                        ?>
-                        
-                    </span>
-                  </div>
+                      <div class="form-group">
+                        <h6 class="description-header"><b>Estado:</b></h6>
+                        <span class="">
+                            <?php 
+                            
+                                if($devuelto == '1'){
+                                    echo 'Regresado'; 
+                                    
+                                }else{ 
+                                    echo $estado; 
+                                } 
+                            
+                            ?>
+                            
+                        </span>
+                      </div>
                   
                   <?php
-                   }
+                    }else{
+                        /// si no viene ningun dao en estado no muestre nada
+                    }
+                   } 
                         $datos = $mysqli->query("SELECT * FROM comentarioSolicitud WHERE idSolicitud = '$id'");
-                        $rows =  mysqli_num_rows($datos);
-    
-                        if($rows > 0){
-                            $display = '';
-                        }else{
-                            $display = 'none';
-                        }
+                        'numeros: '.$rows =  mysqli_num_rows($datos);
+                      
+                        
+                            
+                            if($rows == 0){ 
+                                $display = 'none';
+                            }else{ 
+                                $display = '';
+                            }
+                        
                         
                          
                   if($_POST['revisionDocumental'] == '1'){ }else{
+                      
                   ?>
-                  <div class="form-group" style="display:<?php $display;?>;">
+                  <div class="form-group" style="display:<?php echo $display;?>;">
                     <h6 class="description-header"><b>Comentarios Anteriores:</b></h6>
                     <?php
                     while($columnas = $datos->fetch_assoc()){
@@ -264,6 +272,8 @@ if(!isset($_SESSION["session_username"])){
                     ?>
                   </div>
                  <?php
+                 
+                 
                   }
                  ?>
                   <div class="card-header">
