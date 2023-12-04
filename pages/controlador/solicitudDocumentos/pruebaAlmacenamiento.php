@@ -1975,1047 +1975,1474 @@ if(isset($_POST['actualiza'])){
      '<br>';
      $idDocumento=$_POST['idDocumento'];
     
-    if($activarAlerta == FALSE || $activarAlertaOtro == FALSE){ 
-                    ///// validamos los documentos para verificar que estén en orden, en caso contrario mandamos la alerta
-                                                        $preguntadoValidacion=$mysqli->query("SELECT * FROM documento WHERE  id='$idDocumento' ");
-                                                		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
-                  ?>
-                                                            <script> 
-                                                                 window.onload=function(){
-                                                                   document.forms["miformularioAlerta"].submit();
-                                                                 }
-                                                            </script>
+    $preguntaVigentePreNull=$mysqli->query("SELECT * FROM documento WHERE id='".$_POST['idDocumento']."' AND vigente='1' AND pre IS NULL ");
+    $respuestaPreguntaVigente=$preguntaVigentePreNull->fetch_array(MYSQLI_ASSOC);
+    
+     if($respuestaPreguntaVigente['id'] != NULL){
+        ?>
+                        <script> 
+                             window.onload=function(){
+                               document.forms["miformularioAlerta"].submit();
+                             }
+                        </script>
                                                              
-                                                            <form name="miformularioAlerta" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
-                                                                <input name="alertaDocumento" value="1" type="hidden">
-                                                                <input name="editarDocumentoMasivo" value="1" type="hidden">
-                                                                <input name="enviarIdDocumento" value="<?php echo $extraerPreguntaValidacion['id'];?>" type="hidden">
-                                                                <input name="enviarIdDocumentoControl" value="<?php echo $extraerPreguntaValidacion['id_solicitud'];?>" type="hidden">
-                                                                <!-- <input type="submit" value="enviar alerta"> -->
-                                                            </form> 
-                                                        <?php
-     
-    }else{
-     
-     
-     
-     
-     
-     '<br>';
-     '<br>';
-
-     '<b>Nombre Documento:</b>'.$documento=utf8_decode($_POST['nombreDocumento']);
-     '<br>';
-
-
-     '<b>Norma:</b>';
-     $norma = json_encode($_POST['norma']);
-     '<br>';
-
-    $proceso=$_POST['proceso'];     
+                        <form name="miformularioAlerta" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                            <input name="alertaConsecutivoGestionado" value="1" type="hidden">
+                        </form> 
+                    <?php 
+     }else{
     
-
-     '<b>Proceso:</b>'.$proceso;
-     '<br>';
-     '<b>Tipo Documento:</b>'.$tipoDocumento=$_POST['tipoDoc'];
-     '<br>';
+        if($activarAlerta == FALSE || $activarAlertaOtro == FALSE){ 
+                        ///// validamos los documentos para verificar que estén en orden, en caso contrario mandamos la alerta
+                                                            $preguntadoValidacion=$mysqli->query("SELECT * FROM documento WHERE  id='$idDocumento' ");
+                                                    		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
+                      ?>
+                                                                <script> 
+                                                                     window.onload=function(){
+                                                                       document.forms["miformularioAlerta"].submit();
+                                                                     }
+                                                                </script>
+                                                                 
+                                                                <form name="miformularioAlerta" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                                                                    <input name="alertaDocumento" value="1" type="hidden">
+                                                                    <input name="editarDocumentoMasivo" value="1" type="hidden">
+                                                                    <input name="enviarIdDocumento" value="<?php echo $extraerPreguntaValidacion['id'];?>" type="hidden">
+                                                                    <input name="enviarIdDocumentoControl" value="<?php echo $extraerPreguntaValidacion['id_solicitud'];?>" type="hidden">
+                                                                    <!-- <input type="submit" value="enviar alerta"> -->
+                                                                </form> 
+                                                            <?php
+         
+        }else{
+         
+         
+         
+         
+         
+         '<br>';
+         '<br>';
     
-
-    // validamos que el encargado entre números o letras
-
-
- 'Variable encargado: '.$encargadoValidando=$_POST['validandoEncargados'];
-
-    if ($_POST['validandoEncargados'] == '1'){
-          '<b>Encargado ID :</b>'.$encargado =$_POST['encargado'];
-                $encargadoTexto='';
-    }
-    //else{
-    //echo      '<b>Encargado texto :</b>'.$encargado ='0';
-    //}
-
-    if($_POST['validandoEncargados'] == '2'){
-          '<br>Nombre encargado eliminado: '.$encargadoTexto=$_POST['encargadoT'];
-        $encargado ='0';
-    }
-   
-    // END
+         '<b>Nombre Documento:</b>'.$documento=utf8_decode($_POST['nombreDocumento']);
+         '<br>';
     
-
-    //$solicitud = utf8_decode($_POST['solicitud']);
-     '<br>';
-
-     '<b>Fecha:</b>'.$fecha = date("Y:m:j");
-     '<br>';
-     '<b>Archivo:</b>'.$archivoNombre = $_FILES['archivo']['name'];
-    $guardado = $_FILES['archivo']['tmp_name'];
-     '<br>';
-     '<br>Método de creación: '.$metodo=$_POST['rad_metodo'];
-     '<br>';
-     'Ubicación: '.$ubicacion=$_POST['ubicacion'];
-     '<br>';
-     '<b>Usuario:</b>'.$usuario = $_POST['usuario'];
-     '<br>';
-     'A: '.$validandoAlmacenamientoArrya=$_POST['validandoUsuarios'];
-            '<br>';
-            'B: '.$validandoAlmacenamientoArryaB=$_POST['validandoUsuariosB'];
-            '<br>';
-            'C: '.$validandoAlmacenamientoArryaC=$_POST['validandoUsuariosC'];
-            
-               //////////////// flujo usuario ELABORADOR
-            $radioElabora = $_POST['radiobtnE'];
-            '<br>';
-            $elabora=serialize($_POST['select_encargadoE']);
-            $elaboraN = unserialize($elabora); // para la notificación creación
-            if($validandoAlmacenamientoArrya == 'activosUsuarios' ){
-                array_unshift($elaboraN,$radioElabora);
-                '<b>Quien Elabora:</b>'.$quienElabora=json_encode($elaboraN);
-                '<br>';
-            }else{
-                '<b>Quien Elabora:</b>'.$quienElabora=utf8_decode($_POST['select_encargadoEE']);
-            }
-            //// END
-            
-            
-            ////////////////// flujo usuario REVISOR
-            $radioRevisa = $_POST['radiobtnR'];
-            '<br>';
-            $revisa=serialize($_POST['select_encargadoR']);
-            $revisaN = unserialize($revisa); // para la notificación creación 
-            if($validandoAlmacenamientoArryaB == 'activosUsuariosB' ){
-                array_unshift($revisaN,$radioRevisa);
-                '<b>Quien Revisaa:</b>'.$quienRevisa=json_encode($revisaN);
-            }else{
-                '<b>Quien Revisa2:</b>'.$quienRevisa=utf8_decode($_POST['select_encargadoRR']);
-            }
-            '<br>';
-            ////// END
-            
-            
-            //////////////// flujo usuario APROBADOR
-            $radioAprueba = $_POST['radiobtnA'];
-            '<br>';
-            $aprueba=serialize($_POST['select_encargadoA']);
-            $apruebaN = unserialize($aprueba); // para la notificación creación
-            if($validandoAlmacenamientoArryaC == 'activosUsuariosC' ){
-                array_unshift($apruebaN,$radioAprueba);
-               '<b>Quien Aprueba:</b>'.$quienAprueba=json_encode($apruebaN);
-            }else{
-                '<b>Quien Aprueba:</b>'.$quienAprueba=utf8_decode($_POST['select_encargadoAA']);
-            }
-            
-   
-     '<br>';
-     '<br>';
-
-     '<b>Codificacion:</b>'.$codificacion = $_POST['radCodificacion'];
-     '<br>';
-     '<b>Version:</b>'.$version = $_POST['versionDeclarada'];
-     '<br>';
-     '<b>Consecutivo:</b>'.$consecutivo = $_POST['consecutivoDeclarado'];
-     '<br>';
-     '<br>';
     
-   
-     '<b>Documento Externo</b>:'.$documentosExternos = json_encode($_POST['documentos_externos']);
-     '<br>';
-     '<b>Definiciones</b>:'.$definiciones = json_encode($_POST['definiciones']);
-     '<br>';
-     '<br>archivo de gestión: '.$archivo_gestion=utf8_decode($_POST['archivo_gestion']);
-     '<br>';
-     '<br>archivo de central: '.$archivo_central=utf8_decode($_POST['archivo_central']);
-     '<br>';
-     '<br>archivo de historico: '.$archivo_historico=utf8_decode($_POST['archivo_historico']);
-     '<br>';
-     '<br>disposición documental: '.$disposicion_documental=utf8_decode($_POST['diposicion_documental']);
-     '<br>';
-
-    $radioResponsable = $_POST['radiobtnD'];
-     '<br>';
-    $responsable=serialize($_POST['select_encargadoD']);
-    $responsableN = unserialize($responsable); // para la notificación creación
-    if($_POST['validandoUsuariosR'] == 'activosUsuariosResponsable'){
-        array_unshift($responsableN,$radioResponsable);
-         '<b>Quien responsable: </b>'.$escargadoDispo=json_encode($responsableN);
-    }else{
-         '<b>Quien responsable: </b>'.$escargadoDispo=utf8_decode($_POST['select_encargadoDD']);
-    }
-     '<br>';
+         '<b>Norma:</b>';
+         $norma = json_encode($_POST['norma']);
+         '<br>';
     
-    $editorHtml = utf8_decode($_POST['editorHtml']);
-    
-
-     '<b>Meses de Revision</b>:'.$mesesRevision = intval($_POST['mesesRevision']);
-
-                    //// este espacio se crea para el control de cambios el procedimiento del flujo de aprobación del documento
-                    $queryIdUsuarioElabora = $mysqli->query("SELECT MAX(id) AS id FROM `documento` WHERE usuarioElabora = '$usuario' ORDER BY id DESC");
-                    $datosUsuarioElabora = $queryIdUsuarioElabora->fetch_array(MYSQLI_ASSOC);
-                    '<br>ID documento: '.$idDocumentoElaborado=$datosUsuarioElabora['id'];
-                    
-                
-                    $informacion=utf8_decode($_POST['editor1']);
-                    $reservaIdSolicitud=$_POST['reservaIdSolicitud'];
-                    
-                    $consultamosExistenciaComentario=$mysqli->query("SELECT * FROM controlCambiosFlujo WHERE idDocumento='$idDocumento' ");
-                    $extrarConsultaExistenciaComentario=$consultamosExistenciaComentario->fetch_array(MYSQLI_ASSOC);
-                    if($extrarConsultaExistenciaComentario['idDocumento'] != NULL){ 
-                        $mysqli->query("UPDATE controlCambiosFlujo SET informacion='$informacion', fecha='$fecha', comentarioAnterior='$informacion' WHERE idDocumento='$idDocumento' ")or die(mysqli_error($mysqli));
-                    }else{
-                        $mysqli->query("INSERT INTO controlCambiosFlujo (idDocumento,informacion,fecha,comentarioAnterior)VALUES('$idDocumento','$informacion','$fecha','$informacion')");
-                    }
-                    //// end
-
-
-
-
-
-    //// realiza el proceso de aprobación del documento
-   
-    if( $_FILES['archivopdf']['name'] == NULL && $_FILES['archivootro']['name'] == NULL){ 
-                    
-        $ruta = 'sin datos';
+        $proceso=$_POST['proceso'];     
         
-        $consultandoDocumento=$mysqli->query("SELECT * FROM documento WHERE id='$idDocumento' ");
-        $extraerConsultaDocumento=$consultandoDocumento->fetch_array(MYSQLI_ASSOC);
-      
-         $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
-         nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
-      
-
-        $queryId = $mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE id = '".$extraerConsultaDocumento['id_solicitud']."' ORDER BY id DESC");
-        $datos = $queryId->fetch_array(MYSQLI_ASSOC);
-         '<br>ID documento: '.$idSolicitud=$datos['id'];
+    
+         '<b>Proceso:</b>'.$proceso;
+         '<br>';
+         '<b>Tipo Documento:</b>'.$tipoDocumento=$_POST['tipoDoc'];
+         '<br>';
         
-        if($datos != NULL){
-            //VERSION Y CONSECUTIVO     
-            //VERSION Y CONSECUTIVO  
-                        $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
-                        $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
-                        //$nomProceso = $datosProceso['nombre'];
-                        $prefijoProceso = $datosProceso['prefijo'];
-                        
-                    
-                        //TIPO DE DOCUMENTO 
-                        $queryDocumentos = $mysqli->query("SELECT nombre, prefijo from tipoDocumento WHERE id = '".$tipoDocumento."' ");
-                        $datosDocumento = $queryDocumentos->fetch_array(MYSQLI_ASSOC);
-                        //$tipoDocumento = $datosDocumento['nombre'];
-                        $prefijoTipo = $datosDocumento['prefijo']; 
-            //Consecutivo y version cuando son definidos por el cliente
-            $queryVersiones = $mysqli->query("SELECT * FROM versionamiento WHERE idProceso = '$proceso' AND idTipoDocumento = '$tipoDocumento'");
-            $datosVersiones = $queryVersiones->fetch_assoc();
-            
-            $versionInicial = $datosVersiones['versionInicial'];
-            $consecutivoIncial = $datosVersiones['consecutivoInicial'];
-            
-            $rol = $_POST['rol'];
-            
-            $radCodificacion = 'manual';
-
-            if($radCodificacion == 'manual'){
-                 "<br>MANUAL<br>";
-                 '<br>Versión: '.$version = $version;
-                 '<br>Consecutivo: '.$consecutivo = $consecutivo;
-            }
-                //CODIFICACION
-                $codificacion = "";
-                $dataCodificacion = $mysqli->query("SELECT * FROM codificacion ORDER BY id")or die(mysqli_error());
-                while($rowC = $dataCodificacion->fetch_assoc()){
-                                    
-                    $cod = $rowC['codificacion'];
-                                            
-                    if($cod == "-"){
-                        $codificacion =  $codificacion."-";
-                    }
-                                        
-                    if($cod == "/"){
-                        $codificacion =  $codificacion."/";
-                    }
-                                            
-                    if($cod == " "){
-                        $codificacion =  $codificacion." ";
-                    }
-                                            
-                    if($cod == "Proceso"){
-                        $codificacion =  $codificacion.$prefijoProceso;
-                    }
-                                        
-                    if($cod == "Tipo de documento"){
-                        $codificacion = $codificacion.$prefijoTipo;        
-                    }
-                                            
-                    if($cod == "Consecutivo"){
-                        $codificacion = $codificacion.$consecutivo;        
-                    }
-                                            
-                    if($cod == "Versión"){
-                        $codificacion = $codificacion.$version;        
-                    }
-                }//Fin codificacion
-                $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
-                $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
-                '<br>Nombre proceso: '.$nomProceso = $datosProceso['nombre'];
-                $prefijoProceso = $datosProceso['prefijo']; 
-            
-                // '<br>Fecha de aprobación: '.$fechaAprobacion=date("Y:m:j h:i:s: A");
-
-            /////// datos para el que elaboro
-            'Siemre segunda ---- primera validación';
-            '<br>';
-            $fechaElaboracion=$_POST['fechaElaboracion'];
-            '<br>';
-            'control de cambios : '.$controlCambios=utf8_decode($_POST['controlCambios']);
-            //// end
-            '<br>';
-            /////// datos para el que elaboro
-            'segunda validación';
-            '<br>';
-            $fechaRevision=$_POST['fechaRevision'];
-            '<br>';
-            $comentarioRevision=utf8_decode($_POST['comentarioRevision']);
-            //// end
-        
-            /////// datos para el que elaboro
-            'tercera validación';
-            '<br>';
-            $fechaAprobacion=$_POST['fechaAprobacion'];
-            '<br>';
-            $comentarioAprobo=utf8_decode($_POST['comentarioAprobo']);
-            '<br><b>';
-            $validandoAlmacenamientoArrya;
-            '</b><br>';
-            /*
-            if($validandoAlmacenamientoArrya == 'activosUsuarios'){
-                
-                /// validar y traer el nombre del id para sacar la CC y enviar al control de cambios
-                
-                $quienElaboraDecode=json_decode($quienElabora);
-                    if($quienElaboraDecode[0] == 'cargos'){ 
-                        $longitud = count($quienElaboraDecode);
-                        
-                        for($i=1; $i<$longitud; $i++){
-                            //saco el valor de cada elemento
-                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
-                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                            
-                             'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
-                        }            
-                    }
-                    
-                    if($quienElaboraDecode[0] == 'usuarios'){ 
-                        $longitud = count($quienElaboraDecode);
-                        
-                        for($i=1; $i<$longitud; $i++){
-                            //saco el valor de cada elemento
-                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
-                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                            
-                            'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
-                        } 
-                    }
-                    
-                    $quiennRevisadoDecode=json_decode($quienRevisa);
-                    if($quiennRevisadoDecode[0] == 'cargos'){ 
-                        $longitud = count($quiennRevisadoDecode);
-                        
-                        for($i=1; $i<$longitud; $i++){
-                            //saco el valor de cada elemento
-                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quiennRevisadoDecode[$i]'");
-                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                            
-                             'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
-                        }            
-                    }
-                    
-                    if($quiennRevisadoDecode[0] == 'usuarios'){ 
-                        $longitud = count($quiennRevisadoDecode);
-                        
-                        for($i=1; $i<$longitud; $i++){
-                            //saco el valor de cada elemento
-                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quiennRevisadoDecode[$i]'");
-                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                            
-                             'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
-                        } 
-                    }
-
-                    $quienApruebaDecode=json_decode($quienAprueba);
-                    if($quienApruebaDecode[0] == 'cargos'){ 
-                        $longitud = count($quienApruebaDecode);
-                        
-                        for($i=1; $i<$longitud; $i++){
-                            //saco el valor de cada elemento
-                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
-                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                            
-                             'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
-                        }            
-                    }
-                    
-                    if($quienApruebaDecode[0] == 'usuarios'){ 
-                        $longitud = count($quienApruebaDecode);
-                        
-                        for($i=1; $i<$longitud; $i++){
-                            //saco el valor de cada elemento
-                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
-                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                            
-                             'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
-                        } 
-                    }
-                /// END
-
-                $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
-                $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';//$_POST['nombreReviso']; 
-                $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';//$_POST['nombreAprobo'];
-            }
-            if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){
-                $nombreElaboro=utf8_decode($quienElabora);//$_POST['nombreElaboro']);
-                $nombreReviso=utf8_decode($quienRevisa);//$_POST['nombreReviso']);
-                $nombreAprobo=utf8_decode($quienAprueba);//$_POST['nombreAprobo']);
-            }
-            
-            */
-                                                            if($validandoAlmacenamientoArrya == 'activosUsuarios'){ //echo 'No';
-                                                                $quienElaboraDecode=json_decode($quienElabora);
-                                                                if($quienElaboraDecode[0] == 'cargos'){ 
-                                                                    $longitud = count($quienElaboraDecode);
-                                                                    
-                                                                    for($i=1; $i<$longitud; $i++){
-                                                                        //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
-                                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                        
-                                                                         'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
-                                                                    }            
-                                                                }
-                                                                
-                                                                if($quienElaboraDecode[0] == 'usuarios'){ 
-                                                                    $longitud = count($quienElaboraDecode);
-                                                                    
-                                                                    for($i=1; $i<$longitud; $i++){
-                                                                        //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
-                                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                        
-                                                                        'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
-                                                                    } 
-                                                                }
-                                                                 $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
-                                                                
-                                                            }
-                        
-                                                                if($validandoAlmacenamientoArryaB == 'activosUsuariosB'){ //echo 'No';
-                                                                    $quienRevisadoDecode=json_decode($quienRevisa);
-                                                                    if($quienRevisadoDecode[0] == 'cargos'){ 
-                                                                        $longitud = count($quienRevisadoDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienRevisadoDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
-                                                                        }            
-                                                                    }
-                                                                    
-                                                                    if($quienRevisadoDecode[0] == 'usuarios'){ 
-                                                                        $longitud = count($quienRevisadoDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienRevisadoDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
-                                                                        } 
-                                                                    }
-                                                                    $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';
-                                                                }
-                                                                
-                                                                if($validandoAlmacenamientoArryaC == 'activosUsuariosC'){ 
-                                                                    $quienApruebaDecode=json_decode($quienAprueba);
-                                                                    if($quienApruebaDecode[0] == 'cargos'){ 
-                                                                        $longitud = count($quienApruebaDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
-                                                                        }            
-                                                                    }
-                                                                    
-                                                                    if($quienApruebaDecode[0] == 'usuarios'){ 
-                                                                        $longitud = count($quienApruebaDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
-                                                                        } 
-                                                                    }
-                                                                /// END
-                                        
-                                                                   
-                                                                    $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';
-                                                                    
-                                                                }
-                                                                
-                                                                if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){ 
-                                                                    $nombreElaboro=utf8_decode($_POST['select_encargadoEE']);
-                                                                }
-                                                                if($validandoAlmacenamientoArryaB == 'retiradosUsuariosB'){
-                                                                    $nombreReviso=utf8_decode($_POST['select_encargadoRR']);
-                                                                }
-                                                                if($validandoAlmacenamientoArryaC == 'retiradosUsuariosC'){
-                                                                    $nombreAprobo=utf8_decode($_POST['select_encargadoAA']);
-                                                                }
-                if($fechaElaboracion != NULL){ //$controlCambios
-                    //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$controlCambios','$nombreElaboro','$fechaElaboracion','Elaborador(a)')")or die(mysqli_error($mysqli));  
-                    $mysqli->query("UPDATE controlCambios SET comentario='$controlCambios', fecha='$fechaElaboracion', idUsuarioB='$nombreElaboro' WHERE idDocumento='$idSolicitud' AND rol='Elaborador(a)' ")or die(mysqli_error($mysqli));  
-               
-                }
-                if($fechaRevision != NULL){ //$comentarioRevision
-                    //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioRevision','$nombreReviso','$fechaRevision','Revisor(a)')")or die(mysqli_error($mysqli));  
-                    $mysqli->query("UPDATE controlCambios SET comentario='$comentarioRevision', fecha='$fechaRevision', idUsuarioB='$nombreReviso' WHERE idDocumento='$idSolicitud' AND rol='Revisor(a)' ")or die(mysqli_error($mysqli));  
-               
-                }
-                if($fechaAprobacion != NULL){ //$comentarioAprobo
-                    //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioAprobo','$nombreAprobo','$fechaAprobacion','Aprobador(a)')")or die(mysqli_error($mysqli));  
-                    $mysqli->query("UPDATE controlCambios SET comentario='$comentarioAprobo', fecha='$fechaAprobacion', idUsuarioB='$nombreAprobo' WHERE idDocumento='$idSolicitud' AND rol='Aprobador(a)' ")or die(mysqli_error($mysqli));  
-               
-                }
-            /*
-            `codificacion`='$codificacion',
-            */
-            $mysqli->query("UPDATE documento SET 
-            
-            `tipoCodificacion`='$radCodificacion',
-            `consecutivoTemporal`='$consecutivo',
-            `versionTemporal`='$version',
-            `nombres`='$documento',
-            `proceso`='$proceso',
-            `nombreProceso`='$nomProceso',
-            `norma`='$norma',
-            `tipo_documento`='$tipoDocumento',
-            `ubicacion`='$ubicacion',
-            `elabora`='$quienElabora',
-            `revisa`='$quienRevisa',
-            `aprueba`='$quienAprueba',
-            `documento_externo`='$documentosExternos',
-            `definiciones`='$definiciones',
-            `archivo_gestion`='$archivo_gestion',
-            `archivo_central`='$archivo_central',
-            `archivo_historico`='$archivo_historico',
-            `disposicion_documental`='$disposicion_documental',
-            `responsable_disposicion`='$escargadoDispo',
-            `usuario_aprovacion_reg`='$select_encargadoAR',
-            `mesesRevision`='$mesesRevision',
-            `id_solicitud`='$idSolicitud'
-            WHERE id='$idDocumento' ")or die(mysqli_error($mysqli));
-            /*
-            ,
-            `nombrePDF`='$nombrePDFf',
-            `nombreOtro`='$nombreOtroo'
-            $mysqli->query("INSERT INTO documento(
-                                    `codificacion`,
-                                    `tipoCodificacion`,
-                                    `consecutivo`,
-                                    `version`,
-                                    `nombres`,
-                                    `proceso`,
-                                    `nombreProceso`,
-                                    `norma`,
-                                    `metodo`,
-                                    `tipo_documento`,
-                                    `ubicacion`,
-                                    `elabora`,
-                                    `revisa`,
-                                    `aprueba`,
-                                    `documento_externo`,
-                                    `definiciones`,
-                                    `archivo_gestion`,
-                                    `archivo_central`,
-                                    `archivo_historico`,
-                                    `disposicion_documental`,
-                                    `responsable_disposicion`,
-                                    `usuario_aprovacion_reg`,
-                                    `flujo`,
-                                    `mesesRevision`,
-                                    `id_solicitud`,
-                                    estadoCreado,
-                                    nombrePDF,
-                                    nombreOtro,
-                                    htmlDoc,
-                                    estado,
-                                    usuarioElabora,
-                                    plataformaH,
-                                    plataformaHRevisa,
-                                    plataformaHAprueba,
-                                    vigente,
-                                    fechaAprobado,
-                                    pre
-                                )
-                                VALUES(
-                                    '$codificacion',
-                                    '$radCodificacion',
-                                    '$consecutivo',
-                                    '$version',
-                                    '$documento',
-                                    '$proceso',
-                                    '$nomProceso',
-                                    '$norma',
-                                    '$metodo',
-                                    '$tipoDocumento',
-                                    '$ubicacion',
-                                    '$quienElabora',
-                                    '$quienRevisa',
-                                    '$quienAprueba',
-                                    '$documentosExternos',
-                                    '$definiciones',
-                                    '$archivo_gestion',
-                                    '$archivo_central',
-                                    '$archivo_historico',
-                                    '$disposicion_documental',
-                                    '$escargadoDispo',
-                                    '$select_encargadoAR',
-                                    'cierra',
-                                    '$mesesRevision',
-                                    '$idSolicitud',
-                                    TRUE,
-                                    '$nombrePDF',
-                                    '$nombreOtro',
-                                    '$editorHtml',
-                                    'Aprobado',
-                                    '$idUser',
-                                    '1',
-                                    '1',
-                                    '1',
-                                    '1',
-                                    '$fechaAprobacion',
-                                    'si'
-                                    )")or die(mysqli_error($mysqli));
-                                    
-             */                
+    
+        // validamos que el encargado entre números o letras
+    
+    
+     'Variable encargado: '.$encargadoValidando=$_POST['validandoEncargados'];
+    
+        if ($_POST['validandoEncargados'] == '1'){
+              '<b>Encargado ID :</b>'.$encargado =$_POST['encargado'];
+                    $encargadoTexto='';
         }
+        //else{
+        //echo      '<b>Encargado texto :</b>'.$encargado ='0';
+        //}
+    
+        if($_POST['validandoEncargados'] == '2'){
+              '<br>Nombre encargado eliminado: '.$encargadoTexto=$_POST['encargadoT'];
+            $encargado ='0';
+        }
+       
+        // END
         
+    
+        //$solicitud = utf8_decode($_POST['solicitud']);
+         '<br>';
+    
+         '<b>Fecha:</b>'.$fecha = date("Y:m:j");
+         '<br>';
+         '<b>Archivo:</b>'.$archivoNombre = $_FILES['archivo']['name'];
+        $guardado = $_FILES['archivo']['tmp_name'];
+         '<br>';
+         '<br>Método de creación: '.$metodo=$_POST['rad_metodo'];
+         '<br>';
+         'Ubicación: '.$ubicacion=$_POST['ubicacion'];
+         '<br>';
+         '<b>Usuario:</b>'.$usuario = $_POST['usuario'];
+         '<br>';
+         'A: '.$validandoAlmacenamientoArrya=$_POST['validandoUsuarios'];
+                '<br>';
+                'B: '.$validandoAlmacenamientoArryaB=$_POST['validandoUsuariosB'];
+                '<br>';
+                'C: '.$validandoAlmacenamientoArryaC=$_POST['validandoUsuariosC'];
+                
+                   //////////////// flujo usuario ELABORADOR
+                $radioElabora = $_POST['radiobtnE'];
+                '<br>';
+                $elabora=serialize($_POST['select_encargadoE']);
+                $elaboraN = unserialize($elabora); // para la notificación creación
+                if($validandoAlmacenamientoArrya == 'activosUsuarios' ){
+                    array_unshift($elaboraN,$radioElabora);
+                    '<b>Quien Elabora:</b>'.$quienElabora=json_encode($elaboraN);
+                    '<br>';
+                }else{
+                    '<b>Quien Elabora:</b>'.$quienElabora=utf8_decode($_POST['select_encargadoEE']);
+                }
+                //// END
+                
+                
+                ////////////////// flujo usuario REVISOR
+                $radioRevisa = $_POST['radiobtnR'];
+                '<br>';
+                $revisa=serialize($_POST['select_encargadoR']);
+                $revisaN = unserialize($revisa); // para la notificación creación 
+                if($validandoAlmacenamientoArryaB == 'activosUsuariosB' ){
+                    array_unshift($revisaN,$radioRevisa);
+                    '<b>Quien Revisaa:</b>'.$quienRevisa=json_encode($revisaN);
+                }else{
+                    '<b>Quien Revisa2:</b>'.$quienRevisa=utf8_decode($_POST['select_encargadoRR']);
+                }
+                '<br>';
+                ////// END
+                
+                
+                //////////////// flujo usuario APROBADOR
+                $radioAprueba = $_POST['radiobtnA'];
+                '<br>';
+                $aprueba=serialize($_POST['select_encargadoA']);
+                $apruebaN = unserialize($aprueba); // para la notificación creación
+                if($validandoAlmacenamientoArryaC == 'activosUsuariosC' ){
+                    array_unshift($apruebaN,$radioAprueba);
+                   '<b>Quien Aprueba:</b>'.$quienAprueba=json_encode($apruebaN);
+                }else{
+                    '<b>Quien Aprueba:</b>'.$quienAprueba=utf8_decode($_POST['select_encargadoAA']);
+                }
+                
+       
+         '<br>';
+         '<br>';
+    
+         '<b>Codificacion:</b>'.$codificacion = $_POST['radCodificacion'];
+         '<br>';
+         '<b>Version:</b>'.$version = $_POST['versionDeclarada'];
+         '<br>';
+         '<b>Consecutivo:</b>'.$consecutivo = $_POST['consecutivoDeclarado'];
+         '<br>';
+         '<br>';
         
+       
+         '<b>Documento Externo</b>:'.$documentosExternos = json_encode($_POST['documentos_externos']);
+         '<br>';
+         '<b>Definiciones</b>:'.$definiciones = json_encode($_POST['definiciones']);
+         '<br>';
+         '<br>archivo de gestión: '.$archivo_gestion=utf8_decode($_POST['archivo_gestion']);
+         '<br>';
+         '<br>archivo de central: '.$archivo_central=utf8_decode($_POST['archivo_central']);
+         '<br>';
+         '<br>archivo de historico: '.$archivo_historico=utf8_decode($_POST['archivo_historico']);
+         '<br>';
+         '<br>disposición documental: '.$disposicion_documental=utf8_decode($_POST['diposicion_documental']);
+         '<br>';
+    
+        $radioResponsable = $_POST['radiobtnD'];
+         '<br>';
+        $responsable=serialize($_POST['select_encargadoD']);
+        $responsableN = unserialize($responsable); // para la notificación creación
+        if($_POST['validandoUsuariosR'] == 'activosUsuariosResponsable'){
+            array_unshift($responsableN,$radioResponsable);
+             '<b>Quien responsable: </b>'.$escargadoDispo=json_encode($responsableN);
+        }else{
+             '<b>Quien responsable: </b>'.$escargadoDispo=utf8_decode($_POST['select_encargadoDD']);
+        }
+         '<br>';
         
+        $editorHtml = utf8_decode($_POST['editorHtml']);
         
-    }else{
-        if(!file_exists('../../archivos/solicitudes')){
-            mkdir('../../archivos/solicitudes',0777,true);
-            if(file_exists('../../archivos/solicitudes')){
+    
+         '<b>Meses de Revision</b>:'.$mesesRevision = intval($_POST['mesesRevision']);
+    
+                        //// este espacio se crea para el control de cambios el procedimiento del flujo de aprobación del documento
+                        $queryIdUsuarioElabora = $mysqli->query("SELECT MAX(id) AS id FROM `documento` WHERE usuarioElabora = '$usuario' ORDER BY id DESC");
+                        $datosUsuarioElabora = $queryIdUsuarioElabora->fetch_array(MYSQLI_ASSOC);
+                        '<br>ID documento: '.$idDocumentoElaborado=$datosUsuarioElabora['id'];
+                        
+                    
+                        $informacion=utf8_decode($_POST['editor1']);
+                        $reservaIdSolicitud=$_POST['reservaIdSolicitud'];
+                        
+                        $consultamosExistenciaComentario=$mysqli->query("SELECT * FROM controlCambiosFlujo WHERE idDocumento='$idDocumento' ");
+                        $extrarConsultaExistenciaComentario=$consultamosExistenciaComentario->fetch_array(MYSQLI_ASSOC);
+                        if($extrarConsultaExistenciaComentario['idDocumento'] != NULL){ 
+                            $mysqli->query("UPDATE controlCambiosFlujo SET informacion='$informacion', fecha='$fecha', comentarioAnterior='$informacion' WHERE idDocumento='$idDocumento' ")or die(mysqli_error($mysqli));
+                        }else{
+                            $mysqli->query("INSERT INTO controlCambiosFlujo (idDocumento,informacion,fecha,comentarioAnterior)VALUES('$idDocumento','$informacion','$fecha','$informacion')");
+                        }
+                        //// end
+    
+    
+    
+    
+    
+        //// realiza el proceso de aprobación del documento
+       
+        if( $_FILES['archivopdf']['name'] == NULL && $_FILES['archivootro']['name'] == NULL){ 
+                        
+            $ruta = 'sin datos';
+            
+            $consultandoDocumento=$mysqli->query("SELECT * FROM documento WHERE id='$idDocumento' ");
+            $extraerConsultaDocumento=$consultandoDocumento->fetch_array(MYSQLI_ASSOC);
+          
+             $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
+             nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
+          
+    
+            $queryId = $mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE id = '".$extraerConsultaDocumento['id_solicitud']."' ORDER BY id DESC");
+            $datos = $queryId->fetch_array(MYSQLI_ASSOC);
+             '<br>ID documento: '.$idSolicitud=$datos['id'];
+            
+            if($datos != NULL){
+                //VERSION Y CONSECUTIVO     
+                //VERSION Y CONSECUTIVO  
+                            $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
+                            $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
+                            //$nomProceso = $datosProceso['nombre'];
+                            $prefijoProceso = $datosProceso['prefijo'];
+                            
+                        
+                            //TIPO DE DOCUMENTO 
+                            $queryDocumentos = $mysqli->query("SELECT nombre, prefijo from tipoDocumento WHERE id = '".$tipoDocumento."' ");
+                            $datosDocumento = $queryDocumentos->fetch_array(MYSQLI_ASSOC);
+                            //$tipoDocumento = $datosDocumento['nombre'];
+                            $prefijoTipo = $datosDocumento['prefijo']; 
+                //Consecutivo y version cuando son definidos por el cliente
+                $queryVersiones = $mysqli->query("SELECT * FROM versionamiento WHERE idProceso = '$proceso' AND idTipoDocumento = '$tipoDocumento'");
+                $datosVersiones = $queryVersiones->fetch_assoc();
+                
+                $versionInicial = $datosVersiones['versionInicial'];
+                $consecutivoIncial = $datosVersiones['consecutivoInicial'];
+                
+                $rol = $_POST['rol'];
+                
+                $radCodificacion = 'manual';
+    
+                if($radCodificacion == 'manual'){
+                     "<br>MANUAL<br>";
+                     '<br>Versión: '.$version = $version;
+                     '<br>Consecutivo: '.$consecutivo = $consecutivo;
+                }
+                    //CODIFICACION
+                    $codificacion = "";
+                    $dataCodificacion = $mysqli->query("SELECT * FROM codificacion ORDER BY id")or die(mysqli_error());
+                    while($rowC = $dataCodificacion->fetch_assoc()){
+                                        
+                        $cod = $rowC['codificacion'];
+                                                
+                        if($cod == "-"){
+                            $codificacion =  $codificacion."-";
+                        }
+                                            
+                        if($cod == "/"){
+                            $codificacion =  $codificacion."/";
+                        }
+                                                
+                        if($cod == " "){
+                            $codificacion =  $codificacion." ";
+                        }
+                                                
+                        if($cod == "Proceso"){
+                            $codificacion =  $codificacion.$prefijoProceso;
+                        }
+                                            
+                        if($cod == "Tipo de documento"){
+                            $codificacion = $codificacion.$prefijoTipo;        
+                        }
+                                                
+                        if($cod == "Consecutivo"){
+                            $codificacion = $codificacion.$consecutivo;        
+                        }
+                                                
+                        if($cod == "Versión"){
+                            $codificacion = $codificacion.$version;        
+                        }
+                    }//Fin codificacion
+                    $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
+                    $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
+                    '<br>Nombre proceso: '.$nomProceso = $datosProceso['nombre'];
+                    $prefijoProceso = $datosProceso['prefijo']; 
+                
+                    // '<br>Fecha de aprobación: '.$fechaAprobacion=date("Y:m:j h:i:s: A");
+    
+                /////// datos para el que elaboro
+                'Siemre segunda ---- primera validación';
+                '<br>';
+                $fechaElaboracion=$_POST['fechaElaboracion'];
+                '<br>';
+                'control de cambios : '.$controlCambios=utf8_decode($_POST['controlCambios']);
+                //// end
+                '<br>';
+                /////// datos para el que elaboro
+                'segunda validación';
+                '<br>';
+                $fechaRevision=$_POST['fechaRevision'];
+                '<br>';
+                $comentarioRevision=utf8_decode($_POST['comentarioRevision']);
+                //// end
+            
+                /////// datos para el que elaboro
+                'tercera validación';
+                '<br>';
+                $fechaAprobacion=$_POST['fechaAprobacion'];
+                '<br>';
+                $comentarioAprobo=utf8_decode($_POST['comentarioAprobo']);
+                '<br><b>';
+                $validandoAlmacenamientoArrya;
+                '</b><br>';
+                /*
+                if($validandoAlmacenamientoArrya == 'activosUsuarios'){
+                    
+                    /// validar y traer el nombre del id para sacar la CC y enviar al control de cambios
+                    
+                    $quienElaboraDecode=json_decode($quienElabora);
+                        if($quienElaboraDecode[0] == 'cargos'){ 
+                            $longitud = count($quienElaboraDecode);
+                            
+                            for($i=1; $i<$longitud; $i++){
+                                //saco el valor de cada elemento
+                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
+                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                
+                                 'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
+                            }            
+                        }
+                        
+                        if($quienElaboraDecode[0] == 'usuarios'){ 
+                            $longitud = count($quienElaboraDecode);
+                            
+                            for($i=1; $i<$longitud; $i++){
+                                //saco el valor de cada elemento
+                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
+                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                
+                                'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
+                            } 
+                        }
+                        
+                        $quiennRevisadoDecode=json_decode($quienRevisa);
+                        if($quiennRevisadoDecode[0] == 'cargos'){ 
+                            $longitud = count($quiennRevisadoDecode);
+                            
+                            for($i=1; $i<$longitud; $i++){
+                                //saco el valor de cada elemento
+                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quiennRevisadoDecode[$i]'");
+                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                
+                                 'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
+                            }            
+                        }
+                        
+                        if($quiennRevisadoDecode[0] == 'usuarios'){ 
+                            $longitud = count($quiennRevisadoDecode);
+                            
+                            for($i=1; $i<$longitud; $i++){
+                                //saco el valor de cada elemento
+                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quiennRevisadoDecode[$i]'");
+                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                
+                                 'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
+                            } 
+                        }
+    
+                        $quienApruebaDecode=json_decode($quienAprueba);
+                        if($quienApruebaDecode[0] == 'cargos'){ 
+                            $longitud = count($quienApruebaDecode);
+                            
+                            for($i=1; $i<$longitud; $i++){
+                                //saco el valor de cada elemento
+                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
+                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                
+                                 'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
+                            }            
+                        }
+                        
+                        if($quienApruebaDecode[0] == 'usuarios'){ 
+                            $longitud = count($quienApruebaDecode);
+                            
+                            for($i=1; $i<$longitud; $i++){
+                                //saco el valor de cada elemento
+                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
+                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                
+                                 'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
+                            } 
+                        }
+                    /// END
+    
+                    $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
+                    $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';//$_POST['nombreReviso']; 
+                    $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';//$_POST['nombreAprobo'];
+                }
+                if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){
+                    $nombreElaboro=utf8_decode($quienElabora);//$_POST['nombreElaboro']);
+                    $nombreReviso=utf8_decode($quienRevisa);//$_POST['nombreReviso']);
+                    $nombreAprobo=utf8_decode($quienAprueba);//$_POST['nombreAprobo']);
+                }
+                
+                */
+                                                                if($validandoAlmacenamientoArrya == 'activosUsuarios'){ //echo 'No';
+                                                                    $quienElaboraDecode=json_decode($quienElabora);
+                                                                    if($quienElaboraDecode[0] == 'cargos'){ 
+                                                                        $longitud = count($quienElaboraDecode);
+                                                                        
+                                                                        for($i=1; $i<$longitud; $i++){
+                                                                            //saco el valor de cada elemento
+                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
+                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                            
+                                                                             'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
+                                                                        }            
+                                                                    }
+                                                                    
+                                                                    if($quienElaboraDecode[0] == 'usuarios'){ 
+                                                                        $longitud = count($quienElaboraDecode);
+                                                                        
+                                                                        for($i=1; $i<$longitud; $i++){
+                                                                            //saco el valor de cada elemento
+                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
+                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                            
+                                                                            'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
+                                                                        } 
+                                                                    }
+                                                                     $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
+                                                                    
+                                                                }
+                            
+                                                                    if($validandoAlmacenamientoArryaB == 'activosUsuariosB'){ //echo 'No';
+                                                                        $quienRevisadoDecode=json_decode($quienRevisa);
+                                                                        if($quienRevisadoDecode[0] == 'cargos'){ 
+                                                                            $longitud = count($quienRevisadoDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienRevisadoDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
+                                                                            }            
+                                                                        }
+                                                                        
+                                                                        if($quienRevisadoDecode[0] == 'usuarios'){ 
+                                                                            $longitud = count($quienRevisadoDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienRevisadoDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
+                                                                            } 
+                                                                        }
+                                                                        $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';
+                                                                    }
+                                                                    
+                                                                    if($validandoAlmacenamientoArryaC == 'activosUsuariosC'){ 
+                                                                        $quienApruebaDecode=json_decode($quienAprueba);
+                                                                        if($quienApruebaDecode[0] == 'cargos'){ 
+                                                                            $longitud = count($quienApruebaDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
+                                                                            }            
+                                                                        }
+                                                                        
+                                                                        if($quienApruebaDecode[0] == 'usuarios'){ 
+                                                                            $longitud = count($quienApruebaDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
+                                                                            } 
+                                                                        }
+                                                                    /// END
+                                            
+                                                                       
+                                                                        $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';
+                                                                        
+                                                                    }
+                                                                    
+                                                                    if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){ 
+                                                                        $nombreElaboro=utf8_decode($_POST['select_encargadoEE']);
+                                                                    }
+                                                                    if($validandoAlmacenamientoArryaB == 'retiradosUsuariosB'){
+                                                                        $nombreReviso=utf8_decode($_POST['select_encargadoRR']);
+                                                                    }
+                                                                    if($validandoAlmacenamientoArryaC == 'retiradosUsuariosC'){
+                                                                        $nombreAprobo=utf8_decode($_POST['select_encargadoAA']);
+                                                                    }
+                    if($fechaElaboracion != NULL){ //$controlCambios
+                        //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$controlCambios','$nombreElaboro','$fechaElaboracion','Elaborador(a)')")or die(mysqli_error($mysqli));  
+                        $mysqli->query("UPDATE controlCambios SET comentario='$controlCambios', fecha='$fechaElaboracion', idUsuarioB='$nombreElaboro' WHERE idDocumento='$idSolicitud' AND rol='Elaborador(a)' ")or die(mysqli_error($mysqli));  
+                   
+                    }
+                    if($fechaRevision != NULL){ //$comentarioRevision
+                        //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioRevision','$nombreReviso','$fechaRevision','Revisor(a)')")or die(mysqli_error($mysqli));  
+                        $mysqli->query("UPDATE controlCambios SET comentario='$comentarioRevision', fecha='$fechaRevision', idUsuarioB='$nombreReviso' WHERE idDocumento='$idSolicitud' AND rol='Revisor(a)' ")or die(mysqli_error($mysqli));  
+                   
+                    }
+                    if($fechaAprobacion != NULL){ //$comentarioAprobo
+                        //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioAprobo','$nombreAprobo','$fechaAprobacion','Aprobador(a)')")or die(mysqli_error($mysqli));  
+                        $mysqli->query("UPDATE controlCambios SET comentario='$comentarioAprobo', fecha='$fechaAprobacion', idUsuarioB='$nombreAprobo' WHERE idDocumento='$idSolicitud' AND rol='Aprobador(a)' ")or die(mysqli_error($mysqli));  
+                   
+                    }
+                /*
+                `codificacion`='$codificacion',
+                */
+                $mysqli->query("UPDATE documento SET 
+                
+                `tipoCodificacion`='$radCodificacion',
+                `consecutivoTemporal`='$consecutivo',
+                `versionTemporal`='$version',
+                `nombres`='$documento',
+                `proceso`='$proceso',
+                `nombreProceso`='$nomProceso',
+                `norma`='$norma',
+                `tipo_documento`='$tipoDocumento',
+                `ubicacion`='$ubicacion',
+                `elabora`='$quienElabora',
+                `revisa`='$quienRevisa',
+                `aprueba`='$quienAprueba',
+                `documento_externo`='$documentosExternos',
+                `definiciones`='$definiciones',
+                `archivo_gestion`='$archivo_gestion',
+                `archivo_central`='$archivo_central',
+                `archivo_historico`='$archivo_historico',
+                `disposicion_documental`='$disposicion_documental',
+                `responsable_disposicion`='$escargadoDispo',
+                `usuario_aprovacion_reg`='$select_encargadoAR',
+                `mesesRevision`='$mesesRevision',
+                `id_solicitud`='$idSolicitud'
+                WHERE id='$idDocumento' ")or die(mysqli_error($mysqli));
+                /*
+                ,
+                `nombrePDF`='$nombrePDFf',
+                `nombreOtro`='$nombreOtroo'
+                $mysqli->query("INSERT INTO documento(
+                                        `codificacion`,
+                                        `tipoCodificacion`,
+                                        `consecutivo`,
+                                        `version`,
+                                        `nombres`,
+                                        `proceso`,
+                                        `nombreProceso`,
+                                        `norma`,
+                                        `metodo`,
+                                        `tipo_documento`,
+                                        `ubicacion`,
+                                        `elabora`,
+                                        `revisa`,
+                                        `aprueba`,
+                                        `documento_externo`,
+                                        `definiciones`,
+                                        `archivo_gestion`,
+                                        `archivo_central`,
+                                        `archivo_historico`,
+                                        `disposicion_documental`,
+                                        `responsable_disposicion`,
+                                        `usuario_aprovacion_reg`,
+                                        `flujo`,
+                                        `mesesRevision`,
+                                        `id_solicitud`,
+                                        estadoCreado,
+                                        nombrePDF,
+                                        nombreOtro,
+                                        htmlDoc,
+                                        estado,
+                                        usuarioElabora,
+                                        plataformaH,
+                                        plataformaHRevisa,
+                                        plataformaHAprueba,
+                                        vigente,
+                                        fechaAprobado,
+                                        pre
+                                    )
+                                    VALUES(
+                                        '$codificacion',
+                                        '$radCodificacion',
+                                        '$consecutivo',
+                                        '$version',
+                                        '$documento',
+                                        '$proceso',
+                                        '$nomProceso',
+                                        '$norma',
+                                        '$metodo',
+                                        '$tipoDocumento',
+                                        '$ubicacion',
+                                        '$quienElabora',
+                                        '$quienRevisa',
+                                        '$quienAprueba',
+                                        '$documentosExternos',
+                                        '$definiciones',
+                                        '$archivo_gestion',
+                                        '$archivo_central',
+                                        '$archivo_historico',
+                                        '$disposicion_documental',
+                                        '$escargadoDispo',
+                                        '$select_encargadoAR',
+                                        'cierra',
+                                        '$mesesRevision',
+                                        '$idSolicitud',
+                                        TRUE,
+                                        '$nombrePDF',
+                                        '$nombreOtro',
+                                        '$editorHtml',
+                                        'Aprobado',
+                                        '$idUser',
+                                        '1',
+                                        '1',
+                                        '1',
+                                        '1',
+                                        '$fechaAprobacion',
+                                        'si'
+                                        )")or die(mysqli_error($mysqli));
+                                        
+                 */                
+            }
+            
+            
+            
+            
+        }else{
+            if(!file_exists('../../archivos/solicitudes')){
+                mkdir('../../archivos/solicitudes',0777,true);
+                if(file_exists('../../archivos/solicitudes')){
+                    if(move_uploaded_file($guardado, '../../archivos/solicitudes/'.$archivoNombre)){
+                        
+                        $ruta = utf8_decode('archivos/solicitudes/'.$archivoNombre);
+                        
+                       
+                        ?>
+                            <script> 
+                                 window.onload=function(){
+                               
+                                     document.forms["miformulario"].submit();
+                                 }
+                            </script>
+                             
+                            <form name="miformulario" action="h1" method="POST" onsubmit="procesar(this.action);" >
+                            </form> 
+                        <?php
+                       
+                    }else{
+                        
+                        
+                        ?>
+                            <script> 
+                                 window.onload=function(){
+                               
+                                     document.forms["miformulario"].submit();
+                                 }
+                            </script>
+                             
+                            <form name="miformulario" action="h2" method="POST" onsubmit="procesar(this.action);" >
+                                <input type="hidden" name="validacionExiste" value="1">
+                            </form> 
+                        <?php
+                    }
+                }
+                
+            }else{
                 if(move_uploaded_file($guardado, '../../archivos/solicitudes/'.$archivoNombre)){
+                    $ruta = utf8_decode('archivos/solicitudes/'.$archivoNombre);
+                    
+                    $consultandoDocumento=$mysqli->query("SELECT * FROM documento WHERE id='$idDocumento' ");
+                    $extraerConsultaDocumento=$consultandoDocumento->fetch_array(MYSQLI_ASSOC);
+                
+                    if($archivoNombre != NULL){
+                        $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
+                        nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento', documento='$ruta' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
+                    }else{
+                        $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
+                        nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
+                    }
+    
+                   
+    
+                    $queryId = $mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE id = '".$extraerConsultaDocumento['id_solicitud']."' ORDER BY id DESC");
+                    $datos = $queryId->fetch_array(MYSQLI_ASSOC);
+                    '<br>ID documento: '.$idSolicitud=$datos['id'];
+                    
+                    if($datos != NULL){
+                        //VERSION Y CONSECUTIVO        
+                        //VERSION Y CONSECUTIVO  
+                            $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
+                            $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
+                            //$nomProceso = $datosProceso['nombre'];
+                            $prefijoProceso = $datosProceso['prefijo'];
+                            
+                        
+                            //TIPO DE DOCUMENTO 
+                            $queryDocumentos = $mysqli->query("SELECT nombre, prefijo from tipoDocumento WHERE id = '".$tipoDocumento."' ");
+                            $datosDocumento = $queryDocumentos->fetch_array(MYSQLI_ASSOC);
+                            //$tipoDocumento = $datosDocumento['nombre'];
+                            $prefijoTipo = $datosDocumento['prefijo']; 
+                        //Consecutivo y version cuando son definidos por el cliente
+                        $queryVersiones = $mysqli->query("SELECT * FROM versionamiento WHERE idProceso = '$proceso' AND idTipoDocumento = '$tipoDocumento'");
+                        $datosVersiones = $queryVersiones->fetch_assoc();
+                        
+                        $versionInicial = $datosVersiones['versionInicial'];
+                        $consecutivoIncial = $datosVersiones['consecutivoInicial'];
+                        
+                        $rol = $_POST['rol'];
+                        
+                        $radCodificacion = 'manual';
+    
+                        if($radCodificacion == 'manual'){
+                            "<br>MANUAL<br>";
+                            '<br>Versión: '.$version = $version;
+                            '<br>Consecutivo: '.$consecutivo = $consecutivo;
+                        }
+                            //CODIFICACION
+                            $codificacion = "";
+                            $dataCodificacion = $mysqli->query("SELECT * FROM codificacion ORDER BY id")or die(mysqli_error());
+                            while($rowC = $dataCodificacion->fetch_assoc()){
+                                                
+                                $cod = $rowC['codificacion'];
+                                                        
+                                if($cod == "-"){
+                                    $codificacion =  $codificacion."-";
+                                }
+                                                    
+                                if($cod == "/"){
+                                    $codificacion =  $codificacion."/";
+                                }
+                                                        
+                                if($cod == " "){
+                                    $codificacion =  $codificacion." ";
+                                }
+                                                        
+                                if($cod == "Proceso"){
+                                    $codificacion =  $codificacion.$prefijoProceso;
+                                }
+                                                    
+                                if($cod == "Tipo de documento"){
+                                    $codificacion = $codificacion.$prefijoTipo;        
+                                }
+                                                        
+                                if($cod == "Consecutivo"){
+                                    $codificacion = $codificacion.$consecutivo;        
+                                }
+                                                        
+                                if($cod == "Versión"){
+                                    $codificacion = $codificacion.$version;        
+                                }
+                            }//Fin codificacion
+                            $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
+                            $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
+                            '<br>Nombre proceso: '.$nomProceso = $datosProceso['nombre'];
+                            $prefijoProceso = $datosProceso['prefijo']; 
+                        
+                            // '<br>Fecha de aprobación: '.$fechaAprobacion=date("Y:m:j h:i:s: A");
+    
+                        /////// datos para el que elaboro
+                        'Siemre segunda ---- primera validación';
+                        '<br>';
+                        $fechaElaboracion=$_POST['fechaElaboracion'];
+                        '<br>';
+                        'control de cambios : '.$controlCambios=utf8_decode($_POST['controlCambios']);
+                        //// end
+                        '<br>';
+                        /////// datos para el que elaboro
+                        'segunda validación';
+                        '<br>';
+                        $fechaRevision=$_POST['fechaRevision'];
+                        '<br>';
+                        $comentarioRevision=utf8_decode($_POST['comentarioRevision']);
+                        //// end
+                    
+                        /////// datos para el que elaboro
+                        'tercera validación';
+                        '<br>';
+                        $fechaAprobacion=$_POST['fechaAprobacion'];
+                        '<br>';
+                        $comentarioAprobo=utf8_decode($_POST['comentarioAprobo']);
+                        '<br><b>';
+                        $validandoAlmacenamientoArrya;
+                        '</b><br>';
+                        
+                        /*
+                        if($validandoAlmacenamientoArrya == 'activosUsuarios'){
+                            
+                            /// validar y traer el nombre del id para sacar la CC y enviar al control de cambios
+                            
+                            $quienElaboraDecode=json_decode($quienElabora);
+                                if($quienElaboraDecode[0] == 'cargos'){ 
+                                    $longitud = count($quienElaboraDecode);
+                                    
+                                    for($i=1; $i<$longitud; $i++){
+                                        //saco el valor de cada elemento
+                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
+                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                        
+                                        'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
+                                    }            
+                                }
+                                
+                                if($quienElaboraDecode[0] == 'usuarios'){ 
+                                    $longitud = count($quienElaboraDecode);
+                                    
+                                    for($i=1; $i<$longitud; $i++){
+                                        //saco el valor de cada elemento
+                                        $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
+                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                        
+                                        'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
+                                    } 
+                                }
+                                
+                                $quiennRevisadoDecode=json_decode($quienRevisa);
+                                if($quiennRevisadoDecode[0] == 'cargos'){ 
+                                    $longitud = count($quiennRevisadoDecode);
+                                    
+                                    for($i=1; $i<$longitud; $i++){
+                                        //saco el valor de cada elemento
+                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quiennRevisadoDecode[$i]'");
+                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                        
+                                        'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
+                                    }            
+                                }
+                                
+                                if($quiennRevisadoDecode[0] == 'usuarios'){ 
+                                    $longitud = count($quiennRevisadoDecode);
+                                    
+                                    for($i=1; $i<$longitud; $i++){
+                                        //saco el valor de cada elemento
+                                        $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quiennRevisadoDecode[$i]'");
+                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                        
+                                        'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
+                                    } 
+                                }
+    
+                                $quienApruebaDecode=json_decode($quienAprueba);
+                                if($quienApruebaDecode[0] == 'cargos'){ 
+                                    $longitud = count($quienApruebaDecode);
+                                    
+                                    for($i=1; $i<$longitud; $i++){
+                                        //saco el valor de cada elemento
+                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
+                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                        
+                                        'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
+                                    }            
+                                }
+                                
+                                if($quienApruebaDecode[0] == 'usuarios'){ 
+                                    $longitud = count($quienApruebaDecode);
+                                    
+                                    for($i=1; $i<$longitud; $i++){
+                                        //saco el valor de cada elemento
+                                        $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
+                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                        
+                                        'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
+                                    } 
+                                }
+                            /// END
+    
+                            $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
+                            $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';//$_POST['nombreReviso']; 
+                            $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';//$_POST['nombreAprobo'];
+                        }
+                        if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){
+                            $nombreElaboro=utf8_decode($quienElabora);//$_POST['nombreElaboro']);
+                            $nombreReviso=utf8_decode($quienRevisa);//$_POST['nombreReviso']);
+                            $nombreAprobo=utf8_decode($quienAprueba);//$_POST['nombreAprobo']);
+                        }
+                        */
+                        
+                                                                if($validandoAlmacenamientoArrya == 'activosUsuarios'){ //echo 'No';
+                                                                    $quienElaboraDecode=json_decode($quienElabora);
+                                                                    if($quienElaboraDecode[0] == 'cargos'){ 
+                                                                        $longitud = count($quienElaboraDecode);
+                                                                        
+                                                                        for($i=1; $i<$longitud; $i++){
+                                                                            //saco el valor de cada elemento
+                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
+                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                            
+                                                                             'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
+                                                                        }            
+                                                                    }
+                                                                    
+                                                                    if($quienElaboraDecode[0] == 'usuarios'){ 
+                                                                        $longitud = count($quienElaboraDecode);
+                                                                        
+                                                                        for($i=1; $i<$longitud; $i++){
+                                                                            //saco el valor de cada elemento
+                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
+                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                            
+                                                                            'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
+                                                                        } 
+                                                                    }
+                                                                     $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
+                                                                    
+                                                                }
+                            
+                                                                    if($validandoAlmacenamientoArryaB == 'activosUsuariosB'){ //echo 'No';
+                                                                        $quienRevisadoDecode=json_decode($quienRevisa);
+                                                                        if($quienRevisadoDecode[0] == 'cargos'){ 
+                                                                            $longitud = count($quienRevisadoDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienRevisadoDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
+                                                                            }            
+                                                                        }
+                                                                        
+                                                                        if($quienRevisadoDecode[0] == 'usuarios'){ 
+                                                                            $longitud = count($quienRevisadoDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienRevisadoDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
+                                                                            } 
+                                                                        }
+                                                                        $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';
+                                                                    }
+                                                                    
+                                                                    if($validandoAlmacenamientoArryaC == 'activosUsuariosC'){ 
+                                                                        $quienApruebaDecode=json_decode($quienAprueba);
+                                                                        if($quienApruebaDecode[0] == 'cargos'){ 
+                                                                            $longitud = count($quienApruebaDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
+                                                                            }            
+                                                                        }
+                                                                        
+                                                                        if($quienApruebaDecode[0] == 'usuarios'){ 
+                                                                            $longitud = count($quienApruebaDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
+                                                                            } 
+                                                                        }
+                                                                    /// END
+                                            
+                                                                       
+                                                                        $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';
+                                                                        
+                                                                    }
+                                                                    
+                                                                    if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){ 
+                                                                        $nombreElaboro=utf8_decode($_POST['select_encargadoEE']);
+                                                                    }
+                                                                    if($validandoAlmacenamientoArryaB == 'retiradosUsuariosB'){
+                                                                        $nombreReviso=utf8_decode($_POST['select_encargadoRR']);
+                                                                    }
+                                                                    if($validandoAlmacenamientoArryaC == 'retiradosUsuariosC'){
+                                                                        $nombreAprobo=utf8_decode($_POST['select_encargadoAA']);
+                                                                    }
+                        
+                            if($fechaElaboracion != NULL){ //$controlCambios
+                                //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$controlCambios','$nombreElaboro','$fechaElaboracion','Elaborador(a)')")or die(mysqli_error($mysqli));  
+                                $mysqli->query("UPDATE controlCambios SET comentario='$controlCambios', fecha='$fechaElaboracion', idUsuarioB='$nombreElaboro' WHERE idDocumento='$idSolicitud' AND rol='Elaborador(a)' ")or die(mysqli_error($mysqli));  
+                        
+                            }
+                            if($fechaRevision != NULL){ //$comentarioRevision
+                                //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioRevision','$nombreReviso','$fechaRevision','Revisor(a)')")or die(mysqli_error($mysqli));  
+                                $mysqli->query("UPDATE controlCambios SET comentario='$comentarioRevision', fecha='$fechaRevision', idUsuarioB='$nombreReviso' WHERE idDocumento='$idSolicitud' AND rol='Revisor(a)' ")or die(mysqli_error($mysqli));  
+                        
+                            }
+                            if($fechaAprobacion != NULL){ //$comentarioAprobo
+                                //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioAprobo','$nombreAprobo','$fechaAprobacion','Aprobador(a)')")or die(mysqli_error($mysqli));  
+                                $mysqli->query("UPDATE controlCambios SET comentario='$comentarioAprobo', fecha='$fechaAprobacion', idUsuarioB='$nombreAprobo' WHERE idDocumento='$idSolicitud' AND rol='Aprobador(a)' ")or die(mysqli_error($mysqli));  
+                        
+                            }
+                            
+                            'Fechaaaaaaaa: '.$fecha = date("Ymjhis");
+    
+                            $rol = "Encargado(a) solicitud";
+                        
+                            '1: '.$nombrePDF = $_FILES['archivopdf']['name']; 
+                            $rutaPDF =$_FILES['archivopdf']['tmp_name']; 
+                            '<br>2: '.$nombreOtro =$_FILES['archivootro']['name'];
+                            $rutaOtro =$_FILES['archivootro']['tmp_name'];
+    
+                            if(!file_exists('../../archivos/documentos/')){
+                                mkdir('../../archivos/documentos',0777,true);
+                                if(file_exists('../../archivos/documentos/')){
+                                    if(move_uploaded_file($rutaPDF, '../../archivos/documentos/'.$fecha.$nombrePDF)){
+                                        
+                                    }else{
+                                        //echo "Archivo no se pudo guardar";
+                                    }
+                                }
+                            }else{
+                                if(move_uploaded_file($rutaPDF, '../../archivos/documentos/'.$fecha.$nombrePDF)){
+                                
+                                }else{
+                                    //echo "Archivo no se pudo guardar";
+                                }
+                            }
+                            
+                            if(!file_exists('../../archivos/documentos/')){
+                                mkdir('../../archivos/documentos',0777,true);
+                                if(file_exists('../../archivos/documentos/')){
+                                    if(move_uploaded_file($rutaOtro, '../../archivos/documentos/'.$fecha.$nombreOtro)){
+                                        //echo "Archivo guardado con exito";
+                                        
+                                    }else{
+                                        //echo "Archivo no se pudo guardar";
+                                    }
+                                }
+                            }else{
+                                if(move_uploaded_file($rutaOtro, '../../archivos/documentos/'.$fecha.$nombreOtro)){
+                                    //echo "Archivo guardado con exito";
+                                }else{
+                                    //echo "Archivo no se pudo guardar";
+                                }
+                            }
+                            $nombrePDFf=$fecha.utf8_decode($nombrePDF);
+                            '<br>';
+                            $nombreOtroo=$fecha.utf8_decode($nombreOtro); //echo 'Muechee pues !';
+                            if($nombrePDF  != NULL){
+                                /*
+                                `codificacion`='$codificacion',
+                                */
+                                $mysqli->query("UPDATE documento SET 
+                                
+                                `tipoCodificacion`='$radCodificacion',
+                                `consecutivoTemporal`='$consecutivo',
+                                `versionTemporal`='$version',
+                                `nombres`='$documento',
+                                `proceso`='$proceso',
+                                `nombreProceso`='$nomProceso',
+                                `norma`='$norma',
+                                `tipo_documento`='$tipoDocumento',
+                                `ubicacion`='$ubicacion',
+                                `elabora`='$quienElabora',
+                                `revisa`='$quienRevisa',
+                                `aprueba`='$quienAprueba',
+                                `documento_externo`='$documentosExternos',
+                                `definiciones`='$definiciones',
+                                `archivo_gestion`='$archivo_gestion',
+                                `archivo_central`='$archivo_central',
+                                `archivo_historico`='$archivo_historico',
+                                `disposicion_documental`='$disposicion_documental',
+                                `responsable_disposicion`='$escargadoDispo',
+                                `usuario_aprovacion_reg`='$select_encargadoAR',
+                                `mesesRevision`='$mesesRevision',
+                                `id_solicitud`='$idSolicitud',
+                                `nombrePDF`='$nombrePDFf'
+                                
+                                WHERE id='$idDocumento' ")or die(mysqli_error($mysqli)); //`nombreOtro`='$nombreOtroo'
+                            }
+                            if($nombreOtro  != NULL){
+                                /*
+                                `codificacion`='$codificacion',
+                                */
+                                $mysqli->query("UPDATE documento SET 
+                                
+                                `tipoCodificacion`='$radCodificacion',
+                                `consecutivoTemporal`='$consecutivo',
+                                `versionTemporal`='$version',
+                                `nombres`='$documento',
+                                `proceso`='$proceso',
+                                `nombreProceso`='$nomProceso',
+                                `norma`='$norma',
+                                `tipo_documento`='$tipoDocumento',
+                                `ubicacion`='$ubicacion',
+                                `elabora`='$quienElabora',
+                                `revisa`='$quienRevisa',
+                                `aprueba`='$quienAprueba',
+                                `documento_externo`='$documentosExternos',
+                                `definiciones`='$definiciones',
+                                `archivo_gestion`='$archivo_gestion',
+                                `archivo_central`='$archivo_central',
+                                `archivo_historico`='$archivo_historico',
+                                `disposicion_documental`='$disposicion_documental',
+                                `responsable_disposicion`='$escargadoDispo',
+                                `usuario_aprovacion_reg`='$select_encargadoAR',
+                                `mesesRevision`='$mesesRevision',
+                                `id_solicitud`='$idSolicitud',
+                                `nombreOtro`='$nombreOtroo'
+                                
+                                WHERE id='$idDocumento' ")or die(mysqli_error($mysqli)); //`nombreOtro`='$nombreOtroo'
+                            }
+        
+                            if($nombrePDF != NULL && $nombreOtro != NULL){
+                                /*
+                                 `codificacion`='$codificacion',
+                                */
+                                $mysqli->query("UPDATE documento SET 
+                               
+                                `tipoCodificacion`='$radCodificacion',
+                                `consecutivoTemporal`='$consecutivo',
+                                `versionTemporal`='$version',
+                                `nombres`='$documento',
+                                `proceso`='$proceso',
+                                `nombreProceso`='$nomProceso',
+                                `norma`='$norma',
+                                `tipo_documento`='$tipoDocumento',
+                                `ubicacion`='$ubicacion',
+                                `elabora`='$quienElabora',
+                                `revisa`='$quienRevisa',
+                                `aprueba`='$quienAprueba',
+                                `documento_externo`='$documentosExternos',
+                                `definiciones`='$definiciones',
+                                `archivo_gestion`='$archivo_gestion',
+                                `archivo_central`='$archivo_central',
+                                `archivo_historico`='$archivo_historico',
+                                `disposicion_documental`='$disposicion_documental',
+                                `responsable_disposicion`='$escargadoDispo',
+                                `usuario_aprovacion_reg`='$select_encargadoAR',
+                                `mesesRevision`='$mesesRevision',
+                                `id_solicitud`='$idSolicitud',
+                                `nombrePDF`='$nombrePDFf',
+                                `nombreOtro`='$nombreOtroo'
+                                WHERE id='$idDocumento' ")or die(mysqli_error($mysqli));
+                            }
+                    /*
+                        $mysqli->query("UPDATE documento SET 
+                        `codificacion`='$codificacion',
+                        `tipoCodificacion`='$radCodificacion',
+                        `consecutivo`='$consecutivo',
+                        `version`='$version',
+                        `nombres`='$documento',
+                        `proceso`='$proceso',
+                        `nombreProceso`='$nomProceso',
+                        `norma`='$norma',
+                        `tipo_documento`='$tipoDocumento',
+                        `ubicacion`='$ubicacion',
+                        `elabora`='$quienElabora',
+                        `revisa`='$quienRevisa',
+                        `aprueba`='$quienAprueba',
+                        `documento_externo`='$documentosExternos',
+                        `definiciones`='$definiciones',
+                        `archivo_gestion`='$archivo_gestion',
+                        `archivo_central`='$archivo_central',
+                        `archivo_historico`='$archivo_historico',
+                        `disposicion_documental`='$disposicion_documental',
+                        `responsable_disposicion`='$escargadoDispo',
+                        `usuario_aprovacion_reg`='$select_encargadoAR',
+                        `mesesRevision`='$mesesRevision',
+                        `id_solicitud`='$idSolicitud',
+                        `nombrePDF`='$nombrePDFf',
+                        `nombreOtro`='$nombreOtroo'
+                        WHERE id='$idDocumento' ")or die(mysqli_error($mysqli));
+                     */               
+                    }
+    
+    
+                }else{
                     
                     $ruta = utf8_decode('archivos/solicitudes/'.$archivoNombre);
                     
-                   
-                    ?>
-                        <script> 
-                             window.onload=function(){
-                           
-                                 document.forms["miformulario"].submit();
-                             }
-                        </script>
-                         
-                        <form name="miformulario" action="h1" method="POST" onsubmit="procesar(this.action);" >
-                        </form> 
-                    <?php
-                   
-                }else{
+                    $consultandoDocumento=$mysqli->query("SELECT * FROM documento WHERE id='$idDocumento' ");
+                    $extraerConsultaDocumento=$consultandoDocumento->fetch_array(MYSQLI_ASSOC);
                     
-                    
-                    ?>
-                        <script> 
-                             window.onload=function(){
-                           
-                                 document.forms["miformulario"].submit();
-                             }
-                        </script>
-                         
-                        <form name="miformulario" action="h2" method="POST" onsubmit="procesar(this.action);" >
-                            <input type="hidden" name="validacionExiste" value="1">
-                        </form> 
-                    <?php
-                }
-            }
-            
-        }else{
-            if(move_uploaded_file($guardado, '../../archivos/solicitudes/'.$archivoNombre)){
-                $ruta = utf8_decode('archivos/solicitudes/'.$archivoNombre);
-                
-                $consultandoDocumento=$mysqli->query("SELECT * FROM documento WHERE id='$idDocumento' ");
-                $extraerConsultaDocumento=$consultandoDocumento->fetch_array(MYSQLI_ASSOC);
-            
-                if($archivoNombre != NULL){
-                    $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
-                    nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento', documento='$ruta' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
-                }else{
-                    $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
-                    nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
-                }
-
-               
-
-                $queryId = $mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE id = '".$extraerConsultaDocumento['id_solicitud']."' ORDER BY id DESC");
-                $datos = $queryId->fetch_array(MYSQLI_ASSOC);
-                '<br>ID documento: '.$idSolicitud=$datos['id'];
-                
-                if($datos != NULL){
-                    //VERSION Y CONSECUTIVO        
-                    //VERSION Y CONSECUTIVO  
-                        $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
-                        $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
-                        //$nomProceso = $datosProceso['nombre'];
-                        $prefijoProceso = $datosProceso['prefijo'];
-                        
-                    
-                        //TIPO DE DOCUMENTO 
-                        $queryDocumentos = $mysqli->query("SELECT nombre, prefijo from tipoDocumento WHERE id = '".$tipoDocumento."' ");
-                        $datosDocumento = $queryDocumentos->fetch_array(MYSQLI_ASSOC);
-                        //$tipoDocumento = $datosDocumento['nombre'];
-                        $prefijoTipo = $datosDocumento['prefijo']; 
-                    //Consecutivo y version cuando son definidos por el cliente
-                    $queryVersiones = $mysqli->query("SELECT * FROM versionamiento WHERE idProceso = '$proceso' AND idTipoDocumento = '$tipoDocumento'");
-                    $datosVersiones = $queryVersiones->fetch_assoc();
-                    
-                    $versionInicial = $datosVersiones['versionInicial'];
-                    $consecutivoIncial = $datosVersiones['consecutivoInicial'];
-                    
-                    $rol = $_POST['rol'];
-                    
-                    $radCodificacion = 'manual';
-
-                    if($radCodificacion == 'manual'){
-                        "<br>MANUAL<br>";
-                        '<br>Versión: '.$version = $version;
-                        '<br>Consecutivo: '.$consecutivo = $consecutivo;
+                    if($archivoNombre != NULL){
+                        $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
+                        nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento', documento='$ruta' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
+                    }else{
+                        $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
+                        nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
                     }
-                        //CODIFICACION
-                        $codificacion = "";
-                        $dataCodificacion = $mysqli->query("SELECT * FROM codificacion ORDER BY id")or die(mysqli_error());
-                        while($rowC = $dataCodificacion->fetch_assoc()){
+                    
+    
+                    $queryId = $mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE id = '".$extraerConsultaDocumento['id_solicitud']."' ORDER BY id DESC");
+                    $datos = $queryId->fetch_array(MYSQLI_ASSOC);
+                    '<br>ID documento: '.$idSolicitud=$datos['id'];
+                    
+                    if($datos != NULL){
+                        //VERSION Y CONSECUTIVO  
+                            $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
+                            $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
+                            //$nomProceso = $datosProceso['nombre'];
+                            $prefijoProceso = $datosProceso['prefijo'];
+                            
+                        
+                            //TIPO DE DOCUMENTO 
+                            $queryDocumentos = $mysqli->query("SELECT nombre, prefijo from tipoDocumento WHERE id = '".$tipoDocumento."' ");
+                            $datosDocumento = $queryDocumentos->fetch_array(MYSQLI_ASSOC);
+                            //$tipoDocumento = $datosDocumento['nombre'];
+                            $prefijoTipo = $datosDocumento['prefijo']; 
+                        //VERSION Y CONSECUTIVO                    
+                        //Consecutivo y version cuando son definidos por el cliente
+                        $queryVersiones = $mysqli->query("SELECT * FROM versionamiento WHERE idProceso = '$proceso' AND idTipoDocumento = '$tipoDocumento'");
+                        $datosVersiones = $queryVersiones->fetch_assoc();
+                        
+                        $versionInicial = $datosVersiones['versionInicial'];
+                        $consecutivoIncial = $datosVersiones['consecutivoInicial'];
+                        
+                        $rol = $_POST['rol'];
+                        
+                        $radCodificacion = 'manual';
+    
+                        if($radCodificacion == 'manual'){
+                            "<br>MANUAL<br>";
+                            '<br>Versión: '.$version = $version;
+                            '<br>Consecutivo: '.$consecutivo = $consecutivo;
+                        }
+                            //CODIFICACION
+                            $codificacion = "";
+                            $dataCodificacion = $mysqli->query("SELECT * FROM codificacion ORDER BY id")or die(mysqli_error());
+                            while($rowC = $dataCodificacion->fetch_assoc()){
+                                                
+                                $cod = $rowC['codificacion'];
+                                                        
+                                if($cod == "-"){
+                                    $codificacion =  $codificacion."-";
+                                }
+                                                    
+                                if($cod == "/"){
+                                    $codificacion =  $codificacion."/";
+                                }
+                                                        
+                                if($cod == " "){
+                                    $codificacion =  $codificacion." ";
+                                }
+                                                        
+                                if($cod == "Proceso"){
+                                    $codificacion =  $codificacion.$prefijoProceso;
+                                }
+                                                    
+                                if($cod == "Tipo de documento"){
+                                    $codificacion = $codificacion.$prefijoTipo;        
+                                }
+                                                        
+                                if($cod == "Consecutivo"){
+                                    $codificacion = $codificacion.$consecutivo;        
+                                }
+                                                        
+                                if($cod == "Versión"){
+                                    $codificacion = $codificacion.$version;        
+                                }
+                            }//Fin codificacion
+                            $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
+                            $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
+                            '<br>Nombre proceso: '.$nomProceso = $datosProceso['nombre'];
+                            $prefijoProceso = $datosProceso['prefijo']; 
+                        
+                            // '<br>Fecha de aprobación: '.$fechaAprobacion=date("Y:m:j h:i:s: A");
+    
+                        /////// datos para el que elaboro
+                        'Siemre segunda ---- primera validación';
+                        '<br>';
+                        $fechaElaboracion=$_POST['fechaElaboracion'];
+                        '<br>';
+                        'control de cambios : '.$controlCambios=utf8_decode($_POST['controlCambios']);
+                        //// end
+                        '<br>';
+                        /////// datos para el que elaboro
+                        'segunda validación';
+                        '<br>';
+                        $fechaRevision=$_POST['fechaRevision'];
+                        '<br>';
+                        $comentarioRevision=utf8_decode($_POST['comentarioRevision']);
+                        //// end
+                    
+                        /////// datos para el que elaboro
+                        'tercera validación';
+                        '<br>';
+                        $fechaAprobacion=$_POST['fechaAprobacion'];
+                        '<br>';
+                        $comentarioAprobo=utf8_decode($_POST['comentarioAprobo']);
+                        '<br><b>';
+                        $validandoAlmacenamientoArrya;
+                        '</b><br>';
+                        
+                        if($validandoAlmacenamientoArrya == 'activosUsuarios'){ //echo 'No';
+                                                                    $quienElaboraDecode=json_decode($quienElabora);
+                                                                    if($quienElaboraDecode[0] == 'cargos'){ 
+                                                                        $longitud = count($quienElaboraDecode);
+                                                                        
+                                                                        for($i=1; $i<$longitud; $i++){
+                                                                            //saco el valor de cada elemento
+                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
+                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                            
+                                                                             'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
+                                                                        }            
+                                                                    }
+                                                                    
+                                                                    if($quienElaboraDecode[0] == 'usuarios'){ 
+                                                                        $longitud = count($quienElaboraDecode);
+                                                                        
+                                                                        for($i=1; $i<$longitud; $i++){
+                                                                            //saco el valor de cada elemento
+                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
+                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                            
+                                                                            'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
+                                                                        } 
+                                                                    }
+                                                                     $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
+                                                                    
+                                                                }
+                            
+                                                                    if($validandoAlmacenamientoArryaB == 'activosUsuariosB'){ //echo 'No';
+                                                                        $quienRevisadoDecode=json_decode($quienRevisa);
+                                                                        if($quienRevisadoDecode[0] == 'cargos'){ 
+                                                                            $longitud = count($quienRevisadoDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienRevisadoDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
+                                                                            }            
+                                                                        }
+                                                                        
+                                                                        if($quienRevisadoDecode[0] == 'usuarios'){ 
+                                                                            $longitud = count($quienRevisadoDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienRevisadoDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
+                                                                            } 
+                                                                        }
+                                                                        $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';
+                                                                    }
+                                                                    
+                                                                    if($validandoAlmacenamientoArryaC == 'activosUsuariosC'){ 
+                                                                        $quienApruebaDecode=json_decode($quienAprueba);
+                                                                        if($quienApruebaDecode[0] == 'cargos'){ 
+                                                                            $longitud = count($quienApruebaDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
+                                                                            }            
+                                                                        }
+                                                                        
+                                                                        if($quienApruebaDecode[0] == 'usuarios'){ 
+                                                                            $longitud = count($quienApruebaDecode);
+                                                                            
+                                                                            for($i=1; $i<$longitud; $i++){
+                                                                                //saco el valor de cada elemento
+                                                                                $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
+                                                                                $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
+                                                                                
+                                                                                'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
+                                                                            } 
+                                                                        }
+                                                                    /// END
                                             
-                            $cod = $rowC['codificacion'];
-                                                    
-                            if($cod == "-"){
-                                $codificacion =  $codificacion."-";
-                            }
-                                                
-                            if($cod == "/"){
-                                $codificacion =  $codificacion."/";
-                            }
-                                                    
-                            if($cod == " "){
-                                $codificacion =  $codificacion." ";
-                            }
-                                                    
-                            if($cod == "Proceso"){
-                                $codificacion =  $codificacion.$prefijoProceso;
-                            }
-                                                
-                            if($cod == "Tipo de documento"){
-                                $codificacion = $codificacion.$prefijoTipo;        
-                            }
-                                                    
-                            if($cod == "Consecutivo"){
-                                $codificacion = $codificacion.$consecutivo;        
-                            }
-                                                    
-                            if($cod == "Versión"){
-                                $codificacion = $codificacion.$version;        
-                            }
-                        }//Fin codificacion
-                        $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
-                        $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
-                        '<br>Nombre proceso: '.$nomProceso = $datosProceso['nombre'];
-                        $prefijoProceso = $datosProceso['prefijo']; 
-                    
-                        // '<br>Fecha de aprobación: '.$fechaAprobacion=date("Y:m:j h:i:s: A");
-
-                    /////// datos para el que elaboro
-                    'Siemre segunda ---- primera validación';
-                    '<br>';
-                    $fechaElaboracion=$_POST['fechaElaboracion'];
-                    '<br>';
-                    'control de cambios : '.$controlCambios=utf8_decode($_POST['controlCambios']);
-                    //// end
-                    '<br>';
-                    /////// datos para el que elaboro
-                    'segunda validación';
-                    '<br>';
-                    $fechaRevision=$_POST['fechaRevision'];
-                    '<br>';
-                    $comentarioRevision=utf8_decode($_POST['comentarioRevision']);
-                    //// end
-                
-                    /////// datos para el que elaboro
-                    'tercera validación';
-                    '<br>';
-                    $fechaAprobacion=$_POST['fechaAprobacion'];
-                    '<br>';
-                    $comentarioAprobo=utf8_decode($_POST['comentarioAprobo']);
-                    '<br><b>';
-                    $validandoAlmacenamientoArrya;
-                    '</b><br>';
-                    
-                    /*
-                    if($validandoAlmacenamientoArrya == 'activosUsuarios'){
+                                                                       
+                                                                        $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';
+                                                                        
+                                                                    }
+                                                                    
+                                                                    if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){ 
+                                                                        $nombreElaboro=utf8_decode($_POST['select_encargadoEE']);
+                                                                    }
+                                                                    if($validandoAlmacenamientoArryaB == 'retiradosUsuariosB'){
+                                                                        $nombreReviso=utf8_decode($_POST['select_encargadoRR']);
+                                                                    }
+                                                                    if($validandoAlmacenamientoArryaC == 'retiradosUsuariosC'){
+                                                                        $nombreAprobo=utf8_decode($_POST['select_encargadoAA']);
+                                                                    }
                         
-                        /// validar y traer el nombre del id para sacar la CC y enviar al control de cambios
+                            if($fechaElaboracion != NULL){ //$controlCambios
+                                //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$controlCambios','$nombreElaboro','$fechaElaboracion','Elaborador(a)')")or die(mysqli_error($mysqli));  
+                                $mysqli->query("UPDATE controlCambios SET comentario='$controlCambios', fecha='$fechaElaboracion', idUsuarioB='$nombreElaboro' WHERE idDocumento='$idSolicitud' AND rol='Elaborador(a)' ")or die(mysqli_error($mysqli));  
                         
-                        $quienElaboraDecode=json_decode($quienElabora);
-                            if($quienElaboraDecode[0] == 'cargos'){ 
-                                $longitud = count($quienElaboraDecode);
-                                
-                                for($i=1; $i<$longitud; $i++){
-                                    //saco el valor de cada elemento
-                                    $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
-                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                    
-                                    'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
-                                }            
                             }
-                            
-                            if($quienElaboraDecode[0] == 'usuarios'){ 
-                                $longitud = count($quienElaboraDecode);
-                                
-                                for($i=1; $i<$longitud; $i++){
-                                    //saco el valor de cada elemento
-                                    $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
-                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                    
-                                    'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
-                                } 
-                            }
-                            
-                            $quiennRevisadoDecode=json_decode($quienRevisa);
-                            if($quiennRevisadoDecode[0] == 'cargos'){ 
-                                $longitud = count($quiennRevisadoDecode);
-                                
-                                for($i=1; $i<$longitud; $i++){
-                                    //saco el valor de cada elemento
-                                    $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quiennRevisadoDecode[$i]'");
-                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                    
-                                    'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
-                                }            
-                            }
-                            
-                            if($quiennRevisadoDecode[0] == 'usuarios'){ 
-                                $longitud = count($quiennRevisadoDecode);
-                                
-                                for($i=1; $i<$longitud; $i++){
-                                    //saco el valor de cada elemento
-                                    $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quiennRevisadoDecode[$i]'");
-                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                    
-                                    'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
-                                } 
-                            }
-
-                            $quienApruebaDecode=json_decode($quienAprueba);
-                            if($quienApruebaDecode[0] == 'cargos'){ 
-                                $longitud = count($quienApruebaDecode);
-                                
-                                for($i=1; $i<$longitud; $i++){
-                                    //saco el valor de cada elemento
-                                    $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
-                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                    
-                                    'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
-                                }            
-                            }
-                            
-                            if($quienApruebaDecode[0] == 'usuarios'){ 
-                                $longitud = count($quienApruebaDecode);
-                                
-                                for($i=1; $i<$longitud; $i++){
-                                    //saco el valor de cada elemento
-                                    $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
-                                    $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                    
-                                    'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
-                                } 
-                            }
-                        /// END
-
-                        $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
-                        $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';//$_POST['nombreReviso']; 
-                        $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';//$_POST['nombreAprobo'];
-                    }
-                    if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){
-                        $nombreElaboro=utf8_decode($quienElabora);//$_POST['nombreElaboro']);
-                        $nombreReviso=utf8_decode($quienRevisa);//$_POST['nombreReviso']);
-                        $nombreAprobo=utf8_decode($quienAprueba);//$_POST['nombreAprobo']);
-                    }
-                    */
-                    
-                                                            if($validandoAlmacenamientoArrya == 'activosUsuarios'){ //echo 'No';
-                                                                $quienElaboraDecode=json_decode($quienElabora);
-                                                                if($quienElaboraDecode[0] == 'cargos'){ 
-                                                                    $longitud = count($quienElaboraDecode);
-                                                                    
-                                                                    for($i=1; $i<$longitud; $i++){
-                                                                        //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
-                                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                        
-                                                                         'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
-                                                                    }            
-                                                                }
-                                                                
-                                                                if($quienElaboraDecode[0] == 'usuarios'){ 
-                                                                    $longitud = count($quienElaboraDecode);
-                                                                    
-                                                                    for($i=1; $i<$longitud; $i++){
-                                                                        //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
-                                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                        
-                                                                        'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
-                                                                    } 
-                                                                }
-                                                                 $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
-                                                                
-                                                            }
+                            if($fechaRevision != NULL){ //$comentarioRevision
+                                //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioRevision','$nombreReviso','$fechaRevision','Revisor(a)')")or die(mysqli_error($mysqli));  
+                                $mysqli->query("UPDATE controlCambios SET comentario='$comentarioRevision', fecha='$fechaRevision', idUsuarioB='$nombreReviso' WHERE idDocumento='$idSolicitud' AND rol='Revisor(a)' ")or die(mysqli_error($mysqli));  
                         
-                                                                if($validandoAlmacenamientoArryaB == 'activosUsuariosB'){ //echo 'No';
-                                                                    $quienRevisadoDecode=json_decode($quienRevisa);
-                                                                    if($quienRevisadoDecode[0] == 'cargos'){ 
-                                                                        $longitud = count($quienRevisadoDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienRevisadoDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
-                                                                        }            
-                                                                    }
-                                                                    
-                                                                    if($quienRevisadoDecode[0] == 'usuarios'){ 
-                                                                        $longitud = count($quienRevisadoDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienRevisadoDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
-                                                                        } 
-                                                                    }
-                                                                    $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';
-                                                                }
-                                                                
-                                                                if($validandoAlmacenamientoArryaC == 'activosUsuariosC'){ 
-                                                                    $quienApruebaDecode=json_decode($quienAprueba);
-                                                                    if($quienApruebaDecode[0] == 'cargos'){ 
-                                                                        $longitud = count($quienApruebaDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
-                                                                        }            
-                                                                    }
-                                                                    
-                                                                    if($quienApruebaDecode[0] == 'usuarios'){ 
-                                                                        $longitud = count($quienApruebaDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
-                                                                        } 
-                                                                    }
-                                                                /// END
+                            }
+                            if($fechaAprobacion != NULL){ //$comentarioAprobo
+                                //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioAprobo','$nombreAprobo','$fechaAprobacion','Aprobador(a)')")or die(mysqli_error($mysqli));  
+                                $mysqli->query("UPDATE controlCambios SET comentario='$comentarioAprobo', fecha='$fechaAprobacion', idUsuarioB='$nombreAprobo' WHERE idDocumento='$idSolicitud' AND rol='Aprobador(a)' ")or die(mysqli_error($mysqli));  
+                        
+                            }
+                            
+                            'Fechaaaaaaaa: '.$fecha = date("Ymjhis");
+    
+                            $rol = "Encargado(a) solicitud";
+                        
+                            '1: '.$nombrePDF = $_FILES['archivopdf']['name']; 
+                            $enviarNombrePdf=$nombrePDF;
+                            $rutaPDF =$_FILES['archivopdf']['tmp_name']; 
+                            '<br>2: '.$nombreOtro =$_FILES['archivootro']['name'];
+                            $rutaOtro =$_FILES['archivootro']['tmp_name'];
+    
+                            if(!file_exists('../../archivos/documentos/')){
+                                mkdir('../../archivos/documentos',0777,true);
+                                if(file_exists('../../archivos/documentos/')){
+                                    if(move_uploaded_file($rutaPDF, '../../archivos/documentos/'.$fecha.$nombrePDF)){
                                         
-                                                                   
-                                                                    $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';
-                                                                    
-                                                                }
-                                                                
-                                                                if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){ 
-                                                                    $nombreElaboro=utf8_decode($_POST['select_encargadoEE']);
-                                                                }
-                                                                if($validandoAlmacenamientoArryaB == 'retiradosUsuariosB'){
-                                                                    $nombreReviso=utf8_decode($_POST['select_encargadoRR']);
-                                                                }
-                                                                if($validandoAlmacenamientoArryaC == 'retiradosUsuariosC'){
-                                                                    $nombreAprobo=utf8_decode($_POST['select_encargadoAA']);
-                                                                }
-                    
-                        if($fechaElaboracion != NULL){ //$controlCambios
-                            //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$controlCambios','$nombreElaboro','$fechaElaboracion','Elaborador(a)')")or die(mysqli_error($mysqli));  
-                            $mysqli->query("UPDATE controlCambios SET comentario='$controlCambios', fecha='$fechaElaboracion', idUsuarioB='$nombreElaboro' WHERE idDocumento='$idSolicitud' AND rol='Elaborador(a)' ")or die(mysqli_error($mysqli));  
-                    
-                        }
-                        if($fechaRevision != NULL){ //$comentarioRevision
-                            //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioRevision','$nombreReviso','$fechaRevision','Revisor(a)')")or die(mysqli_error($mysqli));  
-                            $mysqli->query("UPDATE controlCambios SET comentario='$comentarioRevision', fecha='$fechaRevision', idUsuarioB='$nombreReviso' WHERE idDocumento='$idSolicitud' AND rol='Revisor(a)' ")or die(mysqli_error($mysqli));  
-                    
-                        }
-                        if($fechaAprobacion != NULL){ //$comentarioAprobo
-                            //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioAprobo','$nombreAprobo','$fechaAprobacion','Aprobador(a)')")or die(mysqli_error($mysqli));  
-                            $mysqli->query("UPDATE controlCambios SET comentario='$comentarioAprobo', fecha='$fechaAprobacion', idUsuarioB='$nombreAprobo' WHERE idDocumento='$idSolicitud' AND rol='Aprobador(a)' ")or die(mysqli_error($mysqli));  
-                    
-                        }
-                        
-                        'Fechaaaaaaaa: '.$fecha = date("Ymjhis");
-
-                        $rol = "Encargado(a) solicitud";
-                    
-                        '1: '.$nombrePDF = $_FILES['archivopdf']['name']; 
-                        $rutaPDF =$_FILES['archivopdf']['tmp_name']; 
-                        '<br>2: '.$nombreOtro =$_FILES['archivootro']['name'];
-                        $rutaOtro =$_FILES['archivootro']['tmp_name'];
-
-                        if(!file_exists('../../archivos/documentos/')){
-                            mkdir('../../archivos/documentos',0777,true);
-                            if(file_exists('../../archivos/documentos/')){
+                                    }else{
+                                        //echo "Archivo no se pudo guardar";
+                                    }
+                                }
+                            }else{
                                 if(move_uploaded_file($rutaPDF, '../../archivos/documentos/'.$fecha.$nombrePDF)){
-                                    
+                                
                                 }else{
                                     //echo "Archivo no se pudo guardar";
                                 }
                             }
-                        }else{
-                            if(move_uploaded_file($rutaPDF, '../../archivos/documentos/'.$fecha.$nombrePDF)){
                             
+                            if(!file_exists('../../archivos/documentos/')){
+                                mkdir('../../archivos/documentos',0777,true);
+                                if(file_exists('../../archivos/documentos/')){
+                                    if(move_uploaded_file($rutaOtro, '../../archivos/documentos/'.$fecha.$nombreOtro)){
+                                        //echo "Archivo guardado con exito";
+                                        
+                                    }else{
+                                        //echo "Archivo no se pudo guardar";
+                                    }
+                                }
                             }else{
-                                //echo "Archivo no se pudo guardar";
-                            }
-                        }
-                        
-                        if(!file_exists('../../archivos/documentos/')){
-                            mkdir('../../archivos/documentos',0777,true);
-                            if(file_exists('../../archivos/documentos/')){
                                 if(move_uploaded_file($rutaOtro, '../../archivos/documentos/'.$fecha.$nombreOtro)){
                                     //echo "Archivo guardado con exito";
-                                    
                                 }else{
                                     //echo "Archivo no se pudo guardar";
                                 }
                             }
-                        }else{
-                            if(move_uploaded_file($rutaOtro, '../../archivos/documentos/'.$fecha.$nombreOtro)){
-                                //echo "Archivo guardado con exito";
-                            }else{
-                                //echo "Archivo no se pudo guardar";
-                            }
-                        }
-                        $nombrePDFf=$fecha.utf8_decode($nombrePDF);
-                        '<br>';
-                        $nombreOtroo=$fecha.utf8_decode($nombreOtro); //echo 'Muechee pues !';
+                            'PDFFFFF: '.$nombrePDFf=$fecha.utf8_decode($nombrePDF);
+                            '<br>';
+                            $nombreOtroo=$fecha.utf8_decode($nombreOtro);
+    
                         if($nombrePDF  != NULL){
                             /*
                             `codificacion`='$codificacion',
@@ -3083,10 +3510,10 @@ if(isset($_POST['actualiza'])){
     
                         if($nombrePDF != NULL && $nombreOtro != NULL){
                             /*
-                             `codificacion`='$codificacion',
+                            `codificacion`='$codificacion',
                             */
                             $mysqli->query("UPDATE documento SET 
-                           
+                            
                             `tipoCodificacion`='$radCodificacion',
                             `consecutivoTemporal`='$consecutivo',
                             `versionTemporal`='$version',
@@ -3113,539 +3540,134 @@ if(isset($_POST['actualiza'])){
                             `nombreOtro`='$nombreOtroo'
                             WHERE id='$idDocumento' ")or die(mysqli_error($mysqli));
                         }
-                /*
-                    $mysqli->query("UPDATE documento SET 
-                    `codificacion`='$codificacion',
-                    `tipoCodificacion`='$radCodificacion',
-                    `consecutivo`='$consecutivo',
-                    `version`='$version',
-                    `nombres`='$documento',
-                    `proceso`='$proceso',
-                    `nombreProceso`='$nomProceso',
-                    `norma`='$norma',
-                    `tipo_documento`='$tipoDocumento',
-                    `ubicacion`='$ubicacion',
-                    `elabora`='$quienElabora',
-                    `revisa`='$quienRevisa',
-                    `aprueba`='$quienAprueba',
-                    `documento_externo`='$documentosExternos',
-                    `definiciones`='$definiciones',
-                    `archivo_gestion`='$archivo_gestion',
-                    `archivo_central`='$archivo_central',
-                    `archivo_historico`='$archivo_historico',
-                    `disposicion_documental`='$disposicion_documental',
-                    `responsable_disposicion`='$escargadoDispo',
-                    `usuario_aprovacion_reg`='$select_encargadoAR',
-                    `mesesRevision`='$mesesRevision',
-                    `id_solicitud`='$idSolicitud',
-                    `nombrePDF`='$nombrePDFf',
-                    `nombreOtro`='$nombreOtroo'
-                    WHERE id='$idDocumento' ")or die(mysqli_error($mysqli));
-                 */               
-                }
-
-
-            }else{
-                
-                $ruta = utf8_decode('archivos/solicitudes/'.$archivoNombre);
-                
-                $consultandoDocumento=$mysqli->query("SELECT * FROM documento WHERE id='$idDocumento' ");
-                $extraerConsultaDocumento=$consultandoDocumento->fetch_array(MYSQLI_ASSOC);
-                
-                if($archivoNombre != NULL){
-                    $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
-                    nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento', documento='$ruta' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
-                }else{
-                    $mysqli->query("UPDATE solicitudDocumentos SET nombreEncargado='$encargadoTexto',  tipoDocumento='$tipoDocumento', encargadoAprobar='$encargado', 
-                    nombreDocumento='$documento', nombreDocumento2='$documento', proceso='$proceso', solicitud='$documento' WHERE id='".$extraerConsultaDocumento['id_solicitud']."' ")or die(mysqli_error($mysqli));
-                }
-                
-
-                $queryId = $mysqli->query("SELECT * FROM `solicitudDocumentos` WHERE id = '".$extraerConsultaDocumento['id_solicitud']."' ORDER BY id DESC");
-                $datos = $queryId->fetch_array(MYSQLI_ASSOC);
-                '<br>ID documento: '.$idSolicitud=$datos['id'];
-                
-                if($datos != NULL){
-                    //VERSION Y CONSECUTIVO  
-                        $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
-                        $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
-                        //$nomProceso = $datosProceso['nombre'];
-                        $prefijoProceso = $datosProceso['prefijo'];
                         
-                    
-                        //TIPO DE DOCUMENTO 
-                        $queryDocumentos = $mysqli->query("SELECT nombre, prefijo from tipoDocumento WHERE id = '".$tipoDocumento."' ");
-                        $datosDocumento = $queryDocumentos->fetch_array(MYSQLI_ASSOC);
-                        //$tipoDocumento = $datosDocumento['nombre'];
-                        $prefijoTipo = $datosDocumento['prefijo']; 
-                    //VERSION Y CONSECUTIVO                    
-                    //Consecutivo y version cuando son definidos por el cliente
-                    $queryVersiones = $mysqli->query("SELECT * FROM versionamiento WHERE idProceso = '$proceso' AND idTipoDocumento = '$tipoDocumento'");
-                    $datosVersiones = $queryVersiones->fetch_assoc();
-                    
-                    $versionInicial = $datosVersiones['versionInicial'];
-                    $consecutivoIncial = $datosVersiones['consecutivoInicial'];
-                    
-                    $rol = $_POST['rol'];
-                    
-                    $radCodificacion = 'manual';
-
-                    if($radCodificacion == 'manual'){
-                        "<br>MANUAL<br>";
-                        '<br>Versión: '.$version = $version;
-                        '<br>Consecutivo: '.$consecutivo = $consecutivo;
-                    }
-                        //CODIFICACION
-                        $codificacion = "";
-                        $dataCodificacion = $mysqli->query("SELECT * FROM codificacion ORDER BY id")or die(mysqli_error());
-                        while($rowC = $dataCodificacion->fetch_assoc()){
-                                            
-                            $cod = $rowC['codificacion'];
-                                                    
-                            if($cod == "-"){
-                                $codificacion =  $codificacion."-";
-                            }
-                                                
-                            if($cod == "/"){
-                                $codificacion =  $codificacion."/";
-                            }
-                                                    
-                            if($cod == " "){
-                                $codificacion =  $codificacion." ";
-                            }
-                                                    
-                            if($cod == "Proceso"){
-                                $codificacion =  $codificacion.$prefijoProceso;
-                            }
-                                                
-                            if($cod == "Tipo de documento"){
-                                $codificacion = $codificacion.$prefijoTipo;        
-                            }
-                                                    
-                            if($cod == "Consecutivo"){
-                                $codificacion = $codificacion.$consecutivo;        
-                            }
-                                                    
-                            if($cod == "Versión"){
-                                $codificacion = $codificacion.$version;        
-                            }
-                        }//Fin codificacion
-                        $queryProcesos = $mysqli->query("SELECT nombre,prefijo from procesos WHERE id = '".$proceso."' ");
-                        $datosProceso = $queryProcesos->fetch_array(MYSQLI_ASSOC);
-                        '<br>Nombre proceso: '.$nomProceso = $datosProceso['nombre'];
-                        $prefijoProceso = $datosProceso['prefijo']; 
-                    
-                        // '<br>Fecha de aprobación: '.$fechaAprobacion=date("Y:m:j h:i:s: A");
-
-                    /////// datos para el que elaboro
-                    'Siemre segunda ---- primera validación';
-                    '<br>';
-                    $fechaElaboracion=$_POST['fechaElaboracion'];
-                    '<br>';
-                    'control de cambios : '.$controlCambios=utf8_decode($_POST['controlCambios']);
-                    //// end
-                    '<br>';
-                    /////// datos para el que elaboro
-                    'segunda validación';
-                    '<br>';
-                    $fechaRevision=$_POST['fechaRevision'];
-                    '<br>';
-                    $comentarioRevision=utf8_decode($_POST['comentarioRevision']);
-                    //// end
-                
-                    /////// datos para el que elaboro
-                    'tercera validación';
-                    '<br>';
-                    $fechaAprobacion=$_POST['fechaAprobacion'];
-                    '<br>';
-                    $comentarioAprobo=utf8_decode($_POST['comentarioAprobo']);
-                    '<br><b>';
-                    $validandoAlmacenamientoArrya;
-                    '</b><br>';
-                    
-                    if($validandoAlmacenamientoArrya == 'activosUsuarios'){ //echo 'No';
-                                                                $quienElaboraDecode=json_decode($quienElabora);
-                                                                if($quienElaboraDecode[0] == 'cargos'){ 
-                                                                    $longitud = count($quienElaboraDecode);
-                                                                    
-                                                                    for($i=1; $i<$longitud; $i++){
-                                                                        //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienElaboraDecode[$i]'");
-                                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                        
-                                                                         'Cargo: '.$enviarDocumentoControlCambiosElaborado=$nombres['nombreCargos'];
-                                                                    }            
-                                                                }
-                                                                
-                                                                if($quienElaboraDecode[0] == 'usuarios'){ 
-                                                                    $longitud = count($quienElaboraDecode);
-                                                                    
-                                                                    for($i=1; $i<$longitud; $i++){
-                                                                        //saco el valor de cada elemento
-                                                                        $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienElaboraDecode[$i]'");
-                                                                        $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                        
-                                                                        'Usuario: '.$enviarDocumentoControlCambiosElaborado=$nombres['cedula'];
-                                                                    } 
-                                                                }
-                                                                 $nombreElaboro=$enviarDocumentoControlCambiosElaborado; '<br>';
-                                                                
-                                                            }
-                        
-                                                                if($validandoAlmacenamientoArryaB == 'activosUsuariosB'){ //echo 'No';
-                                                                    $quienRevisadoDecode=json_decode($quienRevisa);
-                                                                    if($quienRevisadoDecode[0] == 'cargos'){ 
-                                                                        $longitud = count($quienRevisadoDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienRevisadoDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Cargo: '.$enviarDocumentoControlCambiosRevisado=$nombres['nombreCargos'];
-                                                                        }            
-                                                                    }
-                                                                    
-                                                                    if($quienRevisadoDecode[0] == 'usuarios'){ 
-                                                                        $longitud = count($quienRevisadoDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienRevisadoDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Usuario: '.$enviarDocumentoControlCambiosRevisado=$nombres['cedula'];
-                                                                        } 
-                                                                    }
-                                                                    $nombreReviso=$enviarDocumentoControlCambiosRevisado; '<br>';
-                                                                }
-                                                                
-                                                                if($validandoAlmacenamientoArryaC == 'activosUsuariosC'){ 
-                                                                    $quienApruebaDecode=json_decode($quienAprueba);
-                                                                    if($quienApruebaDecode[0] == 'cargos'){ 
-                                                                        $longitud = count($quienApruebaDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT nombreCargos FROM cargos WHERE id_cargos = '$quienApruebaDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Cargo: '.$enviarDocumentoControlCambiosAprueba=$nombres['nombreCargos'];
-                                                                        }            
-                                                                    }
-                                                                    
-                                                                    if($quienApruebaDecode[0] == 'usuarios'){ 
-                                                                        $longitud = count($quienApruebaDecode);
-                                                                        
-                                                                        for($i=1; $i<$longitud; $i++){
-                                                                            //saco el valor de cada elemento
-                                                                            $queryNombres = $mysqli->query("SELECT * FROM usuario WHERE id = '$quienApruebaDecode[$i]'");
-                                                                            $nombres = $queryNombres->fetch_array(MYSQLI_ASSOC); 
-                                                                            
-                                                                            'Usuario: '.$enviarDocumentoControlCambiosAprueba=$nombres['cedula'];
-                                                                        } 
-                                                                    }
-                                                                /// END
-                                        
-                                                                   
-                                                                    $nombreAprobo=$enviarDocumentoControlCambiosAprueba; '<br>';
-                                                                    
-                                                                }
-                                                                
-                                                                if($validandoAlmacenamientoArrya == 'retiradosUsuarios'){ 
-                                                                    $nombreElaboro=utf8_decode($_POST['select_encargadoEE']);
-                                                                }
-                                                                if($validandoAlmacenamientoArryaB == 'retiradosUsuariosB'){
-                                                                    $nombreReviso=utf8_decode($_POST['select_encargadoRR']);
-                                                                }
-                                                                if($validandoAlmacenamientoArryaC == 'retiradosUsuariosC'){
-                                                                    $nombreAprobo=utf8_decode($_POST['select_encargadoAA']);
-                                                                }
-                    
-                        if($fechaElaboracion != NULL){ //$controlCambios
-                            //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$controlCambios','$nombreElaboro','$fechaElaboracion','Elaborador(a)')")or die(mysqli_error($mysqli));  
-                            $mysqli->query("UPDATE controlCambios SET comentario='$controlCambios', fecha='$fechaElaboracion', idUsuarioB='$nombreElaboro' WHERE idDocumento='$idSolicitud' AND rol='Elaborador(a)' ")or die(mysqli_error($mysqli));  
-                    
-                        }
-                        if($fechaRevision != NULL){ //$comentarioRevision
-                            //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioRevision','$nombreReviso','$fechaRevision','Revisor(a)')")or die(mysqli_error($mysqli));  
-                            $mysqli->query("UPDATE controlCambios SET comentario='$comentarioRevision', fecha='$fechaRevision', idUsuarioB='$nombreReviso' WHERE idDocumento='$idSolicitud' AND rol='Revisor(a)' ")or die(mysqli_error($mysqli));  
-                    
-                        }
-                        if($fechaAprobacion != NULL){ //$comentarioAprobo
-                            //$mysqli->query("INSERT INTO controlCambios (idDocumento, comentario, idUsuarioB, fecha, rol) VALUES('$idSolicitud','$comentarioAprobo','$nombreAprobo','$fechaAprobacion','Aprobador(a)')")or die(mysqli_error($mysqli));  
-                            $mysqli->query("UPDATE controlCambios SET comentario='$comentarioAprobo', fecha='$fechaAprobacion', idUsuarioB='$nombreAprobo' WHERE idDocumento='$idSolicitud' AND rol='Aprobador(a)' ")or die(mysqli_error($mysqli));  
-                    
-                        }
-                        
-                        'Fechaaaaaaaa: '.$fecha = date("Ymjhis");
-
-                        $rol = "Encargado(a) solicitud";
-                    
-                        '1: '.$nombrePDF = $_FILES['archivopdf']['name']; 
-                        $enviarNombrePdf=$nombrePDF;
-                        $rutaPDF =$_FILES['archivopdf']['tmp_name']; 
-                        '<br>2: '.$nombreOtro =$_FILES['archivootro']['name'];
-                        $rutaOtro =$_FILES['archivootro']['tmp_name'];
-
-                        if(!file_exists('../../archivos/documentos/')){
-                            mkdir('../../archivos/documentos',0777,true);
-                            if(file_exists('../../archivos/documentos/')){
-                                if(move_uploaded_file($rutaPDF, '../../archivos/documentos/'.$fecha.$nombrePDF)){
                                     
-                                }else{
-                                    //echo "Archivo no se pudo guardar";
-                                }
-                            }
-                        }else{
-                            if(move_uploaded_file($rutaPDF, '../../archivos/documentos/'.$fecha.$nombrePDF)){
-                            
-                            }else{
-                                //echo "Archivo no se pudo guardar";
-                            }
-                        }
-                        
-                        if(!file_exists('../../archivos/documentos/')){
-                            mkdir('../../archivos/documentos',0777,true);
-                            if(file_exists('../../archivos/documentos/')){
-                                if(move_uploaded_file($rutaOtro, '../../archivos/documentos/'.$fecha.$nombreOtro)){
-                                    //echo "Archivo guardado con exito";
-                                    
-                                }else{
-                                    //echo "Archivo no se pudo guardar";
-                                }
-                            }
-                        }else{
-                            if(move_uploaded_file($rutaOtro, '../../archivos/documentos/'.$fecha.$nombreOtro)){
-                                //echo "Archivo guardado con exito";
-                            }else{
-                                //echo "Archivo no se pudo guardar";
-                            }
-                        }
-                        'PDFFFFF: '.$nombrePDFf=$fecha.utf8_decode($nombrePDF);
-                        '<br>';
-                        $nombreOtroo=$fecha.utf8_decode($nombreOtro);
-
-                    if($nombrePDF  != NULL){
-                        /*
-                        `codificacion`='$codificacion',
-                        */
-                        $mysqli->query("UPDATE documento SET 
-                        
-                        `tipoCodificacion`='$radCodificacion',
-                        `consecutivoTemporal`='$consecutivo',
-                        `versionTemporal`='$version',
-                        `nombres`='$documento',
-                        `proceso`='$proceso',
-                        `nombreProceso`='$nomProceso',
-                        `norma`='$norma',
-                        `tipo_documento`='$tipoDocumento',
-                        `ubicacion`='$ubicacion',
-                        `elabora`='$quienElabora',
-                        `revisa`='$quienRevisa',
-                        `aprueba`='$quienAprueba',
-                        `documento_externo`='$documentosExternos',
-                        `definiciones`='$definiciones',
-                        `archivo_gestion`='$archivo_gestion',
-                        `archivo_central`='$archivo_central',
-                        `archivo_historico`='$archivo_historico',
-                        `disposicion_documental`='$disposicion_documental',
-                        `responsable_disposicion`='$escargadoDispo',
-                        `usuario_aprovacion_reg`='$select_encargadoAR',
-                        `mesesRevision`='$mesesRevision',
-                        `id_solicitud`='$idSolicitud',
-                        `nombrePDF`='$nombrePDFf'
-                        
-                        WHERE id='$idDocumento' ")or die(mysqli_error($mysqli)); //`nombreOtro`='$nombreOtroo'
                     }
-                    if($nombreOtro  != NULL){
-                        /*
-                        `codificacion`='$codificacion',
-                        */
-                        $mysqli->query("UPDATE documento SET 
-                        
-                        `tipoCodificacion`='$radCodificacion',
-                        `consecutivoTemporal`='$consecutivo',
-                        `versionTemporal`='$version',
-                        `nombres`='$documento',
-                        `proceso`='$proceso',
-                        `nombreProceso`='$nomProceso',
-                        `norma`='$norma',
-                        `tipo_documento`='$tipoDocumento',
-                        `ubicacion`='$ubicacion',
-                        `elabora`='$quienElabora',
-                        `revisa`='$quienRevisa',
-                        `aprueba`='$quienAprueba',
-                        `documento_externo`='$documentosExternos',
-                        `definiciones`='$definiciones',
-                        `archivo_gestion`='$archivo_gestion',
-                        `archivo_central`='$archivo_central',
-                        `archivo_historico`='$archivo_historico',
-                        `disposicion_documental`='$disposicion_documental',
-                        `responsable_disposicion`='$escargadoDispo',
-                        `usuario_aprovacion_reg`='$select_encargadoAR',
-                        `mesesRevision`='$mesesRevision',
-                        `id_solicitud`='$idSolicitud',
-                        `nombreOtro`='$nombreOtroo'
-                        
-                        WHERE id='$idDocumento' ")or die(mysqli_error($mysqli)); //`nombreOtro`='$nombreOtroo'
-                    }
-
-                    if($nombrePDF != NULL && $nombreOtro != NULL){
-                        /*
-                        `codificacion`='$codificacion',
-                        */
-                        $mysqli->query("UPDATE documento SET 
-                        
-                        `tipoCodificacion`='$radCodificacion',
-                        `consecutivoTemporal`='$consecutivo',
-                        `versionTemporal`='$version',
-                        `nombres`='$documento',
-                        `proceso`='$proceso',
-                        `nombreProceso`='$nomProceso',
-                        `norma`='$norma',
-                        `tipo_documento`='$tipoDocumento',
-                        `ubicacion`='$ubicacion',
-                        `elabora`='$quienElabora',
-                        `revisa`='$quienRevisa',
-                        `aprueba`='$quienAprueba',
-                        `documento_externo`='$documentosExternos',
-                        `definiciones`='$definiciones',
-                        `archivo_gestion`='$archivo_gestion',
-                        `archivo_central`='$archivo_central',
-                        `archivo_historico`='$archivo_historico',
-                        `disposicion_documental`='$disposicion_documental',
-                        `responsable_disposicion`='$escargadoDispo',
-                        `usuario_aprovacion_reg`='$select_encargadoAR',
-                        `mesesRevision`='$mesesRevision',
-                        `id_solicitud`='$idSolicitud',
-                        `nombrePDF`='$nombrePDFf',
-                        `nombreOtro`='$nombreOtroo'
-                        WHERE id='$idDocumento' ")or die(mysqli_error($mysqli));
-                    }
-                    
-                                
-                }
-
-
-                   
-            }
-
-        }
-
-    }
-
-
-
-
- ///// validamos los documentos para verificar que estén en orden, en caso contrario mandamos la alerta
-                                                        $preguntadoValidacion=$mysqli->query("SELECT * FROM documento WHERE  id='$idDocumento' ");
-                                                		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
-                                                		    ' - '.$documentoExtraidoPdf=utf8_encode($extraerPreguntaValidacion['nombrePDF']);
-                                                		    '<br> - '.$documentoExtraidoOtro=utf8_encode($extraerPreguntaValidacion['nombreOtro']);
-                                                		    
-                                                		  '<br>';
-                                                		  '<br>';
-        		                                        $carpeta="../../archivos/documentos/";
-                                                        $ruta="/".$carpeta."/";
-                                                        $directorio=opendir($carpeta);
-                                                        //recoger los  datos
-                                                        $datos=array();
-                                                        $conteoArchivosB=0;
-                                                        $conteoArchivosB2=0;
-                                                        while ($archivo = readdir($directorio)) { 
-                                                          if(($archivo != '.')&&($archivo != '..')){
-                                                             
-                                                            if($documentoExtraidoPdf == $datos[]=$archivo){
-                                                                $conteoArchivosB++;
-                                                                 $datos[]=$archivo;  '<br>';
-                                                            }
-                                                            if($documentoExtraidoOtro == $datos[]=$archivo){
-                                                                $conteoArchivosB2++;
-                                                                 $datos[]=$archivo;  '<br>';
-                                                            }
-                                                             
-                                                             
-                                                          } 
-                                                        }
-                                                        closedir($directorio);
-                                                        
-                                                        /// validamos que existe registro para validar cantidades de archivos
-                                                        if($documentoExtraidoPdf != NULL && $documentoExtraidoOtro != NULL){
-                                                            //echo 'existe los 2';
-                                                        }
-                                                        
-                                                        if($documentoExtraidoPdf != NULL && $documentoExtraidoOtro == NULL){
-                                                            //echo 'viene vacio otro';
-                                                            $conteoArchivosB2=1; // cuando viene en vacio el editable, mandamos 1 para no activar la alerta, ya que debe verificar que el archivo está dañado o no
-                                                        }
-                                                        if($documentoExtraidoPdf == NULL && $documentoExtraidoOtro != NULL){
-                                                            //echo 'viene vacio pdf';
-                                                            $conteoArchivosB=1; // cuando viene en vacio el editable, mandamos 1 para no activar la alerta, ya que debe verificar que el archivo está dañado o no
-                                                        }
-                                                        
-                                                        
-                                                        if($conteoArchivosB > 0 && $conteoArchivosB2 > 0){
-                                                           $documentoHabilitado2='1'; 
-                                                        }else{
-                                                           $documentoHabilitado2='no coincide';
-                                                        }
-                                                         '<br>B: '.$documentoHabilitado2;
-                                                        ///// END
-     
-    	                                                    
-             if( $_FILES['archivopdf']['name'] == NULL && $_FILES['archivootro']['name'] == NULL){  /// si no se suben documentos, no debe activar la alerta
-                 ?>
-                                                            <script> 
-                                                                 window.onload=function(){
-                                                                   document.forms["miformulario"].submit();
-                                                                 }
-                                                            </script>
-                                                             
-                                                            <form name="miformulario" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
-                                                                <!--<input type="submit" value="enviar registro">-->
-                                                            </form> 
-                                                        <?php
-             }else{
-                                            if($documentoHabilitado2 == 1){
-                                              
-                                            ?>
-                                                            <script> 
-                                                                 window.onload=function(){
-                                                                   document.forms["miformulario"].submit();
-                                                                 }
-                                                            </script>
-                                                             
-                                                            <form name="miformulario" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
-                                                                <!--<input type="submit" value="enviar registro">-->
-                                                            </form> 
-                                                        <?php
-                                            }else{
-                                            //echo '<br>Alerta';
-                                            ?>
-                                                <script> 
-                                                     window.onload=function(){
-                                                       document.forms["miformulario"].submit();
-                                                     }
-                                                </script>
-                                                 
-                                                <form name="miformulario" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
-                                                    <input name="alertaDocumento" value="1" type="hidden">
-                                                    <input type="hidden" name="enviarIdDocumento" value="<?php echo $idDocumento;?>">
-                                                    <input type="hidden" name="enviarIdDocumentoControl" value="<?php echo $_POST['enviarIdDocumentoControl'];?>">
-                                                    <input type="hidden" name="editarDocumentoMasivo" value="1">
-                                                    <!-- <input type="submit" value="enviar alerta"> -->
-                                                </form> 
-                                            <?php    
-                                            }
-             }                                         
-                                                        
-                                                        
-                                           
-                        
-
     
-    }
+    
+                       
+                }
+    
+            }
+    
+        }
+    
+    
+    
+    
+     ///// validamos los documentos para verificar que estén en orden, en caso contrario mandamos la alerta
+                                                            $preguntadoValidacion=$mysqli->query("SELECT * FROM documento WHERE  id='$idDocumento' ");
+                                                    		$extraerPreguntaValidacion=$preguntadoValidacion->fetch_array(MYSQLI_ASSOC);
+                                                    		    ' - '.$documentoExtraidoPdf=utf8_encode($extraerPreguntaValidacion['nombrePDF']);
+                                                    		    '<br> - '.$documentoExtraidoOtro=utf8_encode($extraerPreguntaValidacion['nombreOtro']);
+                                                    		    
+                                                    		  '<br>';
+                                                    		  '<br>';
+            		                                        $carpeta="../../archivos/documentos/";
+                                                            $ruta="/".$carpeta."/";
+                                                            $directorio=opendir($carpeta);
+                                                            //recoger los  datos
+                                                            $datos=array();
+                                                            $conteoArchivosB=0;
+                                                            $conteoArchivosB2=0;
+                                                            while ($archivo = readdir($directorio)) { 
+                                                              if(($archivo != '.')&&($archivo != '..')){
+                                                                 
+                                                                if($documentoExtraidoPdf == $datos[]=$archivo){
+                                                                    $conteoArchivosB++;
+                                                                     $datos[]=$archivo;  '<br>';
+                                                                }
+                                                                if($documentoExtraidoOtro == $datos[]=$archivo){
+                                                                    $conteoArchivosB2++;
+                                                                     $datos[]=$archivo;  '<br>';
+                                                                }
+                                                                 
+                                                                 
+                                                              } 
+                                                            }
+                                                            closedir($directorio);
+                                                            
+                                                            /// validamos que existe registro para validar cantidades de archivos
+                                                            if($documentoExtraidoPdf != NULL && $documentoExtraidoOtro != NULL){
+                                                                //echo 'existe los 2';
+                                                            }
+                                                            
+                                                            if($documentoExtraidoPdf != NULL && $documentoExtraidoOtro == NULL){
+                                                                //echo 'viene vacio otro';
+                                                                $conteoArchivosB2=1; // cuando viene en vacio el editable, mandamos 1 para no activar la alerta, ya que debe verificar que el archivo está dañado o no
+                                                            }
+                                                            if($documentoExtraidoPdf == NULL && $documentoExtraidoOtro != NULL){
+                                                                //echo 'viene vacio pdf';
+                                                                $conteoArchivosB=1; // cuando viene en vacio el editable, mandamos 1 para no activar la alerta, ya que debe verificar que el archivo está dañado o no
+                                                            }
+                                                            
+                                                            
+                                                            if($conteoArchivosB > 0 && $conteoArchivosB2 > 0){
+                                                               $documentoHabilitado2='1'; 
+                                                            }else{
+                                                               $documentoHabilitado2='no coincide';
+                                                            }
+                                                             '<br>B: '.$documentoHabilitado2;
+                                                            ///// END
+         
+        	                                                    
+                 if( $_FILES['archivopdf']['name'] == NULL && $_FILES['archivootro']['name'] == NULL){  /// si no se suben documentos, no debe activar la alerta
+                     ?>
+                                                                <script> 
+                                                                     window.onload=function(){
+                                                                       document.forms["miformulario"].submit();
+                                                                     }
+                                                                </script>
+                                                                 
+                                                                <form name="miformulario" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                                                                    <!--<input type="submit" value="enviar registro">-->
+                                                                </form> 
+                                                            <?php
+                 }else{
+                                                if($documentoHabilitado2 == 1){
+                                                  
+                                                ?>
+                                                                <script> 
+                                                                     window.onload=function(){
+                                                                       document.forms["miformulario"].submit();
+                                                                     }
+                                                                </script>
+                                                                 
+                                                                <form name="miformulario" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                                                                    <!--<input type="submit" value="enviar registro">-->
+                                                                </form> 
+                                                            <?php
+                                                }else{
+                                                //echo '<br>Alerta';
+                                                ?>
+                                                    <script> 
+                                                         window.onload=function(){
+                                                           document.forms["miformulario"].submit();
+                                                         }
+                                                    </script>
+                                                     
+                                                    <form name="miformulario" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                                                        <input name="alertaDocumento" value="1" type="hidden">
+                                                        <input type="hidden" name="enviarIdDocumento" value="<?php echo $idDocumento;?>">
+                                                        <input type="hidden" name="enviarIdDocumentoControl" value="<?php echo $_POST['enviarIdDocumentoControl'];?>">
+                                                        <input type="hidden" name="editarDocumentoMasivo" value="1">
+                                                        <!-- <input type="submit" value="enviar alerta"> -->
+                                                    </form> 
+                                                <?php    
+                                                }
+                 }                                         
+                                                            
+                                                            
+                                               
+                            
+    
+        
+        }
+    
+     }
+    
+    
+    
 }
 
 if(isset($_POST['ejecutador'])){
@@ -3868,6 +3890,20 @@ if(isset($_POST['ejecutadorIndividual'])){
     
     $consulta_documento=$mysqli->query("SELECT * FROM documento WHERE id='".$_POST['idDocumento']."' ");
     $extraer_consulta_documento=$consulta_documento->fetch_array(MYSQLI_ASSOC);
+    
+    if($extraer_consulta_documento['vigente'] == '1' && $extraer_consulta_documento['pre'] == NULL){
+        ?>
+                        <script> 
+                             window.onload=function(){
+                               document.forms["miformularioAlerta"].submit();
+                             }
+                        </script>
+                                                             
+                        <form name="miformularioAlerta" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                            <input name="alertaConsecutivoGestionado" value="1" type="hidden">
+                        </form> 
+                    <?php 
+    }else{
      'proceso: '.$proceso=$extraer_consulta_documento['proceso'];
      '<br>tipo de documento: '.$tipoDoc=$extraer_consulta_documento['tipo_documento'];
      '<br>consecutivo: '.$consecutivo=$extraer_consulta_documento['consecutivoTemporal'];
@@ -3987,12 +4023,30 @@ if(isset($_POST['ejecutadorIndividual'])){
     
     
 
-    
+    }
     
 
 }
 
 if(isset($_POST['cancelar'])){ /// se rechaza la solicitud y se elimina el documento
+
+    $preguntaVigentePreNull=$mysqli->query("SELECT * FROM documento WHERE id='".$_POST['idDocumento']."' AND vigente='1' AND pre IS NULL ");
+    $respuestaPreguntaVigente=$preguntaVigentePreNull->fetch_array(MYSQLI_ASSOC);
+    
+     if($respuestaPreguntaVigente['id'] != NULL){
+        ?>
+                        <script> 
+                             window.onload=function(){
+                               document.forms["miformularioAlerta"].submit();
+                             }
+                        </script>
+                                                             
+                        <form name="miformularioAlerta" action="../../crearDocumentoMasivo" method="POST" onsubmit="procesar(this.action);" >
+                            <input name="alertaConsecutivoGestionado" value="1" type="hidden">
+                        </form> 
+                    <?php 
+     }else{
+         
             date_default_timezone_set("America/Bogota");
             $estado = "Rechazado";
             $aprobado_aprueba = 0;
@@ -4013,6 +4067,7 @@ if(isset($_POST['cancelar'])){ /// se rechaza la solicitud y se elimina el docum
                             <input name="validacionEliminar" value="1" type="hidden">
                         </form> 
             <?php
+     }
 }
 //END
 ?>

@@ -97,6 +97,8 @@ if(isset($_POST['revisarDoc'])){
     $queryDoc1 = $mysqli->query("SELECT * FROM documento WHERE id = '$idDocumento'")or die(mysqli_error($mysqli));
     $datosDoc1 = $queryDoc1->fetch_assoc();
     
+   
+                
     
     $NotifiacionElaborador=$datosDoc1['plataformaH'];
     $NotifiacionRevisa=$datosDoc1['plataformaHRevisa'];
@@ -141,6 +143,10 @@ if(isset($_POST['revisarDoc'])){
             $fechaCierre =  date("Y/m/j");
             $idSolicitud = $datosDoc1['id_solicitud'];
             $mysqli->query("UPDATE solicitudDocumentos SET estado = '$estado', fechaCierre = '$fechaCierre', regresa = NULL WHERE id = '$idSolicitud' ")or die(mysqli_error($mysqli));
+            
+            /// se actualiza el revisado del documento anterior para enviar revisado = 0
+            $mysqli->query("UPDATE documento SET ultimaFechaRevision = '$fechaCierre', usuarioRevisa = NULL, revisado = 0 WHERE id='$idAnterior'");
+            // end
             
             $mysqli->query("DELETE FROM `controlCambios` WHERE idRespaldo='".$_POST['idDocumento']."' AND tipoSolicitud='3' ");
             

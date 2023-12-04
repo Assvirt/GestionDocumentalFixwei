@@ -239,8 +239,8 @@ if(isset($_POST['revision'])){
                                           if($tipoSolicitud == '3'){
                                               $tipoSolicitudNombre='eliminación';
                                           }
-                              
-                                          $mail->Subject=utf8_decode('Dueño de proceso - revisión documental '); //- autorizado para visualizar
+                                          //<p><b>Ha sido asignado para visualizar la solicitud de '.$tipoSolicitudNombre.' del documento '.$nombreDocumentoEnviarCorreo.'.</b></p>
+                                          $mail->Subject=utf8_decode('Revisión documental - dueño de proceso'); //- autorizado para visualizar
                                           $mail->Body = utf8_decode('
                                           <html>
                                           <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -251,10 +251,8 @@ if(isset($_POST['revision'])){
                                           
                                           <p>Estimado (a). <b><em>'.$nombredelUsuario.'</em></b>.
                                           <br>
-                                          <p><b>Ha sido asignado para visualizar la solicitud de '.$tipoSolicitudNombre.' del documento '.$nombreDocumentoEnviarCorreo.'.</b></p>
+                                          <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
                                           
-                                          <br><br>
-                                          Se recomienda ingresar y verificar su solicitud.
                                           <br><br>
                                           Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                           </p>
@@ -325,8 +323,8 @@ if(isset($_POST['revision'])){
                                           if($tipoSolicitud == '3'){
                                               $tipoSolicitudNombre='eliminación';
                                           }
-                              
-                                          $mail->Subject=utf8_decode('Dueño de proceso - revisión documental '); //- autorizado para visualizar
+                                          //<p><b>Ha sido asignado para visualizar la solicitud de '.$tipoSolicitudNombre.' del documento '.$nombreDocumentoEnviarCorreo.'.</b></p>
+                                          $mail->Subject=utf8_decode('Revisión documental - dueño de proceso'); //- autorizado para visualizar
                                           $mail->Body = utf8_decode('
                                           <html>
                                           <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -337,10 +335,9 @@ if(isset($_POST['revision'])){
                                           
                                           <p>Estimado (a). <b><em>'.$nombredelUsuario.'</em></b>.
                                           <br>
-                                          <p><b>Ha sido asignado para visualizar la solicitud de '.$tipoSolicitudNombre.' del documento '.$nombreDocumentoEnviarCorreo.'.</b></p>
+                                          <p><b>El documento '.$nombreDocumentoEnviarCorreo.' se encuentra dentro del periodo de revisión</b></p>
                                           
-                                          <br><br>
-                                          Se recomienda ingresar y verificar su solicitud.
+                                          
                                           <br><br>
                                           Este correo es informativo por tanto, le pedimos no responda este mensaje.
                                           </p>
