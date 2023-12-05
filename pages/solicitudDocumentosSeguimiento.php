@@ -403,7 +403,7 @@ if(!isset($_SESSION["session_username"])){
                         }else{ //echo 'dato entrante revision documental: '.$_POST['revisionDocumental'];
                             if($_POST['revisionDocumental'] == '1'){
                                 
-                            }else{ echo 'dato entrante revision documental: '.$_POST['revisionDocumental'];
+                            }else{ //echo 'dato entrante revision documental: '.$_POST['revisionDocumental'];
                             echo '<br><font color="orange"><b>No tiene permisos para cambiar el estado de la solicitud</b></font>';
                             }
                         }
